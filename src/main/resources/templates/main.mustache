@@ -1,36 +1,18 @@
 <html>
     <body>
-        <form method="post" action="filter">
-            <input type="text" name="filter">
-            <button type="submit">Найти</button>
-            <input type="button" value="Показать список товаров" onClick='location.href="/list"'>
-            <input type="button" value="Добвить товары" onClick='location.href="/add"'>
-        </form>
-
         <div>
-            <form method="post">
-                <p><b>Заполните фоорму</b></p>
-                <p>Название парфюма:</p>
-                <input type="text" name="perfumeTitle" size="40" placeholder="Название парфюма">
-                <p>Парфюмер: </p>
-                <input type="text" name="perfumer" size="40">
-                <p>Год выпуска: </p>
-                <input type="number" name="year" size="40">
-                <p>Страна производитель: </p>
-                <input type="text" name="country" size="40">
-                <p>Пол: </p>
-                <input type="text" name="perfumeGender" size="40">
-                <p>Верхние ноты: </p>
-                <input type="text" name="fragranceTopNotes" size="40">
-                <p>Средние ноты: </p>
-                <input type="text" name="fragranceMiddleNotes" size="40">
-                <p>Базовые ноты: </p>
-                <input type="text" name="fragranceBaseNotes" size="40">
-                <p>Описание: </p>
-                <textarea name="description" cols="40" rows="3"></textarea>
-                <p>
-                    <button type="submit">Добавить</button>
-                </p>
+            <form action="/logout" method="post">
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+                <input type="submit" value="Sign Out"/>
+            </form>
+        </div>
+        <div>
+            <form method="post" action="filter">
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+                <input type="text" name="filter">
+                <button type="submit">Найти</button>
+                <input type="button" value="Показать список товаров" onClick='location.href="/list"'>
+                <input type="button" value="Добвить товары" onClick='location.href="/add"'>
             </form>
         </div>
     </body>
