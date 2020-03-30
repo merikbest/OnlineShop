@@ -19,6 +19,7 @@ public class Perfume {
     private String fragranceMiddleNotes;
     private String fragranceBaseNotes;
     private String description;
+    private String filename;
 
     public Perfume() {
     }
@@ -115,5 +116,13 @@ public class Perfume {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 }
