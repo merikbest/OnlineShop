@@ -7,7 +7,7 @@
         <span><a href="/user">User list</a></span>
     </div>
     <div>
-        <form method="post" action="filter">
+        <form method="post" action="filter" >
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
             <input type="text" name="filter">
             <button type="submit">Найти</button>

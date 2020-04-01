@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -26,6 +27,11 @@ public class MainController {
 
     @GetMapping("/")
     public String greeting(Map<String, Object> model) {
+        //тест
+//        Perfume perfume = perfumeRepository.findPerfumesById(id);
+//        model.put("perfume", perfume);
+        Iterable<Perfume> perfumes = perfumeRepository.findAll();
+        model.put("perfumes", perfumes);
         return "greeting";
     }
 
@@ -83,5 +89,12 @@ public class MainController {
         List<Perfume> perfumes = perfumeRepository.findByPerfumer(filter);
         model.put("perfumes", perfumes);
         return "filter";
+    }
+
+    @PostMapping("/")
+    public String showPerfumeById(@RequestParam int id, Map<String, Object> model) {
+        List<Perfume> perfume = perfumeRepository.findById(id);
+        model.put("perfumes", perfume);
+        return "greeting";
     }
 }

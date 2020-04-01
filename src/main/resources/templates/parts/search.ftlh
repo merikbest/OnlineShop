@@ -1,7 +1,9 @@
 <#macro list>
     <input type="button" value="на главную" onClick='location.href="/main"'>
     <h3>Список духов</h3>
+
     <#list perfumes as perfume>
+<#--        <p>${perfumes[2].perfumer}</p>-->
         <div>
             <#if perfume.filename??>
                 <img src="/img/${perfume.filename}">
