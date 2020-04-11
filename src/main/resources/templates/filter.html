@@ -1,0 +1,39 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{parts/head :: head}"></head>
+<body>
+<div th:insert="~{parts/navbar :: navbar}"></div>
+<div class="container mt-5">
+    <h3>Список духов</h3>
+    <table th:each="perfume : ${perfumes}" >
+        <div th:if="${perfume.getFilename()}">
+            <img th:src="@{/img/{path} (path = ${perfume.getFilename()})}">
+        </div>
+        <tr>
+            <th align="left">Характеристика</th>
+            <th align="left">Описание</th>
+        </tr>
+        <tr><td>id:</td><td th:text="${perfume.getId()}"></td></tr>
+        <tr><td>Название парфюма:</td><td th:text="${perfume.getPerfumeTitle()}"></td></tr>
+        <tr><td>Парфюмер:</td><td th:text="${perfume.getPerfumer()}"></td></tr>
+        <tr><td>Год выпуска:</td><td th:text="${perfume.getYear()}"></td></tr>
+        <tr><td>Страна производитель: </td><td th:text="${perfume.getCountry()}"></td></tr>
+        <tr><td>Пол: </td><td th:text="${perfume.getPerfumeGender()}"></td></tr>
+        <tr><td>Верхние ноты: </td><td th:text="${perfume.getFragranceTopNotes()}"></td></tr>
+        <tr><td>Средние ноты: </td><td th:text="${perfume.getFragranceMiddleNotes()}"></td></tr>
+        <tr><td>Базовые ноты: </td><td th:text="${perfume.getFragranceBaseNotes()}"></td></tr>
+        <tr><td>Описание: </td><td th:text="${perfume.getDescription()}"></td></tr>
+    </table>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
+</html>

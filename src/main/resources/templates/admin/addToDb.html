@@ -1,0 +1,48 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{parts/head :: head}"></head>
+<body>
+<div th:insert="~{parts/navbar :: navbar}"></div>
+
+<div class="container">
+    <form method="post" action="/user/add" enctype="multipart/form-data">
+        <p><b>Заполните фоорму</b></p>
+        <p>Название парфюма:</p>
+        <input type="text" name="perfumeTitle" size="40" placeholder="Название парфюма">
+        <p>Парфюмер: </p>
+        <input type="text" name="perfumer" size="40">
+        <p>Год выпуска: </p>
+        <input type="number" name="year" size="40">
+        <p>Страна производитель: </p>
+        <input type="text" name="country" size="40">
+        <p>Пол: </p>
+        <input type="text" name="perfumeGender" size="40">
+        <p>Верхние ноты: </p>
+        <input type="text" name="fragranceTopNotes" size="40">
+        <p>Средние ноты: </p>
+        <input type="text" name="fragranceMiddleNotes" size="40">
+        <p>Базовые ноты: </p>
+        <input type="text" name="fragranceBaseNotes" size="40">
+        <p>Описание: </p>
+        <textarea name="description" cols="40" rows="3"></textarea>
+        <p>
+            <button type="submit">Добавить</button>
+            <input type="file" name="file">
+        </p>
+    </form>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
+</html>
