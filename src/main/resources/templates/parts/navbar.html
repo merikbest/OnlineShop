@@ -28,7 +28,7 @@
                     <form method="post" action="filter" class="form-inline my-2 my-lg-0">
                         <input name="filter" class="form-control mr-sm-2" type="search" placeholder="Search"
                                aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
                     </form>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Корзина</a>
@@ -37,8 +37,8 @@
                         <a class="nav-link" href="/cabinet">Личный кабинет</a>
                     </li>
                 </ul>
-                <form action="/logout" method="post">
-                    <input type="submit" value="Sign Out"/>
+                <form action="/logout" method="post" sec:authorize="isAuthenticated()">
+                    <input type="submit" value="Выход"/>
                 </form>
             </div>
         </div>

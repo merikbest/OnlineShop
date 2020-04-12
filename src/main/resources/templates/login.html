@@ -4,13 +4,29 @@
 <head th:insert="~{parts/head :: head}"></head>
 <body>
 <div th:insert="~{parts/navbar :: navbar}"></div>
-Login page
+<div class="container mt-5">
+    <h5>Вход в личный кабинет</h5>
+    <div th:text="${message}"></div>
     <form action="/login" method="post">
-        <div><label> User Name : <input type="text" name="username"/> </label></div>
-        <div><label> Password: <input type="password" name="password"/> </label></div>
-        <div><input type="submit" value="Sign In"/></div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Имя пользователя: </label>
+            <div>
+                <input type="text" name="username" class="form-control"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Пароль: </label>
+            <div>
+                <input type="text" name="password" class="form-control"/>
+            </div>
+        </div>
+        <div >
+            <input type="submit" value="Вход" class="mr-3"/>
+            <a href="/registration">Регистрация</a>
+        </div>
     </form>
-<a href="/registration">Add new user</a>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>

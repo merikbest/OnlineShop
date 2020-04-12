@@ -5,6 +5,60 @@
 <body>
 <div th:insert="~{parts/navbar :: navbar}"></div>
 
+<div class="container slider mb-5">
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="d-block w-100"
+                     src="https://i.pinimg.com/originals/a6/51/85/a65185f3621017135eb2486774849dcc.jpg"
+                     alt="First slide">
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+
+<div class="mx-auto mb-5" style="width: 200px;">
+    <h4>Новинки</h4>
+</div>
+
+<div class="container mb-5">
+    <div class="card-deck">
+        <div class="card text-center">
+            <img class="card-img-top" src="/img/paco_rabanne_3349668509416_images_16539042248.jpg" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">Paco Rabanne 1 Million</h5>
+                <p class="card-text">1132 грн.</p>
+                <a href="#" class="card-link">Card link</a>
+            </div>
+        </div>
+        <div class="card text-center">
+            <img class="card-img-top" src="/img/668197926_w640_h640_parfyumirovannaya-voda-creed.jpg"
+                 alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title" >Creed Aventus</h5>
+                <p class="card-text" >4900 грн.</p>
+                <a href="#" class="card-link">Card link</a>
+            </div>
+        </div>
+        <div class="card text-center">
+            <img class="card-img-top" src="/img/versace_img454_images_15990371251.jpg" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">Versace Crystal Noir</h5>
+                <p class="card-text">1297 грн.</p>
+                <a href="#" class="card-link">Card link</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -5,14 +5,19 @@
 <body>
 <div th:insert="~{parts/navbar :: navbar}"></div>
 
-<div class="container">
-    <form action="/user/add" method="get">
-        <input type="submit" value="Добавить товар"/>
-    </form>
-    <form action="/user" method="get">
-        <input type="submit" value="Список пользоваетлей"/>
-    </form>
+<div class="container mt-5">
+    <p>Привет <span sec:authentication="name"></span>!</p>
+
+    <div sec:authorize="hasAuthority('ADMIN')">
+        <form action="/user/add" method="get">
+            <input type="submit" value="Добавить товар"/>
+        </form>
+        <form action="/user" method="get">
+            <input type="submit" value="Список пользоваетлей"/>
+        </form>
+    </div>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>
