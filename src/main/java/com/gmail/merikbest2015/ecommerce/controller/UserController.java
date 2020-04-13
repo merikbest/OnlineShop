@@ -4,10 +4,11 @@ import com.gmail.merikbest2015.ecommerce.domain.Perfume;
 import com.gmail.merikbest2015.ecommerce.domain.Role;
 import com.gmail.merikbest2015.ecommerce.domain.User;
 import com.gmail.merikbest2015.ecommerce.repos.PerfumeRepository;
-import com.gmail.merikbest2015.ecommerce.repos.UserRepository;
+import com.gmail.merikbest2015.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,18 +16,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/user")
-@PreAuthorize("hasAuthority('ADMIN')")
 public class UserController {
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
     private PerfumeRepository perfumeRepository;
@@ -34,12 +31,14 @@ public class UserController {
     @Value("${upload.path}")
     private String uploadPath;
 
-    @GetMapping("/add")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("add")
     public String addToBD() {
         return "admin/addToDb";
     }
 
-    @PostMapping("/add")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping("add")
     public String add(@RequestParam(name = "perfumeTitle") String perfumeTitle,
                       @RequestParam(name = "perfumer") String perfumer,
                       @RequestParam(name = "year") Integer year,
@@ -72,12 +71,14 @@ public class UserController {
         return "admin/addToDb";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
     public String userList(Model model) {
-        model.addAttribute("users", userRepository.findAll());
+        model.addAttribute("users", userService.findAll());
         return "admin/userList";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("{user}")
     public String userEditForm(@PathVariable User user, Model model) {
         model.addAttribute("user", user);
@@ -85,26 +86,32 @@ public class UserController {
         return "admin/userEdit";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping
     public String userSave(
             @RequestParam String username,
             @RequestParam Map<String, String> form,
             @RequestParam("userId") User user
     ) {
-        user.setUsername(username);
-        Set<String> roles = Arrays.stream(Role.values())
-                .map(Role::name)
-                .collect(Collectors.toSet());
-
-        user.getRoles().clear();
-
-        for (String key : form.keySet()) {
-            if (roles.contains(key)){
-                user.getRoles().add(Role.valueOf(key));
-            }
-        }
-
-        userRepository.save(user);
+        userService.userSave(username, form, user);
         return "redirect:/user";
+    }
+
+    @GetMapping("edit")
+    public String editProfile(Model model, @AuthenticationPrincipal User user) {
+        model.addAttribute("user", user);
+//        model.addAttribute("user", user);
+        return "userEditProfile";
+//        return "profile";
+    }
+
+    @PostMapping("edit")
+    public String updateProfile(
+            @AuthenticationPrincipal User user,
+            @RequestParam String password,
+            @RequestParam String email
+    ) {
+        userService.updateProfile(user, password, email);
+        return "redirect:/user/profile";
     }
 }

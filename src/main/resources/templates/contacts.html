@@ -3,26 +3,25 @@
 
 <head th:insert="~{parts/head :: head}"></head>
 <body>
+
 <div th:insert="~{parts/navbar :: navbar}"></div>
 
 <div class="container mt-5">
-<!--    <span sec:authentication="name"></span>-->
-    <p>Привет !</p>
-
-    <form action="/user/edit" method="get">
-        <input type="submit" value="Изменить пароль"/>
-    </form>
-
-    <div sec:authorize="hasAuthority('ADMIN')">
-        <form action="/user/add" method="get">
-            <input type="submit" value="Добавить товар"/>
-        </form>
-        <form action="/user" method="get">
-            <input type="submit" value="Список пользоваетлей"/>
-        </form>
-    </div>
+    <h5>Контактная информация</h5>
+    <br>
+    <p><b>Телефон:</b> (066) 573-89-96<br/>
+        <b>E-mail:</b> merikbest2015@gmail.com</p>
+    <br>
+    <h6>Режим работы</h6>
+    <p>Интернет магазин работает c 08:00 до 20:00 без перерыва и выходных. <br/>
+        Онлайн заказы принимаются круглосуточно.</p>
+    <br>
+    <h6>Доставка</h6>
+    <p>Доставка заказов происходит через курьерскую службу</p>
 
 </div>
+
+<footer th:insert="~{parts/footer :: footer}"></footer>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

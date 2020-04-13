@@ -8,6 +8,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.Properties;
 
+//ВЫКЛЮЧИТЬ AVAST!!!!!!!!!
 @Configuration
 public class MailConfig {
     @Value("${spring.mail.host}")
@@ -25,11 +26,11 @@ public class MailConfig {
     @Value("${spring.mail.protocol}")
     private String protocol;
 
-//    @Value("${spring.mail.properties.mail.smtp.auth}")
-//    private String auth;
-//
-//    @Value("${spring.mail.properties.mail.smtp.starttls.enable}")
-//    private String enable;
+    @Value("${spring.mail.properties.mail.smtp.auth}")
+    private String auth;
+
+    @Value("${spring.mail.properties.mail.smtp.starttls.enable}")
+    private String enable;
 
     @Value("${mail.debug}")
     private String debug;
@@ -45,6 +46,8 @@ public class MailConfig {
         Properties mailProperties = mailSender.getJavaMailProperties();
         mailProperties.setProperty("mail.transport.protocol", protocol);
         mailProperties.setProperty("mail.debug", debug); //В продакшене отключить
+        mailProperties.setProperty("mail.smtp.auth", auth);
+        mailProperties.setProperty("mail.smtp.starttls.enable", enable);
 
         return mailSender;
     }

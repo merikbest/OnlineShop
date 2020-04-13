@@ -3,7 +3,9 @@
 
 <head th:insert="~{parts/head :: head}"></head>
 <body>
+
 <div th:insert="~{parts/navbar :: navbar}"></div>
+
 <div class="container mt-5">
     <h5>Вход в личный кабинет</h5>
     <div th:text="${message}"></div>
@@ -20,12 +22,14 @@
                 <input type="text" name="password" class="form-control"/>
             </div>
         </div>
-        <div >
+        <div>
             <input type="submit" value="Вход" class="mr-3"/>
             <a href="/registration">Регистрация</a>
         </div>
     </form>
 </div>
+
+<footer th:insert="~{parts/footer :: footer}"></footer>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

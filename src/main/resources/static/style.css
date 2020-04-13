@@ -1,3 +1,16 @@
 body {
-    color: #113;
+    height: 100%;
+}
+
+html {
+    position:relative;
+    min-height:100%;
+}
+#container {
+    padding-bottom: 300px;/*Примерно 2 размера footer, чтобы он не наезжал на контент при узком окне браузера*/
+}
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }

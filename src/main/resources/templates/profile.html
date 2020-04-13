@@ -6,22 +6,28 @@
 <div th:insert="~{parts/navbar :: navbar}"></div>
 
 <div class="container mt-5">
-<!--    <span sec:authentication="name"></span>-->
-    <p>Привет !</p>
+    <h5>Изменение пароля</h5>
+    <p th:text="${username}"></p>
+    <!--    <p th:text="${email}"></p>-->
+    <!--    <div th:text="${message}"></div>-->
 
-    <form action="/user/edit" method="get">
-        <input type="submit" value="Изменить пароль"/>
+    <form action="/user/edit" method="post">
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Введите новый пароль: </label>
+            <div>
+                <input type="password" name="password" class="form-control"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Введите Email: </label>
+            <div>
+                <input type="email" name="email" class="form-control"/>
+            </div>
+        </div>
+        <div >
+            <input type="submit" value="Продолжить"/>
+        </div>
     </form>
-
-    <div sec:authorize="hasAuthority('ADMIN')">
-        <form action="/user/add" method="get">
-            <input type="submit" value="Добавить товар"/>
-        </form>
-        <form action="/user" method="get">
-            <input type="submit" value="Список пользоваетлей"/>
-        </form>
-    </div>
-
 </div>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

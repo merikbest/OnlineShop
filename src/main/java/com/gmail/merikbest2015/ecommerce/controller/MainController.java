@@ -23,11 +23,9 @@ public class MainController {
         return "main";
     }
 
-    @GetMapping("/list")
-    public String get(Map<String, Object> model) {
-        Iterable<Perfume> perfumes = perfumeRepository.findAll();
-        model.put("perfumes", perfumes);
-        return "list";
+    @GetMapping("/contacts")
+    public String getContacts() {
+        return "contacts";
     }
 
     @GetMapping("/cabinet")
@@ -40,12 +38,5 @@ public class MainController {
         List<Perfume> perfumes = perfumeRepository.findByPerfumer(filter);
         model.put("perfumes", perfumes);
         return "filter";
-    }
-
-    @PostMapping("/")
-    public String showPerfumeById(@RequestParam int id, Map<String, Object> model) {
-        List<Perfume> perfume = perfumeRepository.findById(id);
-        model.put("perfumes", perfume);
-        return "greeting";
     }
 }
