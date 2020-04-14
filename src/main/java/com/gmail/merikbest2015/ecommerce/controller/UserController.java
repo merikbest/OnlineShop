@@ -11,13 +11,18 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/user")
@@ -39,37 +44,66 @@ public class UserController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("add")
-    public String add(@RequestParam(name = "perfumeTitle") String perfumeTitle,
-                      @RequestParam(name = "perfumer") String perfumer,
-                      @RequestParam(name = "year") Integer year,
-                      @RequestParam(name = "country") String country,
-                      @RequestParam(name = "perfumeGender") String perfumeGender,
-                      @RequestParam(name = "fragranceTopNotes") String fragranceTopNotes,
-                      @RequestParam(name = "fragranceMiddleNotes") String fragranceMiddleNotes,
-                      @RequestParam(name = "fragranceBaseNotes") String fragranceBaseNotes,
-                      @RequestParam(name = "description") String description,
-                      @RequestParam("file") MultipartFile file,
-                      Map<String, Object> model
+    public String add(@Valid Perfume perfume,
+                      BindingResult bindingResult,
+                      Model model,
+                      @RequestParam("file") MultipartFile file
     ) throws IOException {
-        Perfume perfume = new Perfume(perfumeTitle, perfumer, year, country, perfumeGender, fragranceTopNotes,
-                fragranceMiddleNotes, fragranceBaseNotes, description);
 
-        if (file != null && !file.getOriginalFilename().isEmpty()) {
-            File uploadDir = new File(uploadPath);
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
+            model.mergeAttributes(errorsMap);
+        } else {
+            if (file != null && !file.getOriginalFilename().isEmpty()) {
+                File uploadDir = new File(uploadPath);
 
-            if (!uploadDir.exists()) {
-                uploadDir.mkdir();
+                if (!uploadDir.exists()) {
+                    uploadDir.mkdir();
+                }
+                String uuidFile = UUID.randomUUID().toString();
+                String resultFilename = uuidFile + "." + file.getOriginalFilename();
+
+                file.transferTo(new File(uploadPath + "/" + resultFilename));
+                perfume.setFilename(resultFilename);
             }
-            String uuidFile = UUID.randomUUID().toString();
-            String resultFilename = uuidFile + "." + file.getOriginalFilename();
-
-            file.transferTo(new File(uploadPath + "/" + resultFilename));
-            perfume.setFilename(resultFilename);
+            perfumeRepository.save(perfume);
         }
-        perfumeRepository.save(perfume);
-
         return "admin/addToDb";
     }
+
+//    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PostMapping("add")
+//    public String add(@RequestParam(name = "perfumeTitle") String perfumeTitle,
+//                      @RequestParam(name = "perfumer") String perfumer,
+//                      @RequestParam(name = "year") Integer year,
+//                      @RequestParam(name = "country") String country,
+//                      @RequestParam(name = "perfumeGender") String perfumeGender,
+//                      @RequestParam(name = "fragranceTopNotes") String fragranceTopNotes,
+//                      @RequestParam(name = "fragranceMiddleNotes") String fragranceMiddleNotes,
+//                      @RequestParam(name = "fragranceBaseNotes") String fragranceBaseNotes,
+//                      @RequestParam(name = "description") String description,
+//                      @RequestParam("file") MultipartFile file,
+//                      Map<String, Object> model
+//    ) throws IOException {
+//        Perfume perfume = new Perfume(perfumeTitle, perfumer, year, country, perfumeGender, fragranceTopNotes,
+//                fragranceMiddleNotes, fragranceBaseNotes, description);
+//
+//        if (file != null && !file.getOriginalFilename().isEmpty()) {
+//            File uploadDir = new File(uploadPath);
+//
+//            if (!uploadDir.exists()) {
+//                uploadDir.mkdir();
+//            }
+//            String uuidFile = UUID.randomUUID().toString();
+//            String resultFilename = uuidFile + "." + file.getOriginalFilename();
+//
+//            file.transferTo(new File(uploadPath + "/" + resultFilename));
+//            perfume.setFilename(resultFilename);
+//        }
+//        perfumeRepository.save(perfume);
+//
+//        return "admin/addToDb";
+//    }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
@@ -98,11 +132,10 @@ public class UserController {
     }
 
     @GetMapping("edit")
-    public String editProfile(Model model, @AuthenticationPrincipal User user) {
-        model.addAttribute("user", user);
-//        model.addAttribute("user", user);
+    public String getProfile(Model model, @AuthenticationPrincipal User user) {
+        model.addAttribute("username", user.getUsername());
+        model.addAttribute("email", user.getEmail());
         return "userEditProfile";
-//        return "profile";
     }
 
     @PostMapping("edit")
@@ -112,6 +145,6 @@ public class UserController {
             @RequestParam String email
     ) {
         userService.updateProfile(user, password, email);
-        return "redirect:/user/profile";
+        return "redirect:/cabinet";
     }
 }

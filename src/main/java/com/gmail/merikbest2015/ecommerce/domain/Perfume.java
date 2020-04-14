@@ -1,16 +1,25 @@
 package com.gmail.merikbest2015.ecommerce.domain;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Perfume {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
+
+    @NotBlank(message = "Пожалуйсто заполните поле")
+    @Length(max = 255)
     private String perfumeTitle;
+
+    @NotBlank(message = "Пожалуйсто заполните поле")
+    @Length(max = 255)
     private String perfumer;
     private Integer year;
     private String country;

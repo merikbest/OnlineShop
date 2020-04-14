@@ -6,7 +6,8 @@
 <div th:insert="~{parts/navbar :: navbar}"></div>
 <div class="container mt-5">
     <h5>Регистрация</h5>
-    <div th:text="${message}"></div>
+    <div th:text="${usernameError}"></div>
+    <div th:text="${passwordError}"></div>
     <form action="/registration" method="post">
 <!--        <div><label> Имя пользователя: <input type="text" name="username"/> </label></div>-->
 <!--        <div><label> Пароль: <input type="password" name="password"/> </label></div>-->
@@ -20,6 +21,12 @@
             <label class="col-sm-2 col-form-label">Пароль: </label>
             <div>
                 <input type="password" name="password" class="form-control"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Пароль: </label>
+            <div>
+                <input type="password" name="password2" class="form-control"/>
             </div>
         </div>
         <div class="form-group row">

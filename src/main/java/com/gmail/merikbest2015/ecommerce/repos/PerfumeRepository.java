@@ -7,7 +7,4 @@ import java.util.List;
 
 public interface PerfumeRepository extends CrudRepository<Perfume, Integer> {
     List<Perfume> findByPerfumer(String perfumer);
-//    List<Perfume> findById(int id);
-    Perfume findById(int id);
-    Perfume getPerfumeById(Integer id); //98
 }

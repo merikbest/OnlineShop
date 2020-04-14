@@ -6,25 +6,26 @@
 <div th:insert="~{parts/navbar :: navbar}"></div>
 
 <div class="container mt-5">
-    <h5 th:text="${user.getUsername()}"></h5>
+    <h5>Изменение пароля</h5>
+    <h5 th:text="${username}"></h5>
 
-<!--    <form th:action="@{/user/edit}" method="post" th:object="${user}">-->
-<!--        <div class="form-group row">-->
-<!--            <label class="col-sm-2 col-form-label">Введите новый пароль: </label>-->
-<!--            <div>-->
-<!--                <input type="password" th:field="*{password}" class="form-control"/>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="form-group row">-->
-<!--            <label class="col-sm-2 col-form-label">Введите Email: </label>-->
-<!--            <div>-->
-<!--                <input type="email" th:field="*{email}" class="form-control"/>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div >-->
-<!--            <input type="submit" value="Продолжить"/>-->
-<!--        </div>-->
-<!--    </form>-->
+    <form action="/user/edit" method="post">
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Введите новый пароль: </label>
+            <div>
+                <input type="password" name="password" class="form-control"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Введите Email: </label>
+            <div>
+                <input type="email" name="email" class="form-control" th:value="${email}"/>
+            </div>
+        </div>
+        <div>
+            <input type="submit" value="Продолжить"/>
+        </div>
+    </form>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
