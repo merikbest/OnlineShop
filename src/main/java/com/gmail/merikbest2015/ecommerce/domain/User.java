@@ -22,11 +22,15 @@ public class User implements UserDetails {
     @NotBlank(message = "Пароль не может быть пустым")
     private String password;
 
-
-
     @Email(message = "Неправильный email")
     @NotBlank(message = "Email не может быть пустым")
     private String email;
+
+    private String phoneNumber;
+    private String address;
+    private String city;
+    private String country;
+    private String postIndex;
     private boolean active;
     private String activationCode;
 
@@ -121,5 +125,45 @@ public class User implements UserDetails {
 
     public void setActivationCode(String activationCode) {
         this.activationCode = activationCode;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getPostIndex() {
+        return postIndex;
+    }
+
+    public void setPostIndex(String postIndex) {
+        this.postIndex = postIndex;
     }
 }

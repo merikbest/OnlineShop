@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Perfume {
@@ -21,20 +22,46 @@ public class Perfume {
     @NotBlank(message = "Пожалуйсто заполните поле")
     @Length(max = 255)
     private String perfumer;
+
+    @NotNull(message = "Пожалуйсто заполните поле")
     private Integer year;
+
+    @NotBlank(message = "Пожалуйсто заполните поле")
+    @Length(max = 255)
     private String country;
+
+    @NotBlank(message = "Пожалуйсто заполните поле")
+    @Length(max = 255)
     private String perfumeGender;
+
+    @NotBlank(message = "Пожалуйсто заполните поле")
+    @Length(max = 255)
     private String fragranceTopNotes;
+
+    @NotBlank(message = "Пожалуйсто заполните поле")
+    @Length(max = 255)
     private String fragranceMiddleNotes;
+
+    @NotBlank(message = "Пожалуйсто заполните поле")
+    @Length(max = 255)
     private String fragranceBaseNotes;
+
+    @NotBlank(message = "Пожалуйсто заполните поле")
+    @Length(max = 255)
     private String description;
+
+    @NotBlank(message = "Пожалуйсто заполните поле")
+    @Length(max = 255)
     private String filename;
+
+    @NotNull(message = "Пожалуйсто заполните поле")
+    private Integer price;
 
     public Perfume() {
     }
 
     public Perfume(String perfumeTitle, String perfumer, Integer year, String country, String perfumeGender,
-                   String fragranceTopNotes, String fragranceMiddleNotes, String fragranceBaseNotes, String description)
+                   String fragranceTopNotes, String fragranceMiddleNotes, String fragranceBaseNotes, String description, Integer price)
     {
         this.perfumeTitle = perfumeTitle;
         this.perfumer = perfumer;
@@ -45,6 +72,7 @@ public class Perfume {
         this.fragranceMiddleNotes = fragranceMiddleNotes;
         this.fragranceBaseNotes = fragranceBaseNotes;
         this.description = description;
+        this.price = price;
     }
 
     public Integer getId() {
@@ -133,5 +161,13 @@ public class Perfume {
 
     public void setFilename(String filename) {
         this.filename = filename;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 }
