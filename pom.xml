@@ -74,6 +74,12 @@
             <artifactId>thymeleaf-extras-springsecurity5</artifactId>
         </dependency>
 
+        <!-- REMEMBER ME -->
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-jdbc</artifactId>
+        </dependency>
+
         <!--email-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

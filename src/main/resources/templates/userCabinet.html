@@ -9,7 +9,10 @@
 <div th:replace="parts/common :: navbar"></div>
 
 <div class="container mt-5">
-<!--    <span sec:authentication="name"></span>-->
+
+
+
+    <!--    <span sec:authentication="name"></span>-->
     <p>Привет !</p>
 
     <form action="/user/edit" method="get">
@@ -17,13 +20,22 @@
     </form>
 
     <div sec:authorize="hasAuthority('ADMIN')">
-        <form action="/user/add" method="get">
-            <input type="submit" value="Добавить товар"/>
-        </form>
         <form action="/user" method="get">
             <input type="submit" value="Список пользоваетлей"/>
         </form>
+
+        <form action="/user/add" method="get">
+            <input type="submit" value="Добавить товар"/>
+        </form>
+
+        <form action="/user/productlist" method="get">
+            <input type="submit" value="Список товаров"/>
+        </form>
     </div>
+
+
+
+
 
 </div>
 

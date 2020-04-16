@@ -20,6 +20,7 @@ public class MainController {
     public String main(Map<String, Object> model) {
         Iterable<Perfume> perfumes = perfumeRepository.findAll();
         model.put("perfumes", perfumes);
+
         return "main";
     }
 
@@ -37,6 +38,7 @@ public class MainController {
     public String filter(@RequestParam String filter, Map<String, Object> model) {
         List<Perfume> perfumes = perfumeRepository.findByPerfumer(filter);
         model.put("perfumes", perfumes);
+
         return "filter";
     }
 }
