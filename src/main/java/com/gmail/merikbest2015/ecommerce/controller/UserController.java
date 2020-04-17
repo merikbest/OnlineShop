@@ -57,7 +57,8 @@ public class UserController {
 
         perfumeRepository.saveProductInfoById(perfume.getPerfumeTitle(), perfume.getPerfumer(), perfume.getYear(),
                 perfume.getCountry(), perfume.getPerfumeGender(), perfume.getFragranceTopNotes(), perfume.getFragranceMiddleNotes(),
-                perfume.getFragranceBaseNotes(), perfume.getDescription(), perfume.getFilename(), perfume.getPrice(), perfume.getId());
+                perfume.getFragranceBaseNotes(), perfume.getDescription(), perfume.getFilename(), perfume.getPrice(),
+                perfume.getVolume(), perfume.getType(), perfume.getCount(), perfume.getId());
 
         return "redirect:/user/productlist";
     }
@@ -71,7 +72,7 @@ public class UserController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("add")
-    public String add(@Valid Perfume perfume,
+    public String add( Perfume perfume,
                       BindingResult bindingResult,
                       Model model,
                       @RequestParam("file") MultipartFile file

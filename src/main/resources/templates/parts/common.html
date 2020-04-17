@@ -24,47 +24,56 @@
 
 <!--Navbar-->
 <div th:fragment="navbar" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: black">
+
+    <div class="container-fluid bg-black header-top d-none d-md-block">
         <div class="container">
-            <a class="navbar-brand" href="/">Perfume</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
+            <div class="row text-light pt-4 pb-4">
+                <div class="col-md-5"><i class="fa fa-envelope-o" aria-hidden="true"></i>Perfume webstore</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid bg-black">
+        <nav class="container navbar navbar-expand-lg navbar-dark bg-black text-white">
+<!--            <a class="navbar-brand" href="#">Perfume</a>-->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
+                <ul class="navbar-nav mr-auto ">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Главная</a>
+                        <a class="nav-link text-light" href="/">Главная</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/user/profile">Парфюмерия</a>
+                        <a class="nav-link text-light" href="/user/profile">Парфюмерия</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/contacts">Контакты</a>
+                        <a class="nav-link text-light" href="/contacts">Контакты</a>
                     </li>
                 </ul>
 
                 <ul class="navbar-nav ml-auto">
-                    <form method="post" action="filter" class="form-inline my-2 my-lg-0">
-                        <input name="filter" class="form-control mr-sm-2" type="search" placeholder="Search"
+                    <form class="form-inline d-flex justify-content-center md-form form-sm">
+                        <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Поиск"
                                aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
+                        <i class="fas fa-search fa-1x" aria-hidden="true"></i>
                     </form>
+
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Корзина</a>
+                        <a class="nav-link" href="#"><i class="fas fa-shopping-cart fa-1" style="color:white"></i></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/cabinet">Личный кабинет</a>
+                        <a class="nav-link text-light" href="/cabinet">Личный кабинет</a>
                     </li>
                 </ul>
+
                 <form action="/logout" method="post" sec:authorize="isAuthenticated()">
                     <input type="submit" value="Выход"/>
                 </form>
             </div>
-        </div>
+
     </nav>
+    </div>
 </div>
 
 

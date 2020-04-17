@@ -14,3 +14,17 @@ footer {
     bottom: 0;
     width: 100%;
 }
+
+.bg-black {
+    background-color: black;
+}
+
+.col-md-7 p {
+    color: #555;
+}
+
+.col-md-7 input {
+    height: 33px;
+    text-align: center;
+    width: 40px;
+}

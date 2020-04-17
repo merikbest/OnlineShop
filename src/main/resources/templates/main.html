@@ -31,72 +31,80 @@
 <div class="mx-auto mb-5" style="width: 200px;">
     <h4>Новинки</h4>
 </div>
-<!--th:value="${perfumes.setId(3)}"-->
-    <div class="container">
-        <form method="get" action="/">
-<!--            <p th:id="${3}" th:text="${perfume.getId()}"></p>-->
 
-            <table th:each="perfume : ${perfumes}">
-                <div th:if="${perfume.getId() == 3}">
+    <form method="get" action="/" >
 
-                <div th:if="${perfume.getFilename()}">
-                    <img th:src="@{/img/{path} (path = ${perfume.getFilename()})}">
+    </form>
+
+
+    <div class="container mt-5" >
+        <form method="get" action="/" >
+            <div class="row" >
+<!--th:each="perfume : ${perfumes}"-->
+                <div class="col-lg-3" >
+                    <div class="card" th:if="${perfumes[2].getFilename()}">
+                        <img th:src="@{/img/{path} (path = ${perfumes[2].getFilename()})}" class="rounded mx-auto w-50">
+                        <div class="card-body text-center">
+                            <h5 th:text="${perfumes[2].getPerfumeTitle()}"></h5>
+                            <h6 th:text="${perfumes[2].getPerfumer()}"></h6>
+                            <h6><span th:text="${perfumes[2].getPrice()}"></span>,00 грн.</h6>
+                            <a th:href="@{/product/{path} (path = ${perfumes[2].getId()})}" class="btn btn-dark">Купить</a>
+                        </div>
+                    </div>
                 </div>
 
-                <tr>
-                    <th align="left">Характеристика</th>
-                    <th align="left">Описание</th>
-                </tr>
-                <tr><td>id:</td><td th:text="${perfume.getId()}"></td></tr>
-                <tr><td>Название парфюма:</td><td th:text="${perfume.getPerfumeTitle()}"></td></tr>
-                <tr><td>Парфюмер:</td><td th:text="${perfume.getPerfumer()}"></td></tr>
-                <tr><td>Год выпуска:</td><td th:text="${perfume.getYear()}"></td></tr>
-                <tr><td>Страна производитель: </td><td th:text="${perfume.getCountry()}"></td></tr>
-                <tr><td>Пол: </td><td th:text="${perfume.getPerfumeGender()}"></td></tr>
-                <tr><td>Верхние ноты: </td><td th:text="${perfume.getFragranceTopNotes()}"></td></tr>
-                <tr><td>Средние ноты: </td><td th:text="${perfume.getFragranceMiddleNotes()}"></td></tr>
-                <tr><td>Базовые ноты: </td><td th:text="${perfume.getFragranceBaseNotes()}"></td></tr>
-                <tr><td>Описание: </td><td th:text="${perfume.getDescription()}"></td></tr>
+                <div class="col-lg-3">
+                    <div class="card" th:if="${perfumes[4].getFilename()}">
+                        <img th:src="@{/img/{path} (path = ${perfumes[4].getFilename()})}" class="rounded mx-auto w-50">
+                        <div class="card-body text-center">
+                            <h5 th:text="${perfumes[4].getPerfumeTitle()}"></h5>
+                            <h6 th:text="${perfumes[4].getPerfumer()}"></h6>
+                            <h6><span th:text="${perfumes[4].getPrice()}"></span>,00 грн.</h6>
+                            <a th:href="@{/product/{path} (path = ${perfumes[4].getId()})}" class="btn btn-dark">Купить</a>
+                        </div>
+                    </div>
                 </div>
-            </table>
+
+                <div class="col-lg-3">
+                    <div class="card" th:if="${perfumes[10].getFilename()}">
+                        <img th:src="@{/img/{path} (path = ${perfumes[10].getFilename()})}" class="rounded mx-auto w-50">
+                        <div class="card-body text-center">
+                            <h5 th:text="${perfumes[10].getPerfumeTitle()}"></h5>
+                            <h6 th:text="${perfumes[10].getPerfumer()}"></h6>
+                            <h6><span th:text="${perfumes[10].getPrice()}"></span>,00 грн.</h6>
+                            <a th:href="@{/product/{path} (path = ${perfumes[10].getId()})}" class="btn btn-dark">Купить</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="card" th:if="${perfumes[9].getFilename()}">
+                        <img th:src="@{/img/{path} (path = ${perfumes[9].getFilename()})}" class="rounded mx-auto w-50">
+                        <div class="card-body text-center">
+                            <h5 th:text="${perfumes[9].getPerfumeTitle()}"></h5>
+                            <h6 th:text="${perfumes[9].getPerfumer()}"></h6>
+                            <h6><span th:text="${perfumes[9].getPrice()}"></span>,00 грн.</h6>
+                            <a th:href="@{/product/{path} (path = ${perfumes[9].getId()})}" class="btn btn-dark">Купить</a>
+                        </div>
+                    </div>
+                </div>
+<!--                <div class="col-lg-3" th:if="${perfume.getId() == 31}">-->
+<!--                    <div class="card" th:if="${perfume.getFilename()}">-->
+<!--                        <img th:src="@{/img/{path} (path = ${perfume.getFilename()})}" class="rounded mx-auto w-50">-->
+<!--                        <div class="card-body text-center">-->
+<!--                            <h5 th:text="${perfume.getPerfumeTitle()}"></h5>-->
+<!--                            <h6 th:text="${perfume.getPerfumer()}"></h6>-->
+<!--                            <h6><span th:text="${perfume.getPrice()}"></span>,00 грн.</h6>-->
+<!--                            <a th:href="@{/product/{path} (path = ${perfume.getId()})}" class="btn btn-dark">Купить</a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+            </div>
         </form>
     </div>
 
-
-
-<div class="container mb-5">
-    <div class="card-deck">
-        <div class="card text-center">
-            <img class="card-img-top" src="/img/paco_rabanne_3349668509416_images_16539042248.jpg"
-                 alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Paco Rabanne 1 Million</h5>
-                <p class="card-text">1132 грн.</p>
-                <a href="#" class="card-link">Купить</a>
-            </div>
-        </div>
-        <div class="card text-center">
-            <img class="card-img-top" src="/img/668197926_w640_h640_parfyumirovannaya-voda-creed.jpg"
-                 alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Creed Aventus</h5>
-                <p class="card-text">4900 грн.</p>
-                <a href="#" class="card-link">Купить</a>
-            </div>
-        </div>
-        <div class="card text-center">
-            <img class="card-img-top" src="/img/versace_img454_images_15990371251.jpg" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Versace Crystal Noir</h5>
-                <p class="card-text">1297 грн.</p>
-                <a href="#" class="card-link">Купить</a>
-            </div>
-        </div>
-    </div>
-</div>
 </div>
 
 <footer th:insert="~{parts/common :: footer}"></footer>
-
 </body>
 </html>

@@ -46,23 +46,31 @@ public class Perfume {
     @Length(max = 255)
     private String fragranceBaseNotes;
 
-    @NotBlank(message = "Пожалуйсто заполните поле")
-    @Length(max = 255)
     private String description;
 
-    @NotBlank(message = "Пожалуйсто заполните поле")
-    @Length(max = 255)
     private String filename;
 
     @NotNull(message = "Пожалуйсто заполните поле")
     private Integer price;
 
+    @NotBlank(message = "Пожалуйсто заполните поле")
+    @Length(max = 255)
+    private String volume;
+
+    @NotBlank(message = "Пожалуйсто заполните поле")
+    @Length(max = 255)
+    private String type;
+
+    @NotNull(message = "Пожалуйсто заполните поле")
+    private Integer count;
+
     public Perfume() {
     }
 
     public Perfume(String perfumeTitle, String perfumer, Integer year, String country, String perfumeGender,
-                   String fragranceTopNotes, String fragranceMiddleNotes, String fragranceBaseNotes, String description, Integer price)
-    {
+                   String fragranceTopNotes, String fragranceMiddleNotes, String fragranceBaseNotes, String description,
+                   Integer price, String volume, String type, Integer count
+    ) {
         this.perfumeTitle = perfumeTitle;
         this.perfumer = perfumer;
         this.year = year;
@@ -73,6 +81,9 @@ public class Perfume {
         this.fragranceBaseNotes = fragranceBaseNotes;
         this.description = description;
         this.price = price;
+        this.volume = volume;
+        this.type = type;
+        this.count = count;
     }
 
     public Integer getId() {
@@ -169,5 +180,29 @@ public class Perfume {
 
     public void setPrice(Integer price) {
         this.price = price;
+    }
+
+    public String getVolume() {
+        return volume;
+    }
+
+    public void setVolume(String volume) {
+        this.volume = volume;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 }

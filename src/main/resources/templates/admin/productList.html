@@ -15,7 +15,7 @@
         <form method="get" action="/user/productlist">
 
             <table th:each="perfume : ${perfumes}">
-                <div th:if="${perfume.getId() == 3}">
+<!--                <div th:if="${perfume.getId() == 3}">-->
 
                     <div th:if="${perfume.getFilename()}">
                         <img th:src="@{/img/{path} (path = ${perfume.getFilename()})}">
@@ -42,7 +42,7 @@
 <!--                        <input type="submit" value="Редактировать"/>-->
 <!--                    </form>-->
 
-                </div>
+<!--                </div>-->
             </table>
         </form>
 
