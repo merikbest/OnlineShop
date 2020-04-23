@@ -8,9 +8,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Entity
-public class Perfume {
+public class Perfume implements Serializable {
+
+    private static final long serialVersionUID = 8409824142150821849L;
+
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
@@ -62,14 +66,14 @@ public class Perfume {
     private String type;
 
     @NotNull(message = "Пожалуйсто заполните поле")
-    private Integer count;
+    private Integer amount;
 
     public Perfume() {
     }
 
     public Perfume(String perfumeTitle, String perfumer, Integer year, String country, String perfumeGender,
                    String fragranceTopNotes, String fragranceMiddleNotes, String fragranceBaseNotes, String description,
-                   Integer price, String volume, String type, Integer count
+                   Integer price, String volume, String type, Integer amount
     ) {
         this.perfumeTitle = perfumeTitle;
         this.perfumer = perfumer;
@@ -83,7 +87,7 @@ public class Perfume {
         this.price = price;
         this.volume = volume;
         this.type = type;
-        this.count = count;
+        this.amount = amount;
     }
 
     public Integer getId() {
@@ -198,11 +202,11 @@ public class Perfume {
         this.type = type;
     }
 
-    public Integer getCount() {
-        return count;
+    public Integer getAmount() {
+        return amount;
     }
 
-    public void setCount(Integer count) {
-        this.count = count;
+    public void setAmount(Integer count) {
+        this.amount = count;
     }
 }

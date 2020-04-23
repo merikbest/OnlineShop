@@ -34,6 +34,9 @@ public class User implements UserDetails {
     private boolean active;
     private String activationCode;
 
+    @OneToOne(mappedBy = "cartUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Cart cart;
+
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
@@ -165,5 +168,13 @@ public class User implements UserDetails {
 
     public void setPostIndex(String postIndex) {
         this.postIndex = postIndex;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 }
