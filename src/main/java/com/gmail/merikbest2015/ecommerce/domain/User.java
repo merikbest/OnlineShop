@@ -34,7 +34,7 @@ public class User implements UserDetails {
     private boolean active;
     private String activationCode;
 
-    @OneToOne(mappedBy = "cartUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "cartUser", cascade = CascadeType.ALL)
     private Cart cart;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)

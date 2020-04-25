@@ -13,11 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
+import javax.persistence.Transient;
 import java.io.File;
 import java.io.IOException;
-import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -140,50 +139,6 @@ public class UserController {
 
         return "redirect:/cabinet";
     }
-
-    //CART
-    @PostMapping("cart")
-    public String addToCart(@AuthenticationPrincipal User user, Integer id, Integer amount) { //Principal principal
-        shoppingCartService.addToCart(user, id, amount);
-
-        return "redirect:/user";
-    }
-
-    @GetMapping("cart")
-    public String getCart(@AuthenticationPrincipal User user, Model model) {
-//        Cart cart = shoppingCartService.getCart(user);
-//        model.addAttribute("cart", cart);
-
-        List<CartItem> cartItemList = shoppingCartService.getCart(user);
-        model.addAttribute("cartList", cartItemList);
-
-        return "cart";
-    }
-
-//    @DeleteMapping("cart")
-//    public String removeFromCart(@AuthenticationPrincipal User user, Integer id) {
-//        shoppingCartService.removeFromCart(user, id);
-//
-//        return "cart";
-//    }
-
-    @PostMapping("cart/delete")
-    public String removeFromCart(@AuthenticationPrincipal User user, Integer id) {//@PathVariable("id")
-        shoppingCartService.removeFromCart(user, id);
-
-        return "redirect:/user";
-    }
-
-//    @GetMapping("/cart/{id}")
-//    public String removeFromCart(@AuthenticationPrincipal User user, @PathVariable Integer id) {
-//        shoppingCartService.removeFromCart(user, id);
-//
-//        return "redirect:/user";
-//    }
-
-
-
-
 
     private void saveFile(Perfume perfume, @RequestParam("file") MultipartFile file) throws IOException {
         if (file != null && !file.getOriginalFilename().isEmpty()) {

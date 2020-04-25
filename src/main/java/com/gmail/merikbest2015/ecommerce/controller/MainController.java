@@ -30,9 +30,10 @@ public class MainController {
     }
 
     @PostMapping("/")
-    public String getById(Integer idd, Model model) {
-        Optional<Perfume> perf = perfumeRepository.findById(idd);
-        model.addAttribute("perfume", perf);
+    public String getById(Long id, Model model) {
+        Optional<Perfume> optionalPerfume = perfumeRepository.findById(id);
+        Perfume perfume = optionalPerfume.get();
+        model.addAttribute("perfume", perfume);
 
         return "main";
     }
