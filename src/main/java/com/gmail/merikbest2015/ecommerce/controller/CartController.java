@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Optional;
 
@@ -30,13 +31,12 @@ public class CartController {
     @Autowired
     private CartItemRepository cartItemRepository;
 
-
     @PostMapping("cart")
-    public String addToCart(@AuthenticationPrincipal User user, Long id) {
+    public String addToCart(@AuthenticationPrincipal User user, Long id, @RequestParam Integer amount) {
         user = userRepository.findByUsername(user.getUsername());
-        shoppingCartService.addToCart(user, id);
+        shoppingCartService.addToCart(user, id, amount);
 
-        return "redirect:/cart";
+        return "redirect:/main";
     }
 
     @GetMapping("cart")
@@ -48,12 +48,9 @@ public class CartController {
     }
 
     @GetMapping("/delete/{id}")
-    public String removeFromCart(@AuthenticationPrincipal User user,
-                                 @PathVariable("id") Long id) {
-        Optional<CartItem> optionalItem = cartItemRepository.findById(id);
-        CartItem cartItem = optionalItem.get();
-        cartItemRepository.delete(cartItem);
+    public String removeFromCart(@AuthenticationPrincipal User user, @PathVariable("id") Long id) {
+        shoppingCartService.removeFromCart(user, id);
 
-        return "redirect:/cart";
+        return "redirect:/main";
     }
 }

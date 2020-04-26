@@ -24,23 +24,45 @@ public class ShoppingCartService {
     @Autowired
     private CartItemRepository cartItemRepository;
 
-    public void addToCart(User user, Long id) {
+    public void addToCart(User user, Long id, Integer amount) {
         Cart cart = user.getCart();
 
         if (cart == null) {
             cart = new Cart();
             cart.setCartUser(user);
+        } else if (cart.getCartItemList() != null || !cart.getCartItemList().isEmpty()) {
+            for (CartItem cartItem : cart.getCartItemList()) {
+                if (cartItem.getCartProduct().getId().equals(id)) {
+                    cartItem.setAmount(cartItem.getAmount() + amount);
+
+                    cartRepository.save(cart);
+                }
+            }
         }
 
-        cartRepository.save(cart);
-
         Optional optional = perfumeRepository.findById(id);
+        if (!optional.isPresent()) {
+            throw new IllegalArgumentException("Product not found.");
+        }
+
         Perfume perfume = (Perfume) optional.get();
 
         CartItem cartItem = new CartItem();
         cartItem.setCart(user.getCart());
         cartItem.setCartProduct(perfume);
 
+        cartItem.setCart(cart);
+        //        if (cart.getCartItemList() == null) {
+//            cart.setCartItemList(new ArrayList<>());
+//        }
+//
+//        cart.getCartItemList().add(cartItem);
         cartItemRepository.save(cartItem);
+    }
+
+    public void removeFromCart(User user, Long id) {
+        Optional<CartItem> optionalItem = cartItemRepository.findById(id);
+        CartItem cartItem = optionalItem.get();
+        cartItemRepository.delete(cartItem);
     }
 }

@@ -21,9 +21,6 @@ public class Cart implements Serializable {
     @JoinColumn(name = "user_id")
     private User cartUser;
 
-    @Column(name = "total_price")
-    private Float totalPrice;
-
     public Cart() {
     }
 
@@ -41,14 +38,6 @@ public class Cart implements Serializable {
 
     public void setCartItemList(List<CartItem> perfumeList) {
         this.cartItemList = perfumeList;
-    }
-
-    public Float getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(Float totalPrice) {
-        this.totalPrice = totalPrice;
     }
 
     public User getCartUser() {

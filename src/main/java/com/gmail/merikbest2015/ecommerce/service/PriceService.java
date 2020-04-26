@@ -16,7 +16,7 @@ public class PriceService {
             totalPrice = totalPrice + (((item.getCartProduct().getPrice() * item.getCartProduct().getAmount())));
         }
 
-        cart.setTotalPrice(roundTwoDecimals(totalPrice));
+//        cart.setTotalPrice(roundTwoDecimals(totalPrice));
 
         return cart;
     }
