@@ -1,5 +1,7 @@
 package com.gmail.merikbest2015.ecommerce.domain;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -35,15 +37,16 @@ public class User implements UserDetails {
     private boolean active;
     private String activationCode;
 
-    @OneToOne(mappedBy = "cartUser", cascade = CascadeType.ALL)
-    private Cart cart;
-
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-    @OneToMany(mappedBy="user")
+    @OneToOne(mappedBy = "cartUser", cascade = CascadeType.ALL)
+    private Cart cart;
+
+    @OneToMany(mappedBy="user", fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Order> orderList;
 
     public boolean isAdmin() {
@@ -180,5 +183,13 @@ public class User implements UserDetails {
 
     public void setCart(Cart cart) {
         this.cart = cart;
+    }
+
+    public List<Order> getOrderList() {
+        return orderList;
+    }
+
+    public void setOrderList(List<Order> orderList) {
+        this.orderList = orderList;
     }
 }

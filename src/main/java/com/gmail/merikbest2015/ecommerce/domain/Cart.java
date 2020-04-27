@@ -12,9 +12,9 @@ public class Cart implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Integer subPrice;
 
-    //(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.EAGER) //fetch = FetchType.LAZY
     private List<CartItem> cartItemList;
 
     @OneToOne
@@ -46,5 +46,13 @@ public class Cart implements Serializable {
 
     public void setCartUser(User cartUser) {
         this.cartUser = cartUser;
+    }
+
+    public Integer getSubPrice() {
+        return subPrice;
+    }
+
+    public void setSubPrice(Integer subPrice) {
+        this.subPrice = subPrice;
     }
 }

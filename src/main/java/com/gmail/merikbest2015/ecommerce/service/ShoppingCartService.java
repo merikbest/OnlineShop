@@ -65,4 +65,16 @@ public class ShoppingCartService {
         CartItem cartItem = optionalItem.get();
         cartItemRepository.delete(cartItem);
     }
+
+    public User getOrder(User user) {
+        Cart cart = user.getCart();
+        int price = 0;
+
+        for (CartItem cartItem : cart.getCartItemList()) {
+            price = price + (cartItem.getCartProduct().getPrice() * cartItem.getAmount());
+        }
+        cart.setSubPrice(price);
+
+        return user;
+    }
 }
