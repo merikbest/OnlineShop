@@ -43,7 +43,7 @@ public class CartController {
         user = userRepository.findByUsername(user.getUsername());
         shoppingCartService.addToCart(user, id, amount);
 
-        return "redirect:/main";
+        return "main";
     }
 
     @GetMapping("cart")
@@ -58,7 +58,7 @@ public class CartController {
     public String removeFromCart(@AuthenticationPrincipal User user, @PathVariable("id") Long id) {
         shoppingCartService.removeFromCart(user, id);
 
-        return "redirect:/main";
+        return "main";
     }
 
     @GetMapping("order")

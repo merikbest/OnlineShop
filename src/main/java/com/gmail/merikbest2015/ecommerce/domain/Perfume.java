@@ -64,15 +64,12 @@ public class Perfume implements Serializable {
     @Length(max = 255)
     private String type;
 
-    @NotNull(message = "Пожалуйсто заполните поле")
-    private Integer amount;
-
     public Perfume() {
     }
 
     public Perfume(String perfumeTitle, String perfumer, Integer year, String country, String perfumeGender,
                    String fragranceTopNotes, String fragranceMiddleNotes, String fragranceBaseNotes, String description,
-                   Integer price, String volume, String type, Integer amount
+                   Integer price, String volume, String type
     ) {
         this.perfumeTitle = perfumeTitle;
         this.perfumer = perfumer;
@@ -86,7 +83,7 @@ public class Perfume implements Serializable {
         this.price = price;
         this.volume = volume;
         this.type = type;
-        this.amount = amount;
+
     }
 
     public Long getId() {
@@ -199,13 +196,5 @@ public class Perfume implements Serializable {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public Integer getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Integer count) {
-        this.amount = count;
     }
 }

@@ -12,9 +12,9 @@
 
         <div th:each="item : ${cart.getCartItemList()}">
 
-            <div>
+<!--            <div>
                 <img th:src="@{/img/{path} (path = ${item.getCartProduct().getFilename()})}" class="rounded mx-auto w-100">
-            </div>
+            </div>-->
 
                 <p th:text="${item.getCartProduct().getPerfumer()}"></p>
                 <p th:text="${item.getCartProduct().getPerfumeTitle()}"></p>

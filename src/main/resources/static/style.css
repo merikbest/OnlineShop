@@ -1,13 +1,33 @@
-/*@import url('https://fonts.googleapis.com/css?family=Quicksand:400,500,700');*/
-/*html,*/
-/*body {*/
-/*    margin: 0;*/
-/*    padding: 0;*/
-/*    box-sizing: border-box;*/
-/*    font-family: "Quicksand", sans-serif;*/
-/*    font-size: 62.5%;*/
-/*    font-size: 10px;*/
-/*}*/
+/*html,
+body {
+    height: 100%;
+}
+
+#container {
+    flex: 1 0 auto;
+}
+
+#sticky-footer {
+    flex-shrink: 0;
+}
+
+.bg-black {
+    background-color: black;
+}
+
+.col-md-7 p {
+    color: #555;
+}
+
+.col-md-7 input {
+    height: 33px;
+    text-align: center;
+    width: 40px;
+}*/
+
+
+
+/*========================================================================================================================*/
 
 body {
     height: 100%;
@@ -18,7 +38,7 @@ html {
     min-height:100%;
 }
 #container {
-    padding-bottom: 300px;/*Примерно 2 размера footer, чтобы он не наезжал на контент при узком окне браузера*/
+    padding-bottom: 600px;/*Примерно 2 размера footer, чтобы он не наезжал на контент при узком окне браузера*/
 }
 footer {
     position: absolute;
@@ -40,6 +60,8 @@ footer {
     width: 40px;
 }
 
+
+/*========================================================================================================================*/
 /*!* Navbar section *!*/
 
 /*.nav {*/

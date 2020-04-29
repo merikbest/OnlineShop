@@ -46,14 +46,11 @@
 <!--        </div>-->
 <!--    </nav>-->
 
+<!--https://i.pinimg.com/564x/69/89/02/698902983d6202fb3cf9efa1ad304b9b.jpg-->
 
-
-    <div class="container-fluid bg-black header-top d-none d-md-block">
-        <div class="container">
-            <div class="row text-light pt-4 pb-4">
-                <div class="col-md-5"><i class="fa fa-envelope-o" aria-hidden="true"></i>Perfume webstore</div>
-            </div>
-        </div>
+    <div class="container-fluid bg-black header-top d-none d-md-block pb-3 pt-2">
+            <img id="logo-main" src="https://i.pinimg.com/564x/69/89/02/698902983d6202fb3cf9efa1ad304b9b.jpg"
+                 class="rounded mx-auto d-block ">
     </div>
 
     <div class="container-fluid bg-black">
@@ -65,28 +62,29 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto ">
                     <li class="nav-item">
-                        <a class="nav-link text-light" href="/">Главная</a>
+                        <a class="nav-link text-light pl-5 pr-5" href="/">Главная</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" href="/user/profile">Парфюмерия</a>
+                        <a class="nav-link text-light pl-5 pr-5" href="/menu">Парфюмерия</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" href="/contacts">Контакты</a>
+                        <a class="nav-link text-light pl-5 pr-5" href="/contacts">Контакты</a>
                     </li>
                 </ul>
 
                 <ul class="navbar-nav ml-auto">
+
                     <form class="form-inline d-flex justify-content-center md-form form-sm">
-                        <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Поиск"
+                        <input class="form-control form-control-sm mr-3 w-75 rounded-0" type="text" placeholder="Поиск"
                                aria-label="Search">
                         <i class="fas fa-search fa-1x" aria-hidden="true"></i>
                     </form>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/cart"><i class="fas fa-shopping-cart fa-1" style="color:white"></i></a>
+                        <a class="nav-link" href="/cart"><i class="fas fa-shopping-cart fa-1 pl-2 pr-2" style="color:white"></i></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" href="/cabinet">Личный кабинет</a>
+                        <a class="nav-link text-light pl-5 pr-5" href="/cabinet">Личный кабинет</a>
                     </li>
                 </ul>
 
@@ -101,7 +99,7 @@
 
 
 <!--Footer-->
-<footer th:fragment="footer" xmlns:th="http://www.thymeleaf.org" class="page-footer p-5 bg-dark text-white">
+<footer th:fragment="footer" xmlns:th="http://www.thymeleaf.org" class="page-footer p-5 bg-black text-white">
     <div class="container">
         <div class="d-flex justify-content-between">
             <div class="footer-left">

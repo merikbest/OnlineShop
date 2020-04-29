@@ -61,7 +61,7 @@ public class UserController {
         perfumeRepository.saveProductInfoById(perfume.getPerfumeTitle(), perfume.getPerfumer(), perfume.getYear(),
                 perfume.getCountry(), perfume.getPerfumeGender(), perfume.getFragranceTopNotes(), perfume.getFragranceMiddleNotes(),
                 perfume.getFragranceBaseNotes(), perfume.getDescription(), perfume.getFilename(), perfume.getPrice(),
-                perfume.getVolume(), perfume.getType(), perfume.getAmount(), perfume.getId());
+                perfume.getVolume(), perfume.getType(), perfume.getId());
 
         return "redirect:/user/productlist";
     }

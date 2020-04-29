@@ -13,7 +13,7 @@ public class PriceService {
         Float totalPrice = 0F;
 
         for (CartItem item : cart.getCartItemList()) {
-            totalPrice = totalPrice + (((item.getCartProduct().getPrice() * item.getCartProduct().getAmount())));
+            totalPrice = totalPrice + (((item.getCartProduct().getPrice() * item.getAmount())));
         }
 
 //        cart.setTotalPrice(roundTwoDecimals(totalPrice));

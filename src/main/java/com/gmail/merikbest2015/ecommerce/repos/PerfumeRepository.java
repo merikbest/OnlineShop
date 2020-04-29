@@ -15,8 +15,8 @@ public interface PerfumeRepository extends CrudRepository<Perfume, Long> {
     @Transactional
     @Query("update Perfume p set p.perfumeTitle = ?1, p.perfumer = ?2, p.year = ?3, p.country = ?4, " +
             "p.perfumeGender = ?5, p.fragranceTopNotes = ?6, p.fragranceMiddleNotes = ?7, p.fragranceBaseNotes = ?8," +
-            "p.description = ?9, p.filename = ?10, p.price = ?11, p.volume = ?12, p.type = ?13, p.amount = ?14  where p.id = ?15")
+            "p.description = ?9, p.filename = ?10, p.price = ?11, p.volume = ?12, p.type = ?13  where p.id = ?14")
     void saveProductInfoById(String perfumeTitle, String perfumer, Integer year, String country, String perfumeGender,
                              String fragranceTopNotes, String fragranceMiddleNotes, String fragranceBaseNotes, String description,
-                             String filename, Integer price, String volume, String type, Integer amount, Long id);
+                             String filename, Integer price, String volume, String type, Long id);
 }

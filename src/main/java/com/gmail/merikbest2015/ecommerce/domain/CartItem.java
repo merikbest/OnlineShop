@@ -22,6 +22,9 @@ public class CartItem implements Serializable {
     @Column(name = "amount")
     private Integer amount;
 
+    public CartItem() {
+    }
+
     public Long getId() {
         return id;
     }
