@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -23,8 +24,11 @@ public class MainController {
 
     @GetMapping("/")
     public String main(Map<String, Object> model) {
-        Iterable<Perfume> perfumes = perfumeRepository.findAll();
-        model.put("perfumes", perfumes);
+        Iterable<Perfume> iterable = perfumeRepository.findAll();
+//        List<Perfume> perfumes = new ArrayList<>();
+//        iterable.forEach(perfumes::add);
+
+        model.put("perfumes", iterable);
 
         return "main";
     }

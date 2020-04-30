@@ -74,196 +74,41 @@
 
     <div class="container mt-5" >
         <form method="get" action="/" >
-            <div id="carouselExampleControls1" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="row">
-                            <div class="col-lg-3" >
-                                <div class="card" th:if="${perfumes[0].getFilename()}">
-                                    <img th:src="@{/img/{path} (path = ${perfumes[0].getFilename()})}" class="rounded mx-auto w-50">
-                                    <div class="card-body text-center">
-                                        <h5 th:text="${perfumes[0].getPerfumeTitle()}"></h5>
-                                        <h6 th:text="${perfumes[0].getPerfumer()}"></h6>
-                                        <h6><span th:text="${perfumes[0].getPrice()}"></span>,00 грн.</h6>
-                                        <a th:href="@{/product/{path} (path = ${perfumes[0].getId()})}" class="btn btn-dark">Купить</a>
-                                    </div>
-                                </div>
-                            </div>
+            <div class="row" th:fragment="list">
 
-                            <div class="col-lg-3" >
-                                <div class="card" th:if="${perfumes[0].getFilename()}">
-                                    <img th:src="@{/img/{path} (path = ${perfumes[0].getFilename()})}" class="rounded mx-auto w-50">
-                                    <div class="card-body text-center">
-                                        <h5 th:text="${perfumes[0].getPerfumeTitle()}"></h5>
-                                        <h6 th:text="${perfumes[0].getPerfumer()}"></h6>
-                                        <h6><span th:text="${perfumes[0].getPrice()}"></span>,00 грн.</h6>
-                                        <a th:href="@{/product/{path} (path = ${perfumes[0].getId()})}" class="btn btn-dark">Купить</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3" >
-                                <div class="card" th:if="${perfumes[0].getFilename()}">
-                                    <img th:src="@{/img/{path} (path = ${perfumes[0].getFilename()})}" class="rounded mx-auto w-50">
-                                    <div class="card-body text-center">
-                                        <h5 th:text="${perfumes[0].getPerfumeTitle()}"></h5>
-                                        <h6 th:text="${perfumes[0].getPerfumer()}"></h6>
-                                        <h6><span th:text="${perfumes[0].getPrice()}"></span>,00 грн.</h6>
-                                        <a th:href="@{/product/{path} (path = ${perfumes[0].getId()})}" class="btn btn-dark">Купить</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3" >
-                                <div class="card" th:if="${perfumes[0].getFilename()}">
-                                    <img th:src="@{/img/{path} (path = ${perfumes[0].getFilename()})}" class="rounded mx-auto w-50">
-                                    <div class="card-body text-center">
-                                        <h5 th:text="${perfumes[0].getPerfumeTitle()}"></h5>
-                                        <h6 th:text="${perfumes[0].getPerfumer()}"></h6>
-                                        <h6><span th:text="${perfumes[0].getPrice()}"></span>,00 грн.</h6>
-                                        <a th:href="@{/product/{path} (path = ${perfumes[0].getId()})}" class="btn btn-dark">Купить</a>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="col-lg-3" th:each="perfume : ${perfumes}">
+                    <div class="card" th:if="${perfume.getFilename()}">
+                        <img th:src="@{/img/{path} (path = ${perfume.getFilename()})}" class="rounded mx-auto w-50">
+                        <div class="card-body text-center">
+                            <h5 th:text="${perfume.getPerfumeTitle()}"></h5>
+                            <h6 th:text="${perfume.getPerfumer()}"></h6>
+                            <h6><span th:text="${perfume.getPrice()}"></span>,00 грн.</h6>
+                            <a th:href="@{/product/{path} (path = ${perfume.getId()})}" class="btn btn-dark">Купить</a>
                         </div>
                     </div>
                 </div>
+
+<!--                <div class="col-lg-3">-->
+<!--                    <section class="panel" th:if="${perfume.getFilename()}">-->
+<!--                        <div class="pro-img-box" >-->
+<!--                            <img th:src="@{/img/{path} (path = ${perfume.getFilename()})}" class="rounded mx-auto w-50">-->
+<!--                        </div>-->
+<!--                        <div class="panel-body text-center">-->
+<!--                            <h5 th:text="${perfume.getPerfumeTitle()}"></h5>-->
+<!--                            <h6 th:text="${perfume.getPerfumer()}"></h6>-->
+<!--                            <h6><span th:text="${perfume.getPrice()}"></span>,00 грн.</h6>-->
+<!--                            <a th:href="@{/product/{path} (path = ${perfume.getId()})}" class="btn btn-dark">Купить</a>-->
+<!--                        </div>-->
+<!--                    </section>-->
+<!--                </div>-->
+
+
+
+
+
             </div>
         </form>
     </div>
-
-
-
-
-
-
-
-
-    <!--<div class="container mt-5" >
-        <form method="get" action="/" >
-            <div id="carouselExampleControls1" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="row">
-                            &lt;!&ndash;th:each="perfume : ${perfumes}"&ndash;&gt;
-                            <div class="col-lg-3" >
-                                <div class="card" th:if="${perfumes[2].getFilename()}">
-                                    <img th:src="@{/img/{path} (path = ${perfumes[2].getFilename()})}" class="rounded mx-auto w-50">
-                                    <div class="card-body text-center">
-                                        <h5 th:text="${perfumes[2].getPerfumeTitle()}"></h5>
-                                        <h6 th:text="${perfumes[2].getPerfumer()}"></h6>
-                                        <h6><span th:text="${perfumes[2].getPrice()}"></span>,00 грн.</h6>
-                                        <a th:href="@{/product/{path} (path = ${perfumes[2].getId()})}" class="btn btn-dark">Купить</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3">
-                                <div class="card" th:if="${perfumes[4].getFilename()}">
-                                    <img th:src="@{/img/{path} (path = ${perfumes[4].getFilename()})}" class="rounded mx-auto w-50">
-                                    <div class="card-body text-center">
-                                        <h5 th:text="${perfumes[4].getPerfumeTitle()}"></h5>
-                                        <h6 th:text="${perfumes[4].getPerfumer()}"></h6>
-                                        <h6><span th:text="${perfumes[4].getPrice()}"></span>,00 грн.</h6>
-                                        <a th:href="@{/product/{path} (path = ${perfumes[4].getId()})}" class="btn btn-dark">Купить</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3">
-                                <div class="card" th:if="${perfumes[10].getFilename()}">
-                                    <img th:src="@{/img/{path} (path = ${perfumes[10].getFilename()})}" class="rounded mx-auto w-50">
-                                    <div class="card-body text-center">
-                                        <h5 th:text="${perfumes[10].getPerfumeTitle()}"></h5>
-                                        <h6 th:text="${perfumes[10].getPerfumer()}"></h6>
-                                        <h6><span th:text="${perfumes[10].getPrice()}"></span>,00 грн.</h6>
-                                        <a th:href="@{/product/{path} (path = ${perfumes[10].getId()})}" class="btn btn-dark">Купить</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3">
-                                <div class="card" th:if="${perfumes[9].getFilename()}">
-                                    <img th:src="@{/img/{path} (path = ${perfumes[9].getFilename()})}" class="rounded mx-auto w-50">
-                                    <div class="card-body text-center">
-                                        <h5 th:text="${perfumes[9].getPerfumeTitle()}"></h5>
-                                        <h6 th:text="${perfumes[9].getPerfumer()}"></h6>
-                                        <h6><span th:text="${perfumes[9].getPrice()}"></span>,00 грн.</h6>
-                                        <a th:href="@{/product/{path} (path = ${perfumes[9].getId()})}" class="btn btn-dark">Купить</a>
-                                    </div>
-                                </div>
-                            </div>
-                            &lt;!&ndash;                <div class="col-lg-3" th:if="${perfume.getId() == 31}">&ndash;&gt;
-                            &lt;!&ndash;                    <div class="card" th:if="${perfume.getFilename()}">&ndash;&gt;
-                            &lt;!&ndash;                        <img th:src="@{/img/{path} (path = ${perfume.getFilename()})}" class="rounded mx-auto w-50">&ndash;&gt;
-                            &lt;!&ndash;                        <div class="card-body text-center">&ndash;&gt;
-                            &lt;!&ndash;                            <h5 th:text="${perfume.getPerfumeTitle()}"></h5>&ndash;&gt;
-                            &lt;!&ndash;                            <h6 th:text="${perfume.getPerfumer()}"></h6>&ndash;&gt;
-                            &lt;!&ndash;                            <h6><span th:text="${perfume.getPrice()}"></span>,00 грн.</h6>&ndash;&gt;
-                            &lt;!&ndash;                            <a th:href="@{/product/{path} (path = ${perfume.getId()})}" class="btn btn-dark">Купить</a>&ndash;&gt;
-                            &lt;!&ndash;                        </div>&ndash;&gt;
-                            &lt;!&ndash;                    </div>&ndash;&gt;
-                            &lt;!&ndash;                </div>&ndash;&gt;
-                        </div>
-                    </div>
-
-                    <div class="carousel-item">
-                        <div class="row">
-                            &lt;!&ndash;th:each="perfume : ${perfumes}"&ndash;&gt;
-                            <div class="col-lg-3" >
-                                <div class="card" th:if="${perfumes[5].getFilename()}">
-                                    <img th:src="@{/img/{path} (path = ${perfumes[5].getFilename()})}" class="rounded mx-auto w-50">
-                                    <div class="card-body text-center">
-                                        <h5 th:text="${perfumes[5].getPerfumeTitle()}"></h5>
-                                        <h6 th:text="${perfumes[5].getPerfumer()}"></h6>
-                                        <h6><span th:text="${perfumes[5].getPrice()}"></span>,00 грн.</h6>
-                                        <a th:href="@{/product/{path} (path = ${perfumes[5].getId()})}" class="btn btn-dark">Купить</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3">
-                                <div class="card" th:if="${perfumes[4].getFilename()}">
-                                    <img th:src="@{/img/{path} (path = ${perfumes[4].getFilename()})}" class="rounded mx-auto w-50">
-                                    <div class="card-body text-center">
-                                        <h5 th:text="${perfumes[4].getPerfumeTitle()}"></h5>
-                                        <h6 th:text="${perfumes[4].getPerfumer()}"></h6>
-                                        <h6><span th:text="${perfumes[4].getPrice()}"></span>,00 грн.</h6>
-                                        <a th:href="@{/product/{path} (path = ${perfumes[4].getId()})}" class="btn btn-dark">Купить</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3">
-                                <div class="card" th:if="${perfumes[10].getFilename()}">
-                                    <img th:src="@{/img/{path} (path = ${perfumes[10].getFilename()})}" class="rounded mx-auto w-50">
-                                    <div class="card-body text-center">
-                                        <h5 th:text="${perfumes[10].getPerfumeTitle()}"></h5>
-                                        <h6 th:text="${perfumes[10].getPerfumer()}"></h6>
-                                        <h6><span th:text="${perfumes[10].getPrice()}"></span>,00 грн.</h6>
-                                        <a th:href="@{/product/{path} (path = ${perfumes[10].getId()})}" class="btn btn-dark">Купить</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3">
-                                <div class="card" th:if="${perfumes[9].getFilename()}">
-                                    <img th:src="@{/img/{path} (path = ${perfumes[9].getFilename()})}" class="rounded mx-auto w-50">
-                                    <div class="card-body text-center">
-                                        <h5 th:text="${perfumes[9].getPerfumeTitle()}"></h5>
-                                        <h6 th:text="${perfumes[9].getPerfumer()}"></h6>
-                                        <h6><span th:text="${perfumes[9].getPrice()}"></span>,00 грн.</h6>
-                                        <a th:href="@{/product/{path} (path = ${perfumes[9].getId()})}" class="btn btn-dark">Купить</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </form>
-    </div>-->
 
 </div>
 

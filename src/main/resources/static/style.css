@@ -62,61 +62,72 @@ footer {
 
 
 /*========================================================================================================================*/
-/*!* Navbar section *!*/
 
-/*.nav {*/
-/*    width: 100%;*/
-/*    height: 65px;*/
-/*    position: fixed;*/
-/*    line-height: 65px;*/
-/*    text-align: center;*/
-/*}*/
+/* SIDEBAR */
 
-/*.nav div.logo {*/
-/*    float: left;*/
-/*    width: auto;*/
-/*    height: auto;*/
-/*    padding-left: 3rem;*/
-/*}*/
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    transition: all 0.3s;
+}
 
-/*.nav div.logo a {*/
-/*    text-decoration: none;*/
-/*    color: #fff;*/
-/*    font-size: 2.5rem;*/
-/*}*/
+#homeSubmenu2 {
+    overflow-y: scroll !important;
+    max-height: 250px !important;
+}
 
-/*.nav div.logo a:hover {*/
-/*    color: #00E676;*/
-/*}*/
 
-/*.nav div.main_list {*/
-/*    height: 65px;*/
-/*    float: right;*/
-/*}*/
+#sidebar .sidebar-header {
+    padding: 20px;
+}
 
-/*.nav div.main_list ul {*/
-/*    width: 100%;*/
-/*    height: 65px;*/
-/*    display: flex;*/
-/*    list-style: none;*/
-/*    margin: 0;*/
-/*    padding: 0;*/
-/*}*/
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid;
+}
 
-/*.nav div.main_list ul li {*/
-/*    width: auto;*/
-/*    height: 65px;*/
-/*    padding: 0;*/
-/*    padding-right: 3rem;*/
-/*}*/
+#sidebar ul p{
+    list-style-type: none;
+    padding: 10px;
+}
 
-/*.nav div.main_list ul li a {*/
-/*    text-decoration: none;*/
-/*    color: #fff;*/
-/*    line-height: 65px;*/
-/*    font-size: 2.4rem;*/
-/*}*/
+#sidebar ul li a{
+    text-decoration: none;
+    color: black;
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
 
-/*.nav div.main_list ul li a:hover {*/
-/*    color: #00E676;*/
-/*}*/
+#sidebar ul li a:hover{
+    color: #7386D5;
+    background-color: #fff;
+}
+
+#sidebar ul li.active>a,
+a[aria-expanded="true"] {
+    /*color: #fff;*/
+    /*background-color: #6d7fcc;*/
+}
+
+a[data-toggle="collapse"]{
+    position: relative;
+}
+
+.dropdown-toggle::after{
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20%;
+    transform: translateY(-50%);
+}
+
+ul ul a{
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    /*background: #6d7fcc;*/
+}
+
+#container {
+
+}
