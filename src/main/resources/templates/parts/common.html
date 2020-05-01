@@ -25,37 +25,13 @@
 <!--Navbar-->
 <div th:fragment="navbar" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
-<!--    <nav class="nav">-->
-<!--        <div class="container">-->
-<!--            <div class="logo">-->
-<!--                <a href="#">Your Logo</a>-->
-<!--            </div>-->
-<!--            <div id="mainListDiv" class="main_list">-->
-<!--                <ul class="navlinks">-->
-<!--                    <li><a href="#">About</a></li>-->
-<!--                    <li><a href="#">Portfolio</a></li>-->
-<!--                    <li><a href="#">Services</a></li>-->
-<!--                    <li><a href="#">Contact</a></li>-->
-<!--                </ul>-->
-<!--            </div>-->
-<!--            <span class="navTrigger">-->
-<!--                <i></i>-->
-<!--                <i></i>-->
-<!--                <i></i>-->
-<!--            </span>-->
-<!--        </div>-->
-<!--    </nav>-->
-
-<!--https://i.pinimg.com/564x/69/89/02/698902983d6202fb3cf9efa1ad304b9b.jpg-->
-
-    <div class="container-fluid bg-black header-top d-none d-md-block pb-3 pt-2">
-            <img id="logo-main" src="https://i.pinimg.com/564x/69/89/02/698902983d6202fb3cf9efa1ad304b9b.jpg"
+    <div class="container-fluid bg-black header-top d-none d-md-block pb-5 pt-5">
+            <img id="logo-main" src="https://i.ibb.co/fqYvrL8/LOGO4.jpg"
                  class="rounded mx-auto d-block ">
     </div>
 
     <div class="container-fluid bg-black">
-        <nav class="container navbar navbar-expand-lg navbar-dark bg-black text-white">
-<!--            <a class="navbar-brand" href="#">Perfume</a>-->
+        <nav class="container navbar navbar-expand-lg bg-black text-white" style="font-size: 18px" >
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -92,11 +68,25 @@
                     <input type="submit" value="Выход"/>
                 </form>
             </div>
-
-    </nav>
+        </nav>
     </div>
 </div>
 
+<!--User sidebar-->
+<div th:fragment="sidebar" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <nav id="sidebar">
+        <div class="sidebar-header"><h3>Привет <span sec:authentication="name"></span>!</h3></div>
+        <ul class="list-unstyled components">
+            <li><a href="/user/edit">Изменить пароль</a></li>
+            <div sec:authorize="hasAuthority('ADMIN')">
+                <li><a href="/user">Список пользоваетлей</a></li>
+                <li><a href="/user/add">Добавить товар</a></li>
+                <li><a href="/user/productlist">Список товаров</a></li>
+                <li><a href="#">Список заказов</a></li>
+            </div>
+        </ul>
+    </nav>
+</div>
 
 <!--Footer-->
 <footer th:fragment="footer" xmlns:th="http://www.thymeleaf.org" class="page-footer p-5 bg-black text-white">

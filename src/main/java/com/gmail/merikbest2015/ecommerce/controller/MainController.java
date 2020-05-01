@@ -25,14 +25,13 @@ public class MainController {
     @GetMapping("/")
     public String main(Map<String, Object> model) {
         Iterable<Perfume> iterable = perfumeRepository.findAll();
-//        List<Perfume> perfumes = new ArrayList<>();
-//        iterable.forEach(perfumes::add);
 
         model.put("perfumes", iterable);
 
         return "main";
     }
 
+    ///??????????
     @PostMapping("/")
     public String getById(Long id, Model model) {
         Optional<Perfume> optionalPerfume = perfumeRepository.findById(id);

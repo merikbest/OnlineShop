@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface PerfumeRepository extends CrudRepository<Perfume, Long> {
     List<Perfume> findByPerfumer(String perfumer);
+    List<Perfume> findByPerfumeGender(String perfumeGender);
 
     @Modifying
     @Transactional

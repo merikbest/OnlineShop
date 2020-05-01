@@ -8,35 +8,11 @@
 <div th:insert="~{parts/common :: scripts}"></div>
 <div th:replace="parts/common :: navbar"></div>
 
-<div class="container mt-5">
+<div class="container">
+    <div class="d-flex">
+<!--        <div th:replace="~{parts/common :: sidebar}"></div>-->
 
-
-
-    <!--    <span sec:authentication="name"></span>-->
-    <p>Привет !</p>
-
-    <form action="/user/edit" method="get">
-        <input type="submit" value="Изменить пароль"/>
-    </form>
-
-    <div sec:authorize="hasAuthority('ADMIN')">
-        <form action="/user" method="get">
-            <input type="submit" value="Список пользоваетлей"/>
-        </form>
-
-        <form action="/user/add" method="get">
-            <input type="submit" value="Добавить товар"/>
-        </form>
-
-        <form action="/user/productlist" method="get">
-            <input type="submit" value="Список товаров"/>
-        </form>
     </div>
-
-
-
-
-
 </div>
 
 <footer th:insert="~{parts/common :: footer}"></footer>
