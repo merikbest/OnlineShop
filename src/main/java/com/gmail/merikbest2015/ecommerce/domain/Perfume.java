@@ -8,12 +8,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
-public class Perfume implements Serializable {
-    private static final long serialVersionUID = -500428554121640512L;
-
+public class Perfume {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
@@ -196,5 +194,31 @@ public class Perfume implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Perfume perfume = (Perfume) o;
+        return Objects.equals(id, perfume.id) &&
+                Objects.equals(perfumeTitle, perfume.perfumeTitle) &&
+                Objects.equals(perfumer, perfume.perfumer) &&
+                Objects.equals(year, perfume.year) &&
+                Objects.equals(country, perfume.country) &&
+                Objects.equals(perfumeGender, perfume.perfumeGender) &&
+                Objects.equals(fragranceTopNotes, perfume.fragranceTopNotes) &&
+                Objects.equals(fragranceMiddleNotes, perfume.fragranceMiddleNotes) &&
+                Objects.equals(fragranceBaseNotes, perfume.fragranceBaseNotes) &&
+                Objects.equals(description, perfume.description) &&
+                Objects.equals(filename, perfume.filename) &&
+                Objects.equals(price, perfume.price) &&
+                Objects.equals(volume, perfume.volume) &&
+                Objects.equals(type, perfume.type);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, perfumeTitle, perfumer, year, country, perfumeGender, fragranceTopNotes, fragranceMiddleNotes, fragranceBaseNotes, description, filename, price, volume, type);
     }
 }

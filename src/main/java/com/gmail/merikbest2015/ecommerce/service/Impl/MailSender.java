@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.ecommerce.service;
+package com.gmail.merikbest2015.ecommerce.service.Impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

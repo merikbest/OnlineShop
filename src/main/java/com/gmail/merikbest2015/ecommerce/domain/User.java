@@ -1,7 +1,5 @@
 package com.gmail.merikbest2015.ecommerce.domain;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -10,6 +8,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -42,12 +41,8 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-    @OneToOne(mappedBy = "cartUser", cascade = CascadeType.ALL)
-    private Cart cart;
-
-    @OneToMany(mappedBy="user", fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
-    private List<Order> orderList;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Perfume> perfumeList;
 
     public boolean isAdmin() {
         return roles.contains(Role.ADMIN);
@@ -177,19 +172,36 @@ public class User implements UserDetails {
         this.postIndex = postIndex;
     }
 
-    public Cart getCart() {
-        return cart;
+    public List<Perfume> getPerfumeList() {
+        return perfumeList;
     }
 
-    public void setCart(Cart cart) {
-        this.cart = cart;
+    public void setPerfumeList(List<Perfume> perfumeList) {
+        this.perfumeList = perfumeList;
     }
 
-    public List<Order> getOrderList() {
-        return orderList;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return active == user.active &&
+                Objects.equals(id, user.id) &&
+                Objects.equals(username, user.username) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(phoneNumber, user.phoneNumber) &&
+                Objects.equals(address, user.address) &&
+                Objects.equals(city, user.city) &&
+                Objects.equals(country, user.country) &&
+                Objects.equals(postIndex, user.postIndex) &&
+                Objects.equals(activationCode, user.activationCode) &&
+                Objects.equals(roles, user.roles) &&
+                Objects.equals(perfumeList, user.perfumeList);
     }
 
-    public void setOrderList(List<Order> orderList) {
-        this.orderList = orderList;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, password, email, phoneNumber, address, city, country, postIndex, active, activationCode, roles, perfumeList);
     }
 }

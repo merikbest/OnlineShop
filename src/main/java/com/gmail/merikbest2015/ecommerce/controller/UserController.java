@@ -1,8 +1,9 @@
 package com.gmail.merikbest2015.ecommerce.controller;
 
-import com.gmail.merikbest2015.ecommerce.domain.*;
-import com.gmail.merikbest2015.ecommerce.repos.PerfumeRepository;
-import com.gmail.merikbest2015.ecommerce.service.ShoppingCartService;
+import com.gmail.merikbest2015.ecommerce.domain.Perfume;
+import com.gmail.merikbest2015.ecommerce.domain.Role;
+import com.gmail.merikbest2015.ecommerce.domain.User;
+import com.gmail.merikbest2015.ecommerce.service.PerfumeService;
 import com.gmail.merikbest2015.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,10 +15,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.Transient;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -28,10 +27,7 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private PerfumeRepository perfumeRepository;
-
-    @Autowired
-    private ShoppingCartService shoppingCartService;
+    private PerfumeService perfumeService;
 
     @Value("${upload.path}")
     private String uploadPath;
@@ -39,7 +35,7 @@ public class UserController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("productlist")
     public String getAllProducts(Model model) {
-        Iterable<Perfume> perfumes = perfumeRepository.findAll();
+        Iterable<Perfume> perfumes = perfumeService.findAll();
         model.addAttribute("perfumes" , perfumes);
 
         return "admin/productList";
@@ -58,7 +54,7 @@ public class UserController {
     public String saveEditedProduct(Perfume perfume, @RequestParam("file") MultipartFile file) throws IOException {
         saveFile(perfume, file);
 
-        perfumeRepository.saveProductInfoById(perfume.getPerfumeTitle(), perfume.getPerfumer(), perfume.getYear(),
+        perfumeService.saveProductInfoById(perfume.getPerfumeTitle(), perfume.getPerfumer(), perfume.getYear(),
                 perfume.getCountry(), perfume.getPerfumeGender(), perfume.getFragranceTopNotes(), perfume.getFragranceMiddleNotes(),
                 perfume.getFragranceBaseNotes(), perfume.getDescription(), perfume.getFilename(), perfume.getPrice(),
                 perfume.getVolume(), perfume.getType(), perfume.getId());
@@ -86,7 +82,7 @@ public class UserController {
         } else {
             saveFile(perfume, file);
 
-            perfumeRepository.save(perfume);
+            perfumeService.save(perfume);
         }
 
         return "admin/addToDb";

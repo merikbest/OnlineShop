@@ -1,97 +1,101 @@
 package com.gmail.merikbest2015.ecommerce.controller;
 
-import com.gmail.merikbest2015.ecommerce.domain.Cart;
-import com.gmail.merikbest2015.ecommerce.domain.CartItem;
 import com.gmail.merikbest2015.ecommerce.domain.Order;
+import com.gmail.merikbest2015.ecommerce.domain.Perfume;
 import com.gmail.merikbest2015.ecommerce.domain.User;
-import com.gmail.merikbest2015.ecommerce.repos.CartItemRepository;
-import com.gmail.merikbest2015.ecommerce.repos.CartRepository;
-import com.gmail.merikbest2015.ecommerce.repos.OrderRepository;
+import com.gmail.merikbest2015.ecommerce.repos.PerfumeRepository;
 import com.gmail.merikbest2015.ecommerce.repos.UserRepository;
-import com.gmail.merikbest2015.ecommerce.service.ShoppingCartService;
+import com.gmail.merikbest2015.ecommerce.service.OrderService;
+import com.gmail.merikbest2015.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Calendar;
 import java.util.Optional;
 
 @Controller
 public class CartController {
     @Autowired
+    private UserService userService;
+
+    @Autowired
+    private OrderService orderService;
+
+    @Autowired
+    private PerfumeRepository perfumeRepository;
+
+    @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private ShoppingCartService shoppingCartService;
-
-    @Autowired
-    private CartRepository cartRepository;
-
-    @Autowired
-    private CartItemRepository cartItemRepository;
-
-    @Autowired
-    private OrderRepository orderRepository;
-
-    @PostMapping("cart")
-    public String addToCart(@AuthenticationPrincipal User user, Long id, @RequestParam Integer amount) {
-        user = userRepository.findByUsername(user.getUsername());
-        shoppingCartService.addToCart(user, id, amount);
-
-        return "main";
-    }
-
-    @GetMapping("cart")
-    public String getCart(@AuthenticationPrincipal User user, Model model) {
-        user = userRepository.findByUsername(user.getUsername());
-        model.addAttribute("cart", user.getCart());
+    @GetMapping("/cart")
+    public String cart(@AuthenticationPrincipal User userSession, Model model) {
+        User userFromDB = userService.findByUsername(userSession.getUsername());
+        model.addAttribute("perfumes", userFromDB.getPerfumeList());
 
         return "cart";
     }
 
-    @GetMapping("/delete/{id}")
-    public String removeFromCart(@AuthenticationPrincipal User user, @PathVariable("id") Long id) {
-        shoppingCartService.removeFromCart(user, id);
+    @PostMapping("/addToCart")
+    public String addToCart(
+            @RequestParam("buttonAddToCart") Perfume perfume,
+            @AuthenticationPrincipal User userSession
+    ) {
+        User user = userService.findByUsername(userSession.getUsername());
+        user.getPerfumeList().add(perfume);
+        userService.save(user);
 
-        return "main";
+        return "redirect:/cart";
     }
 
-    @GetMapping("order")
-    public String getOrder(@AuthenticationPrincipal User user, Model model) {
-        User userOrder = shoppingCartService.getOrder(user);
-        model.addAttribute("user", userOrder);
+    @PostMapping("/removeFromCart")
+    public String removeFromCart(
+            @RequestParam(value = "perfumeId") Perfume perfume,
+            @AuthenticationPrincipal User userSession
+    ) {
+        User user = userService.findByUsername(userSession.getUsername());
 
-        return "order";
+        if (perfume != null) {
+            user.getPerfumeList().remove(perfume);
+        }
+
+        userService.save(user);
+
+        return "redirect:/cart";
+//        return "cart";
     }
 
-    @PostMapping("order")
-    public String createOrder(@AuthenticationPrincipal User user,
-                              @RequestParam String address,
-                              @RequestParam String name) {
-        Order order = new Order();
-        order.setUser(user);
-        order.setAddress(address);
-        order.setName(name);
-        order.setDate(Calendar.getInstance().getTime());
-        order.setTotalPrice(user.getCart().getSubPrice());
-        orderRepository.save(order);
+    @PostMapping("/buyAll")
+    public String buyAll(
+            @RequestParam Double totalPrice,
+            @AuthenticationPrincipal User userSession,
+            Model model
+    ) {
+        User user = userService.findByUsername(userSession.getUsername());
 
-        Cart cart = new Cart();
-        cartRepository.save(cart);
+        Order order = new Order(user);
+        order.getPerfumeList().addAll(user.getPerfumeList());
+//        Double totalPriceDouble = Double.valueOf(totalPrice);
 
-        return "redirect:/confirmed";
+        order.setTotalPrice(totalPrice);
+
+        user.getPerfumeList().clear();
+
+        orderService.save(order);
+
+        return "orders";
     }
 
-    @GetMapping("confirmed")
-    public String confirmedOrder(@AuthenticationPrincipal User user, Model model) {
-        Order order = user.getOrderList().get(user.getOrderList().size() - 1);
-        model.addAttribute("order", order);
+    @GetMapping("/orders")
+    public String orders(Model model) {
+        Iterable<Order> orders = orderService.findAll();
+        model.addAttribute("orders", orders);
 
-        return "confirmed";
+        return "orders";
     }
+
+
 }
