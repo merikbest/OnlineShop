@@ -28,11 +28,6 @@ public class User implements UserDetails {
     @NotBlank(message = "Email не может быть пустым")
     private String email;
 
-    private String phoneNumber;
-    private String address;
-    private String city;
-    private String country;
-    private String postIndex;
     private boolean active;
     private String activationCode;
 
@@ -132,46 +127,6 @@ public class User implements UserDetails {
         this.activationCode = activationCode;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getPostIndex() {
-        return postIndex;
-    }
-
-    public void setPostIndex(String postIndex) {
-        this.postIndex = postIndex;
-    }
-
     public List<Perfume> getPerfumeList() {
         return perfumeList;
     }
@@ -190,11 +145,6 @@ public class User implements UserDetails {
                 Objects.equals(username, user.username) &&
                 Objects.equals(password, user.password) &&
                 Objects.equals(email, user.email) &&
-                Objects.equals(phoneNumber, user.phoneNumber) &&
-                Objects.equals(address, user.address) &&
-                Objects.equals(city, user.city) &&
-                Objects.equals(country, user.country) &&
-                Objects.equals(postIndex, user.postIndex) &&
                 Objects.equals(activationCode, user.activationCode) &&
                 Objects.equals(roles, user.roles) &&
                 Objects.equals(perfumeList, user.perfumeList);
@@ -202,6 +152,6 @@ public class User implements UserDetails {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, email, phoneNumber, address, city, country, postIndex, active, activationCode, roles, perfumeList);
+        return Objects.hash(id, username, password, email, active, activationCode, roles, perfumeList);
     }
 }

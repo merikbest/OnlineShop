@@ -72,6 +72,33 @@
     </div>
 </div>
 
+<!--User navbar-->
+<nav th:fragment="userNavbar" class="navbar navbar-expand-lg navbar-dark bg-dark" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="navbar-nav">
+        <li class="nav-item active">
+            <a class="nav-link text-light mx-3" href="/user/edit">Изменить пароль</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-light mx-3" href="/orders">Список заказов</a>
+        </li>
+    </ul>
+
+    <ul class="navbar-nav" sec:authorize="hasAuthority('ADMIN')">
+        <li class="nav-item">
+            <a class="nav-link text-light mx-3" href="/user">Список пользоваетлей</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-light mx-3" href="/user/add">Добавить товар</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-light mx-3" href="/user/productlist">Список товаров</a>
+        </li>
+    </ul>
+</nav>
+
 <!--User sidebar-->
 <div th:fragment="sidebar" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     <nav id="sidebar">
@@ -86,6 +113,57 @@
             </div>
         </ul>
     </nav>
+</div>
+
+<!--Pager-->
+<div th:fragment="pagination" xmlns:th="http://www.thymeleaf.org">
+    <ul class="pagination">
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">Pages</a>
+        </li>
+        <!--<th:block th:each="i : ${#numbers.sequence( 1, page.getTotalPages())}">-->
+        <th:block th:each="i : ${pagination}">
+            <th:block th:if="${i - 1 == page.getNumber()}">
+                <li class="page-item active">
+                    <a class="page-link" href="#" th:text="${i}"></a>
+                </li>
+            </th:block>
+
+            <th:block th:if="${i != -1 and i - 1 != page.getNumber()}">
+                <li class="page-item">
+                    <a class="page-link" th:href="${url + '?page=' + (i - 1)+ '&size=' + page.getSize()}"
+                       th:text="${i}"></a>
+                </li>
+            </th:block>
+
+            <th:block th:if="${i == -1}">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">...</a>
+                </li>
+            </th:block>
+
+        </th:block>
+    <!--</ul>
+    <ul class="pagination">-->
+
+        <li class="page-item disabled ml-5">
+            <a class="page-link" href="#" tabindex="-1">Elements on the page</a>
+        </li>
+        <th:block th:each="c : ${#numbers.sequence(12, 36, 12)}">
+            <th:block th:if="${c} == ${page.getSize()}">
+                <li class="page-item active">
+                    <a class="page-link" href="#" th:text="${c}"></a>
+                </li>
+            </th:block>
+
+            <th:block th:unless="${c} == ${page.getSize()}">
+                <li class="page-item">
+                    <a class="page-link" th:href="${url + '?page=' + page.getNumber()+ '&size=' + c}"
+                       th:text="${c}"></a>
+                </li>
+            </th:block>
+        </th:block>
+    </ul>
 </div>
 
 <!--Footer-->

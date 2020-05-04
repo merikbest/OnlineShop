@@ -8,6 +8,10 @@
 <div th:replace="/parts/common :: navbar"></div>
 
 <div id="container">
+    <div class="container" >
+        <div th:replace="parts/common :: userNavbar"></div>
+    </div>
+
     <div class="container mt-5">
         <form method="post" action="/user/add" enctype="multipart/form-data">
             <h5>Заполните фоорму</h5>

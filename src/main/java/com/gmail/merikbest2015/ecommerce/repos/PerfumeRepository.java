@@ -1,6 +1,8 @@
 package com.gmail.merikbest2015.ecommerce.repos;
 
 import com.gmail.merikbest2015.ecommerce.domain.Perfume;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -9,8 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface PerfumeRepository extends CrudRepository<Perfume, Long> {
-    List<Perfume> findByPerfumer(String perfumer);
-    List<Perfume> findByPerfumeGender(String perfumeGender);
+    Page<Perfume> findAll(Pageable pageable);
+
+    Page<Perfume> findByPerfumer(String perfumer, Pageable pageable);
+
+    Page<Perfume> findByPerfumeGender(String perfumeGender, Pageable pageable);
+
+    Page<Perfume> findByPerfumeGenderAndPerfumerIn (String gender, List<String> perfumers, Pageable pageable);
 
     @Modifying
     @Transactional

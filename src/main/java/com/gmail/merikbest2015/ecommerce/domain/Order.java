@@ -14,13 +14,13 @@ public class Order {
     private Long id;
     private Double totalPrice;
     private LocalDate date;
+    private String firstName;
+    private String LastName;
+    private String city;
     private String address;
-    private String name;
-
     private String email;
     private String phoneNumber;
     private String postIndex;
-    private String city;
 
     @OrderColumn
     @ManyToMany(fetch = FetchType.EAGER)
@@ -62,36 +62,36 @@ public class Order {
         this.date = date;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return LastName;
+    }
+
+    public void setLastName(String lastName) {
+        LastName = lastName;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     public String getAddress() {
         return address;
     }
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Perfume> getPerfumeList() {
-        return perfumeList;
-    }
-
-    public void setPerfumeList(List<Perfume> perfumeList) {
-        this.perfumeList = perfumeList;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public String getEmail() {
@@ -118,12 +118,20 @@ public class Order {
         this.postIndex = postIndex;
     }
 
-    public String getCity() {
-        return city;
+    public List<Perfume> getPerfumeList() {
+        return perfumeList;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setPerfumeList(List<Perfume> perfumeList) {
+        this.perfumeList = perfumeList;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -134,18 +142,19 @@ public class Order {
         return Objects.equals(id, order.id) &&
                 Objects.equals(totalPrice, order.totalPrice) &&
                 Objects.equals(date, order.date) &&
+                Objects.equals(firstName, order.firstName) &&
+                Objects.equals(LastName, order.LastName) &&
+                Objects.equals(city, order.city) &&
                 Objects.equals(address, order.address) &&
-                Objects.equals(name, order.name) &&
                 Objects.equals(email, order.email) &&
                 Objects.equals(phoneNumber, order.phoneNumber) &&
                 Objects.equals(postIndex, order.postIndex) &&
-                Objects.equals(city, order.city) &&
                 Objects.equals(perfumeList, order.perfumeList) &&
                 Objects.equals(user, order.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, totalPrice, date, address, name, email, phoneNumber, postIndex, city, perfumeList, user);
+        return Objects.hash(id, totalPrice, date, firstName, LastName, city, address, email, phoneNumber, postIndex, perfumeList, user);
     }
 }

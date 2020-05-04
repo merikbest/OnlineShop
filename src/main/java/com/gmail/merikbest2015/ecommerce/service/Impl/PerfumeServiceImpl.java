@@ -4,6 +4,8 @@ import com.gmail.merikbest2015.ecommerce.domain.Perfume;
 import com.gmail.merikbest2015.ecommerce.repos.PerfumeRepository;
 import com.gmail.merikbest2015.ecommerce.service.PerfumeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,13 +21,23 @@ public class PerfumeServiceImpl implements PerfumeService {
     }
 
     @Override
-    public List<Perfume> findByPerfumer(String perfumer) {
-        return perfumeRepository.findByPerfumer(perfumer);
+    public Page<Perfume> findAll(Pageable pageable) {
+        return perfumeRepository.findAll(pageable);
     }
 
     @Override
-    public List<Perfume> findByPerfumeGender(String perfumeGender) {
-        return perfumeRepository.findByPerfumeGender(perfumeGender);
+    public Page<Perfume> findByPerfumer(String perfumer, Pageable pageable) {
+        return perfumeRepository.findByPerfumer(perfumer, pageable);
+    }
+
+    @Override
+    public Page<Perfume> findByPerfumeGender(String perfumeGender, Pageable pageable) {
+        return perfumeRepository.findByPerfumeGender(perfumeGender, pageable);
+    }
+
+    @Override
+    public Page<Perfume> findByPerfumeGenderAndPerfumerIn(String gender, List<String> perfumers, Pageable pageable) {
+        return perfumeRepository.findByPerfumeGenderAndPerfumerIn(gender, perfumers, pageable);
     }
 
     @Override
@@ -42,4 +54,39 @@ public class PerfumeServiceImpl implements PerfumeService {
     public Perfume save(Perfume perfume) {
         return perfumeRepository.save(perfume);
     }
+
+    /*    public List<Perfume> searchByParameters(Pageable pageable, List<String> perfumers, String gender) {
+
+        List<Perfume> perfumes = new ArrayList<>();
+        Page<Perfume> perfumePage;
+
+        if (perfumers != null || gender != null) {
+
+            if (perfumers != null) {
+                for (String perfumer : perfumers) {
+                    perfumes.addAll(perfumeRepository.findByPerfumer(perfumer));
+                }
+
+                if (perfumes.isEmpty()) {
+                    return perfumes;
+                }
+            }
+
+            if (gender != null) {
+
+                if (perfumes.isEmpty()) {
+                    perfumes.addAll(perfumeRepository.findByPerfumeGender(gender));
+                } else {
+                    perfumes = perfumes.stream()
+                            .filter(p -> p.getPerfumeGender().equals(gender))
+                            .collect(Collectors.toList());
+                }
+
+                if (perfumes.isEmpty()) {
+                    return perfumes;
+                }
+            }
+        }
+        return perfumes;
+    }*/
 }

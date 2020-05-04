@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class MainController {
@@ -19,23 +18,12 @@ public class MainController {
     private PerfumeService perfumeService;
 
     @GetMapping("/")
-    public String main(Map<String, Object> model) {
+    public String main(Model model) {
         Iterable<Perfume> iterable = perfumeService.findAll();
-
-        model.put("perfumes", iterable);
+        model.addAttribute("perfumes", iterable);
 
         return "main";
     }
-
-    ///??????????
-/*    @PostMapping("/")
-    public String getById(Long id, Model model) {
-        Optional<Perfume> optionalPerfume = perfumeService.findById(id);
-        Perfume perfume = optionalPerfume.get();
-        model.addAttribute("perfume", perfume);
-
-        return "main";
-    }*/
 
     @GetMapping("/contacts")
     public String getContacts() {
@@ -47,10 +35,11 @@ public class MainController {
         return "userCabinet";
     }
 
+    //ПАНЕЛЬ ПОИСКА
     @PostMapping("/filter")
-    public String filter(@RequestParam String filter, Map<String, Object> model) {
-        List<Perfume> perfumes = perfumeService.findByPerfumer(filter);
-        model.put("perfumes", perfumes);
+    public String filter(@RequestParam String filter, Model model) {
+//        List<Perfume> perfumes = perfumeService.findByPerfumer(filter);
+//        model.addAttribute("perfumes", perfumes);
 
         return "filter";
     }

@@ -6,13 +6,15 @@ import com.gmail.merikbest2015.ecommerce.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
     @Override
-    public Iterable<Order> findAll() {
+    public List<Order> findAll() {
         return orderRepository.findAll();
     }
 

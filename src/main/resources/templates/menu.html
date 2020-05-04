@@ -8,6 +8,7 @@
 <div th:replace="parts/common :: navbar"></div>
 
 
+
 <div id="container">
     <div class="container">
         <div class="d-flex">
@@ -30,6 +31,16 @@
                     <li class="active">
                         <a href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Бренд</a>
                         <ul class="collapse list-unstyled" id="homeSubmenu2">
+<!--                            <div class="custom-control custom-checkbox">-->
+<!--                                <input type="checkbox" name="perfumers" class="custom-control-input" id="customCheck1" />-->
+<!--                                <label class="custom-control-label" for="customCheck1">Boss</label>-->
+<!--                            </div>-->
+                            <li>
+                                <div class="custom-control custom-checkbox checkbox-black ml-3">
+                                    <input type="checkbox" name="perfumers" class="custom-control-input" id="customCheck1" />
+                                    <label class="custom-control-label" for="customCheck1">Boss</label>
+                                </div>
+                            </li>
                             <li><a href="#">Boss</a></li>
                             <li><a href="#">Burberry</a></li>
                             <li><a href="#">Bvlgari</a></li>
@@ -69,41 +80,47 @@
                 </ul>
             </nav>
 
-            <form method="get" action="/menu/{perfumer}">
-                <div class="container-fluid mt-5">
-                    <div class="row" th:fragment="list">
-                        <div class="col-lg-3 d-flex align-items-stretch" th:each="perfume : ${perfumes}">
-                            <div class="card mb-5" th:if="${perfume.getFilename()}">
-                                <img th:src="@{/img/{path} (path = ${perfume.getFilename()})}" class="rounded mx-auto w-50">
-                                <div class="card-body text-center">
-                                    <h5 th:text="${perfume.getPerfumeTitle()}"></h5>
-                                    <h6 th:text="${perfume.getPerfumer()}"></h6>
-                                    <h6><span th:text="${perfume.getPrice()}"></span>,00 грн.</h6>
-                                    <a th:href="@{/product/{path} (path = ${perfume.getId()})}" class="btn btn-dark">Купить</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
+            <div class="row mt-5 ml-5">
+<!--                <div th:replace="parts/common :: pagination"></div>-->
+                <div th:insert="~{parts/common :: pagination}"></div>
 
-            <form method="get" action="/menu/gender/{gender}">
-                <div class="container-fluid mt-5">
-                    <div class="row" th:fragment="list">
-                        <div class="col-lg-3 d-flex align-items-stretch" th:each="perfume : ${gender}">
-                            <div class="card mb-5" th:if="${perfume.getFilename()}">
-                                <img th:src="@{/img/{path} (path = ${perfume.getFilename()})}" class="rounded mx-auto w-50">
-                                <div class="card-body text-center">
-                                    <h5 th:text="${perfume.getPerfumeTitle()}"></h5>
-                                    <h6 th:text="${perfume.getPerfumer()}"></h6>
-                                    <h6><span th:text="${perfume.getPrice()}"></span>,00 грн.</h6>
-                                    <a th:href="@{/product/{path} (path = ${perfume.getId()})}" class="btn btn-dark">Купить</a>
+<!--                <form method="get" action="/menu/{perfumer}">-->
+                    <div class="container-fluid mt-5">
+                        <div class="row" th:fragment="list">
+                            <div class="col-lg-3 d-flex align-items-stretch" th:each="perfume : ${page.getContent()}">
+                                <div class="card mb-5" th:if="${perfume.getFilename()}">
+                                    <img th:src="@{/img/{path} (path = ${perfume.getFilename()})}" class="rounded mx-auto w-50">
+                                    <div class="card-body text-center">
+                                        <h5 th:text="${perfume.getPerfumeTitle()}"></h5>
+                                        <h6 th:text="${perfume.getPerfumer()}"></h6>
+                                        <h6><span th:text="${perfume.getPrice()}"></span>,00 грн.</h6>
+                                        <a th:href="@{/product/{path} (path = ${perfume.getId()})}" class="btn btn-dark">Купить</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </form>
+<!--                </form>-->
+
+<!--                <form method="get" action="/menu/gender/{gender}">-->
+<!--                    <div class="container-fluid mt-5">-->
+<!--                        <div class="row" th:fragment="list">-->
+<!--                            <div class="col-lg-3 d-flex align-items-stretch" th:each="perfume : ${page.getContent()}">-->
+<!--                                <div class="card mb-5" th:if="${perfume.getFilename()}">-->
+<!--                                    <img th:src="@{/img/{path} (path = ${perfume.getFilename()})}" class="rounded mx-auto w-50">-->
+<!--                                    <div class="card-body text-center">-->
+<!--                                        <h5 th:text="${perfume.getPerfumeTitle()}"></h5>-->
+<!--                                        <h6 th:text="${perfume.getPerfumer()}"></h6>-->
+<!--                                        <h6><span th:text="${perfume.getPrice()}"></span>,00 грн.</h6>-->
+<!--                                        <a th:href="@{/product/{path} (path = ${perfume.getId()})}" class="btn btn-dark">Купить</a>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </form>-->
+
+            </div>
 
         </div>
     </div>

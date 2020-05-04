@@ -12,7 +12,7 @@
 
         <p class="h4 mb-4 text-center">Корзина</p>
 
-        <div th:if="${perfumes.size() == 0}">
+        <div class="text-center" th:if="${perfumes.size() == 0}">
             <p>Корзина пуста</p>
         </div>
 
@@ -57,7 +57,7 @@
                 </div>
 
                 <div class="col-3">
-                    <form action="/buyAll" method="post" class="ml-3">
+                    <form action="/order" method="get" class="ml-3">
                         <div class="form-row">
                             <div class="col-6">
                                 <button class="btn btn-success" >Оформить заказ</button>

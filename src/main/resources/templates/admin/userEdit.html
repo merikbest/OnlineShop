@@ -8,6 +8,10 @@
 <div th:replace="/parts/common :: navbar"></div>
 
 <div class="container">
+    <div th:replace="parts/common :: userNavbar"></div>
+</div>
+
+<div class="container">
     <form action="/user" method="post" >
         <input type="text" name="username" th:value="${user.getUsername()}">
         <div th:each="role : ${roles}">

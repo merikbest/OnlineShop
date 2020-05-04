@@ -1,15 +1,21 @@
 package com.gmail.merikbest2015.ecommerce.service;
 
 import com.gmail.merikbest2015.ecommerce.domain.Perfume;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface PerfumeService {
     Iterable<Perfume> findAll();
 
-    List<Perfume> findByPerfumer(String perfumer);
+    Page<Perfume> findAll(Pageable pageable);
 
-    List<Perfume> findByPerfumeGender(String perfumeGender);
+    Page<Perfume> findByPerfumer(String perfumer, Pageable pageable);
+
+    Page<Perfume> findByPerfumeGender(String perfumeGender, Pageable pageable);
+
+    Page<Perfume> findByPerfumeGenderAndPerfumerIn (String gender, List<String> perfumers, Pageable pageable);
 
     void saveProductInfoById(String perfumeTitle, String perfumer, Integer year, String country, String perfumeGender,
                              String fragranceTopNotes, String fragranceMiddleNotes, String fragranceBaseNotes, String description,
