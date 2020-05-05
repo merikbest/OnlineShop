@@ -119,26 +119,34 @@
 <div th:fragment="pagination" xmlns:th="http://www.thymeleaf.org">
     <ul class="pagination">
         <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1">Pages</a>
+            <a class="page-link " href="#" tabindex="-1">Страницы</a>
         </li>
         <!--<th:block th:each="i : ${#numbers.sequence( 1, page.getTotalPages())}">-->
         <th:block th:each="i : ${pagination}">
             <th:block th:if="${i - 1 == page.getNumber()}">
                 <li class="page-item active">
-                    <a class="page-link" href="#" th:text="${i}"></a>
+                    <a class="page-link bg-dark border-dark" href="#" th:text="${i}"></a>
                 </li>
             </th:block>
 
             <th:block th:if="${i != -1 and i - 1 != page.getNumber()}">
-                <li class="page-item">
-                    <a class="page-link" th:href="${url + '?page=' + (i - 1)+ '&size=' + page.getSize()}"
-                       th:text="${i}"></a>
-                </li>
+                <th:block th:if="${url.contains('search')}">
+                    <li class="page-item">
+                        <a class="page-link text-dark" th:href="${url + '&page=' + (i - 1)+ '&size=' + page.getSize()}"
+                           th:text="${i}"></a>
+                    </li>
+                </th:block>
+                <th:block th:if="${!url.contains('search')}">
+                    <li class="page-item">
+                        <a class="page-link text-dark" th:href="${url + '?page=' + (i - 1)+ '&size=' + page.getSize()}"
+                           th:text="${i}"></a>
+                    </li>
+                </th:block>
             </th:block>
 
             <th:block th:if="${i == -1}">
                 <li class="page-item disabled">
-                    <a class="page-link" href="#">...</a>
+                    <a class="page-link text-dark" href="#">...</a>
                 </li>
             </th:block>
 
@@ -147,18 +155,18 @@
     <ul class="pagination">-->
 
         <li class="page-item disabled ml-5">
-            <a class="page-link" href="#" tabindex="-1">Elements on the page</a>
+            <a class="page-link text-dark" href="#" tabindex="-1">Элементов на странице</a>
         </li>
         <th:block th:each="c : ${#numbers.sequence(12, 36, 12)}">
             <th:block th:if="${c} == ${page.getSize()}">
                 <li class="page-item active">
-                    <a class="page-link" href="#" th:text="${c}"></a>
+                    <a class="page-link bg-dark border-dark" href="#" th:text="${c}"></a>
                 </li>
             </th:block>
 
             <th:block th:unless="${c} == ${page.getSize()}">
                 <li class="page-item">
-                    <a class="page-link" th:href="${url + '?page=' + page.getNumber()+ '&size=' + c}"
+                    <a class="page-link text-dark" th:href="${url + '?page=' + page.getNumber()+ '&size=' + c}"
                        th:text="${c}"></a>
                 </li>
             </th:block>

@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.ecommerce.controller;
 
 import com.gmail.merikbest2015.ecommerce.domain.Perfume;
+import com.gmail.merikbest2015.ecommerce.repos.PerfumeRepository;
 import com.gmail.merikbest2015.ecommerce.service.PerfumeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,12 +14,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class MenuController {
     @Autowired
     private PerfumeService perfumeService;
+
+    @Autowired
+    private PerfumeRepository perfumeRepository;
 
     @GetMapping("/menu")
     public String main(@PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC, size = 12) Pageable pageable, Model model) {
@@ -62,14 +67,33 @@ public class MenuController {
 
     @GetMapping("/menu/search")
     public String searchByParameters(@PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC, size = 12) Pageable pageable,
-                                     @RequestParam String gender,
-                                     @RequestParam List<String> perfumers, Model model
+                                     @RequestParam(value = "gender", required = false, defaultValue = "") List<String> gender,
+                                     @RequestParam(value = "perfumers", required = false, defaultValue = "") List<String> perfumers, Model model
     ) {
-        Page<Perfume> perfumesSearch = perfumeService.findByPerfumeGenderAndPerfumerIn(gender, perfumers, pageable);
+        StringBuilder urlBuilder = new StringBuilder();
+        Page<Perfume> perfumesSearch = null;
+
+        if (gender.isEmpty() && perfumers.isEmpty()) {
+            return "redirect:/menu";
+        }
+
+        if (gender.isEmpty()) {
+            perfumesSearch = perfumeService.findByPerfumerIn(perfumers, pageable);
+            urlBuilder = ControllerUtils.getUrlBuilder(perfumers);
+        } else if (perfumers.isEmpty()) {
+            perfumesSearch = perfumeRepository.findByPerfumeGenderIn(gender, pageable);
+            urlBuilder = ControllerUtils.getUrlBuilder(gender);
+        } else if (!gender.isEmpty() && !perfumers.isEmpty()) {
+            perfumesSearch = perfumeRepository.findByPerfumerInAndPerfumeGenderIn(perfumers, gender, pageable);
+            List<String> urlArray = new ArrayList<String>(perfumers);
+            urlArray.addAll(gender);
+            urlBuilder = ControllerUtils.getUrlBuilder(urlArray);
+        }
+
         int[] pagination = ControllerUtils.computePagination(perfumesSearch);
 
         model.addAttribute("pagination", pagination);
-        model.addAttribute("url", "/menu/search");
+        model.addAttribute("url", "/menu/search" + urlBuilder);
         model.addAttribute("page", perfumesSearch);
 
         return "menu";

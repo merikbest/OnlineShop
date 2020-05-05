@@ -35,9 +35,14 @@ public class PerfumeServiceImpl implements PerfumeService {
         return perfumeRepository.findByPerfumeGender(perfumeGender, pageable);
     }
 
+//    @Override
+//    public Page<Perfume> findByPerfumeGenderOrPerfumerIn(String gender, List<String> perfumers, Pageable pageable) {
+//        return perfumeRepository.findByPerfumeGenderOrPerfumerIn(gender, perfumers, pageable);
+//    }
+
     @Override
-    public Page<Perfume> findByPerfumeGenderAndPerfumerIn(String gender, List<String> perfumers, Pageable pageable) {
-        return perfumeRepository.findByPerfumeGenderAndPerfumerIn(gender, perfumers, pageable);
+    public Page<Perfume> findByPerfumerIn(List<String> perfumers, Pageable pageable) {
+        return perfumeRepository.findByPerfumerIn(perfumers, pageable);
     }
 
     @Override

@@ -17,7 +17,16 @@ public interface PerfumeRepository extends CrudRepository<Perfume, Long> {
 
     Page<Perfume> findByPerfumeGender(String perfumeGender, Pageable pageable);
 
-    Page<Perfume> findByPerfumeGenderAndPerfumerIn (String gender, List<String> perfumers, Pageable pageable);
+    Page<Perfume> findByPerfumeGenderIn(List<String> perfumeGender, Pageable pageable);
+/*
+    Page<Perfume> findByPerfumeGenderInAndPerfumerIn(List<String> gender, List<String> perfumers, Pageable pageable);
+    */
+
+    Page<Perfume> findByPerfumerInAndPerfumeGenderIn(List<String> perfumers, List<String> gender, Pageable pageable);
+
+    Page<Perfume> findByPerfumerInOrPerfumeGenderIn (List<String> perfumers, List<String> gender, Pageable pageable);
+
+    Page<Perfume> findByPerfumerIn (List<String> perfumers, Pageable pageable);
 
     @Modifying
     @Transactional

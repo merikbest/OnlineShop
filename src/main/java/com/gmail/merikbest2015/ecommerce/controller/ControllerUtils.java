@@ -40,4 +40,24 @@ public class ControllerUtils {
             return IntStream.rangeClosed(1, totalPages).toArray();
         }
     }
+
+    static StringBuilder getUrlBuilder(List<String> urlArray) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        if (urlArray.get(0).contains("женский") || urlArray.get(0).contains("мужской")) {
+            stringBuilder.append("?gender=" + urlArray.get(0));
+        } else {
+            stringBuilder.append("?perfumers=" + urlArray.get(0).replaceAll("\\s+", "+"));
+        }
+
+        for (int i = 1; i < urlArray.size(); i++) {
+            if (urlArray.get(i).contains("женский") || urlArray.get(i).contains("мужской")) {
+                stringBuilder.append("&gender=" + urlArray.get(i));
+            } else {
+                stringBuilder.append("&perfumers=" + urlArray.get(i).replaceAll("\\s+", "+"));
+            }
+        }
+
+        return stringBuilder;
+    }
 }

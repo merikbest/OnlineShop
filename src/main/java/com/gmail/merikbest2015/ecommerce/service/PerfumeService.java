@@ -15,7 +15,10 @@ public interface PerfumeService {
 
     Page<Perfume> findByPerfumeGender(String perfumeGender, Pageable pageable);
 
-    Page<Perfume> findByPerfumeGenderAndPerfumerIn (String gender, List<String> perfumers, Pageable pageable);
+//    Page<Perfume> findByPerfumeGenderOrPerfumerIn (String gender, List<String> perfumers, Pageable pageable);
+
+    Page<Perfume> findByPerfumerIn (List<String> perfumers, Pageable pageable);
+
 
     void saveProductInfoById(String perfumeTitle, String perfumer, Integer year, String country, String perfumeGender,
                              String fragranceTopNotes, String fragranceMiddleNotes, String fragranceBaseNotes, String description,
