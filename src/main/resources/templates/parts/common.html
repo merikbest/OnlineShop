@@ -50,10 +50,10 @@
 
                 <ul class="navbar-nav ml-auto">
 
-                    <form class="form-inline d-flex justify-content-center md-form form-sm">
-                        <input class="form-control form-control-sm mr-3 w-75 rounded-0" type="text" placeholder="Поиск"
+                    <form class="form-inline d-flex justify-content-center md-form form-sm mr-3">
+                        <input class="form-control form-control-sm mr-3 w-75 rounded-0" type="text" name="filter" placeholder="Поиск"
                                aria-label="Search">
-                        <i class="fas fa-search fa-1x" aria-hidden="true"></i>
+                        <a class="nav-link" href="/filter"><i class="fas fa-search fa-1x" aria-hidden="true" style="color:white"></i></a>
                     </form>
 
                     <li class="nav-item">
@@ -81,12 +81,15 @@
         <li class="nav-item active">
             <a class="nav-link text-light mx-3" href="/user/edit">Изменить пароль</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link text-light mx-3" href="/orders">Список заказов</a>
+        <li class="nav-item" sec:authorize="hasAuthority('USER')">
+            <a class="nav-link text-light mx-3" href="/userOrders">Список заказов</a>
         </li>
     </ul>
 
     <ul class="navbar-nav" sec:authorize="hasAuthority('ADMIN')">
+        <li class="nav-item">
+            <a class="nav-link text-light mx-3" href="/orders">Список всех заказов</a>
+        </li>
         <li class="nav-item">
             <a class="nav-link text-light mx-3" href="/user">Список пользоваетлей</a>
         </li>
@@ -195,4 +198,6 @@
             <p>© Copy right merikbest</p>
         </div>
     </div>
+    </nav>
 </footer>
+

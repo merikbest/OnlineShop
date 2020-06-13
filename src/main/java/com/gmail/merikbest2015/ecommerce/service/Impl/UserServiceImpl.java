@@ -18,14 +18,18 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserDetailsService, UserService {
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private MailSender mailSender;
+    private final MailSender mailSender;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository, MailSender mailSender) {
+        this.userRepository = userRepository;
+        this.mailSender = mailSender;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, LockedException {
@@ -51,7 +55,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             return false;
         }
 
-        user.setActive(true);
+        user.setActive(false); //true
         user.setRoles(Collections.singleton(Role.USER));
         user.setActivationCode(UUID.randomUUID().toString());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -84,6 +88,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         }
 
         user.setActivationCode(null);
+        user.setActive(true); //небыло
         userRepository.save(user);
 
         return true;

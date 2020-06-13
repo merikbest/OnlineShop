@@ -23,14 +23,18 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private PerfumeService perfumeService;
+    private final PerfumeService perfumeService;
 
     @Value("${upload.path}")
     private String uploadPath;
+
+    @Autowired
+    public UserController(UserService userService, PerfumeService perfumeService) {
+        this.userService = userService;
+        this.perfumeService = perfumeService;
+    }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("productlist")

@@ -12,8 +12,12 @@ import java.util.List;
 
 @Service
 public class PerfumeServiceImpl implements PerfumeService {
+    private final PerfumeRepository perfumeRepository;
+
     @Autowired
-    private PerfumeRepository perfumeRepository;
+    public PerfumeServiceImpl(PerfumeRepository perfumeRepository) {
+        this.perfumeRepository = perfumeRepository;
+    }
 
     @Override
     public Iterable<Perfume> findAll() {

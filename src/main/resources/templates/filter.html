@@ -9,26 +9,45 @@
 <div th:replace="parts/common :: navbar"></div>
 
 <div class="container mt-5">
-    <h3>Список духов</h3>
-    <table th:each="perfume : ${perfumes}" >
-        <div th:if="${perfume.getFilename()}">
-            <img th:src="@{/img/{path} (path = ${perfume.getFilename()})}">
+    <div class="container-fluid mt-5">
+        <div class="row" th:fragment="list">
+            <div class="col-lg-3 d-flex align-items-stretch" th:each="perfume :  ${perfumes}">
+                <div class="card mb-5" th:if="${perfume.getFilename()}">
+                    <img th:src="@{/img/{path} (path = ${perfume.getFilename()})}" class="rounded mx-auto w-50">
+                    <div class="card-body text-center">
+                        <h5 th:text="${perfume.getPerfumeTitle()}"></h5>
+                        <h6 th:text="${perfume.getPerfumer()}"></h6>
+                        <h6><span th:text="${perfume.getPrice()}"></span>,00 грн.</h6>
+                    </div>
+                    <div class="text-center align-items-end mb-3">
+                        <a th:href="@{/product/{path} (path = ${perfume.getId()})}" class="btn btn-dark">Купить</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <tr>
-            <th align="left">Характеристика</th>
-            <th align="left">Описание</th>
-        </tr>
-        <tr><td>id:</td><td th:text="${perfume.getId()}"></td></tr>
-        <tr><td>Название парфюма:</td><td th:text="${perfume.getPerfumeTitle()}"></td></tr>
-        <tr><td>Парфюмер:</td><td th:text="${perfume.getPerfumer()}"></td></tr>
-        <tr><td>Год выпуска:</td><td th:text="${perfume.getYear()}"></td></tr>
-        <tr><td>Страна производитель: </td><td th:text="${perfume.getCountry()}"></td></tr>
-        <tr><td>Пол: </td><td th:text="${perfume.getPerfumeGender()}"></td></tr>
-        <tr><td>Верхние ноты: </td><td th:text="${perfume.getFragranceTopNotes()}"></td></tr>
-        <tr><td>Средние ноты: </td><td th:text="${perfume.getFragranceMiddleNotes()}"></td></tr>
-        <tr><td>Базовые ноты: </td><td th:text="${perfume.getFragranceBaseNotes()}"></td></tr>
-        <tr><td>Описание: </td><td th:text="${perfume.getDescription()}"></td></tr>
-    </table>
+    </div>
+
+
+<!--    <h3>Список духов</h3>-->
+<!--    <table th:each="perfume : ${perfumes}" >-->
+<!--        <div th:if="${perfume.getFilename()}">-->
+<!--            <img th:src="@{/img/{path} (path = ${perfume.getFilename()})}">-->
+<!--        </div>-->
+<!--        <tr>-->
+<!--            <th align="left">Характеристика</th>-->
+<!--            <th align="left">Описание</th>-->
+<!--        </tr>-->
+<!--        <tr><td>id:</td><td th:text="${perfume.getId()}"></td></tr>-->
+<!--        <tr><td>Название парфюма:</td><td th:text="${perfume.getPerfumeTitle()}"></td></tr>-->
+<!--        <tr><td>Парфюмер:</td><td th:text="${perfume.getPerfumer()}"></td></tr>-->
+<!--        <tr><td>Год выпуска:</td><td th:text="${perfume.getYear()}"></td></tr>-->
+<!--        <tr><td>Страна производитель: </td><td th:text="${perfume.getCountry()}"></td></tr>-->
+<!--        <tr><td>Пол: </td><td th:text="${perfume.getPerfumeGender()}"></td></tr>-->
+<!--        <tr><td>Верхние ноты: </td><td th:text="${perfume.getFragranceTopNotes()}"></td></tr>-->
+<!--        <tr><td>Средние ноты: </td><td th:text="${perfume.getFragranceMiddleNotes()}"></td></tr>-->
+<!--        <tr><td>Базовые ноты: </td><td th:text="${perfume.getFragranceBaseNotes()}"></td></tr>-->
+<!--        <tr><td>Описание: </td><td th:text="${perfume.getDescription()}"></td></tr>-->
+<!--    </table>-->
 </div>
 
 <footer th:insert="~{parts/common :: footer}"></footer>

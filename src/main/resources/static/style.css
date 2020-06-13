@@ -74,18 +74,40 @@ body {
 /*    !*line-height: 50px;*!*/
 /*}*/
 
-body {
-    height: 100%;
-}
+/*body {*/
+/*    height: 100%;*/
+/*}*/
+
+/*________________________________*/
+/*html, body {*/
+/*    position:relative;*/
+/*    min-height:100%;*/
+/*}*/
+
+/*footer {*/
+/*    position:absolute;*/
+/*    bottom:0;*/
+/*}*/
+/*________________________________*/
 
 html {
-    position:relative;
-    min-height:100%;
+    position: relative;
+    min-height: 100%;
+}
+body {
+    margin-bottom: 25vh;
+}
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 25vh; /*высота футера будет зависеть от высоты экрана*/
 }
 
-#container {
-    padding-bottom: 400px;/*Примерно 2 размера footer, чтобы он не наезжал на контент при узком окне браузера*/
-}
+
+/*#container {*/
+/*    padding-bottom: 400px;!*Примерно 2 размера footer, чтобы он не наезжал на контент при узком окне браузера*!*/
+/*}*/
 
 footer {
     position: absolute;

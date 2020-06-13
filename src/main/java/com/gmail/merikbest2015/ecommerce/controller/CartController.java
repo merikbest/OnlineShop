@@ -2,9 +2,6 @@ package com.gmail.merikbest2015.ecommerce.controller;
 
 import com.gmail.merikbest2015.ecommerce.domain.Perfume;
 import com.gmail.merikbest2015.ecommerce.domain.User;
-import com.gmail.merikbest2015.ecommerce.repos.PerfumeRepository;
-import com.gmail.merikbest2015.ecommerce.repos.UserRepository;
-import com.gmail.merikbest2015.ecommerce.service.OrderService;
 import com.gmail.merikbest2015.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,17 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class CartController {
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @Autowired
-    private OrderService orderService;
-
-    @Autowired
-    private PerfumeRepository perfumeRepository;
-
-    @Autowired
-    private UserRepository userRepository;
+    public CartController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/cart")
     public String getCart(@AuthenticationPrincipal User userSession, Model model) {

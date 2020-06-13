@@ -19,11 +19,15 @@ import java.util.List;
 
 @Controller
 public class MenuController {
-    @Autowired
-    private PerfumeService perfumeService;
+    private final PerfumeService perfumeService;
+
+    private final PerfumeRepository perfumeRepository;
 
     @Autowired
-    private PerfumeRepository perfumeRepository;
+    public MenuController(PerfumeService perfumeService, PerfumeRepository perfumeRepository) {
+        this.perfumeService = perfumeService;
+        this.perfumeRepository = perfumeRepository;
+    }
 
     @GetMapping("/menu")
     public String main(@PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC, size = 12) Pageable pageable, Model model) {

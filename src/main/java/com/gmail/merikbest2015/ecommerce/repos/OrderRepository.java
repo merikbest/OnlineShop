@@ -1,8 +1,11 @@
 package com.gmail.merikbest2015.ecommerce.repos;
 
 import com.gmail.merikbest2015.ecommerce.domain.Order;
+import com.gmail.merikbest2015.ecommerce.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface OrderRepository extends JpaRepository<Order, Long> {
+import java.util.List;
 
+public interface OrderRepository extends JpaRepository<Order, Long> {
+    List<Order> findOrderByUser(User user);
 }
