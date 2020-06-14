@@ -21,8 +21,6 @@ public interface PerfumeRepository extends CrudRepository<Perfume, Long> {
 
     List<Perfume> findByPerfumerOrPerfumeTitle(String perfumer, String perfumeTitle);
 
-    Iterable<Perfume> findByPerfumer(String perfumer);
-
     Page<Perfume> findByPerfumerInAndPerfumeGenderIn(List<String> perfumers, List<String> gender, Pageable pageable);
 
     Page<Perfume> findByPerfumerInOrPerfumeGenderIn (List<String> perfumers, List<String> gender, Pageable pageable);

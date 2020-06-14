@@ -39,10 +39,10 @@ public class PerfumeServiceImpl implements PerfumeService {
         return perfumeRepository.findByPerfumeGender(perfumeGender, pageable);
     }
 
-//    @Override
-//    public Page<Perfume> findByPerfumeGenderOrPerfumerIn(String gender, List<String> perfumers, Pageable pageable) {
-//        return perfumeRepository.findByPerfumeGenderOrPerfumerIn(gender, perfumers, pageable);
-//    }
+    @Override
+    public List<Perfume> findByPerfumerOrPerfumeTitle(String perfumer, String perfumeTitle) {
+        return perfumeRepository.findByPerfumerOrPerfumeTitle(perfumer, perfumeTitle);
+    }
 
     @Override
     public Page<Perfume> findByPerfumerIn(List<String> perfumers, Pageable pageable) {

@@ -1,6 +1,9 @@
 package com.gmail.merikbest2015.ecommerce.domain;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +17,35 @@ public class Order {
     private Long id;
     private Double totalPrice;
     private LocalDate date;
+
+    @NotBlank(message = "Пожалуйсто заполните поле")
+    @Length(min = 2, max = 36)
     private String firstName;
+
+    @NotBlank(message = "Пожалуйсто заполните поле")
+    @Length(min = 2, max = 36)
     private String LastName;
+
+    @NotBlank(message = "Пожалуйсто заполните поле")
+    @Length(max = 255)
     private String city;
+
+    @NotBlank(message = "Пожалуйсто заполните поле")
+    @Length(max = 255)
     private String address;
+
+    @Email(message = "Некорректный email")
+    @NotBlank(message = "Email не может быть пустым")
     private String email;
-    private String phoneNumber;
-    private String postIndex;
+
+    @NotNull(message = "Номер телефона не может быть пустым")
+//    @Pattern(message = "Некорректный номер телефона", regexp = "((\\+)?\\b(8|38)?(0[\\d]{2}))([\\d-]{5,8})([\\d]{2})")
+//    @Length(min = 12, max = 12, message = "Некорректный номер телефона")
+    private Integer phoneNumber;
+
+    @NotNull(message = "Почтовый индекс не может быть пустым")
+//    @Length(min = 5, max = 5, message = "Почтовый индекс должен содержать 5 цифр")
+    private Integer postIndex;
 
     @OrderColumn
     @ManyToMany(fetch = FetchType.EAGER)
@@ -102,19 +127,19 @@ public class Order {
         this.email = email;
     }
 
-    public String getPhoneNumber() {
+    public Integer getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber(Integer phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getPostIndex() {
+    public Integer getPostIndex() {
         return postIndex;
     }
 
-    public void setPostIndex(String postIndex) {
+    public void setPostIndex(Integer postIndex) {
         this.postIndex = postIndex;
     }
 

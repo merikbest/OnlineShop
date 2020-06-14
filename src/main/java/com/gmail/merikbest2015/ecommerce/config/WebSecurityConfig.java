@@ -22,11 +22,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-//    @Autowired
-//    public WebSecurityConfig(UserServiceImpl userService) {
-//        this.userService = userService;
-//    }
-
     @Bean
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder(8);
@@ -37,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                     .antMatchers("/", "/filter", "/registration", "/contacts", "/img/**", "/static/**",
-                            "/activate/*", "/product/*", "/menu", "/menu/*").permitAll()
+                            "/activate/*", "/product/*", "/menu/**").permitAll()
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()

@@ -42,7 +42,7 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String addUser(
+    public String registration(
             @RequestParam("password2") String passwordConfirm,
             @RequestParam("g-recaptcha-response") String captchaResponse,
             @Valid User user,
@@ -86,7 +86,7 @@ public class RegistrationController {
     }
 
     @GetMapping("/activate/{code}")
-    public String activate(@PathVariable String code, Model model) {
+    public String activateEmailCode(@PathVariable String code, Model model) {
         boolean isActivated = userService.activateUser(code);
 
         if (isActivated) {

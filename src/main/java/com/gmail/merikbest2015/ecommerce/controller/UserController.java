@@ -7,6 +7,10 @@ import com.gmail.merikbest2015.ecommerce.service.PerfumeService;
 import com.gmail.merikbest2015.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -38,9 +42,13 @@ public class UserController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("productlist")
-    public String getAllProducts(Model model) {
-        Iterable<Perfume> perfumes = perfumeService.findAll();
-        model.addAttribute("perfumes" , perfumes);
+    public String getAllProducts(@PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC, size = 12) Pageable pageable, Model model) {
+        Page<Perfume> page = perfumeService.findAll(pageable);
+        int[] pagination = ControllerUtils.computePagination(page);
+
+        model.addAttribute("pagination", pagination);
+        model.addAttribute("url", "productlist");
+        model.addAttribute("page", page);
 
         return "admin/productList";
     }
@@ -68,14 +76,13 @@ public class UserController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("add")
-    public String addToBD() {
-
+    public String addProductToBd() {
         return "admin/addToDb";
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("add")
-    public String add(Perfume perfume,
+    public String addProductToBd(Perfume perfume,
                       BindingResult bindingResult,
                       Model model,
                       @RequestParam("file") MultipartFile file
@@ -111,7 +118,7 @@ public class UserController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping
-    public String userSave(
+    public String userSaveEditForm(
             @RequestParam String username,
             @RequestParam Map<String, String> form,
             @RequestParam("userId") User user
@@ -122,7 +129,7 @@ public class UserController {
     }
 
     @GetMapping("edit")
-    public String getProfile(Model model, @AuthenticationPrincipal User user) {
+    public String getProfileInfo(Model model, @AuthenticationPrincipal User user) {
         model.addAttribute("username", user.getUsername());
         model.addAttribute("email", user.getEmail());
 
@@ -130,7 +137,7 @@ public class UserController {
     }
 
     @PostMapping("edit")
-    public String updateProfile(
+    public String updateProfileInfo(
             @AuthenticationPrincipal User user,
             @RequestParam String password,
             @RequestParam String email
