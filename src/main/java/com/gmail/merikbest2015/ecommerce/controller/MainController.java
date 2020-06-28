@@ -3,13 +3,15 @@ package com.gmail.merikbest2015.ecommerce.controller;
 import com.gmail.merikbest2015.ecommerce.domain.Perfume;
 import com.gmail.merikbest2015.ecommerce.service.PerfumeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
 
 @Controller
 public class MainController {
@@ -38,12 +40,20 @@ public class MainController {
         return "userCabinet";
     }
 
-    @GetMapping("/filter")
-    public String filter(@RequestParam String filter, Model model) {
-        List<Perfume> perfumes = perfumeService.findByPerfumerOrPerfumeTitle(filter, filter);
-        model.addAttribute("perfumes", perfumes);
+    @GetMapping("/search")
+    public String search(
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC, size = 12) Pageable pageable,
+            @RequestParam String filter,
+            Model model
+    ) {
+        Page<Perfume> page = perfumeService.findByPerfumerOrPerfumeTitle(filter, filter, pageable);
+        int[] pagination = ControllerUtils.computePagination(page);
 
-        return "filter";
+        model.addAttribute("pagination", pagination);
+        model.addAttribute("url", "/menu");
+        model.addAttribute("page", page);
+
+        return "menu";
     }
 
     @GetMapping("/product/{perfume}")

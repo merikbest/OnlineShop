@@ -42,8 +42,10 @@ public class MenuController {
     }
 
     @GetMapping("/menu/{perfumer}")
-    public String findByPerfumer(@PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC, size = 12) Pageable pageable,
-                                 @PathVariable String perfumer, Model model
+    public String findByPerfumer(
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC, size = 12) Pageable pageable,
+            @PathVariable String perfumer,
+            Model model
     ) {
         Page<Perfume> perfumeList = perfumeService.findByPerfumer(perfumer, pageable);
         int[] pagination = ControllerUtils.computePagination(perfumeList);
@@ -56,8 +58,10 @@ public class MenuController {
     }
 
     @GetMapping("/menu/gender/{gender}")
-    public String findByPerfumeGender(@PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC, size = 12) Pageable pageable,
-                                      @PathVariable("gender") String perfumeGender, Model model
+    public String findByPerfumeGender(
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC, size = 12) Pageable pageable,
+            @PathVariable("gender") String perfumeGender,
+            Model model
     ) {
         Page<Perfume> gender = perfumeService.findByPerfumeGender(perfumeGender, pageable);
         int[] pagination = ControllerUtils.computePagination(gender);
@@ -70,9 +74,11 @@ public class MenuController {
     }
 
     @GetMapping("/menu/search")
-    public String searchByParameters(@PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC, size = 12) Pageable pageable,
-                                     @RequestParam(value = "gender", required = false, defaultValue = "") List<String> gender,
-                                     @RequestParam(value = "perfumers", required = false, defaultValue = "") List<String> perfumers, Model model
+    public String searchByParameters(
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC, size = 12) Pageable pageable,
+            @RequestParam(value = "gender", required = false, defaultValue = "") List<String> gender,
+            @RequestParam(value = "perfumers", required = false, defaultValue = "") List<String> perfumers,
+            Model model
     ) {
         StringBuilder urlBuilder = new StringBuilder();
         Page<Perfume> perfumesSearch = null;

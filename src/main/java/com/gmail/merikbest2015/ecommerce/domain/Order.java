@@ -1,7 +1,5 @@
 package com.gmail.merikbest2015.ecommerce.domain;
 
-import org.hibernate.validator.constraints.Length;
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
@@ -19,19 +17,15 @@ public class Order {
     private LocalDate date;
 
     @NotBlank(message = "Пожалуйсто заполните поле")
-    @Length(min = 2, max = 36)
     private String firstName;
 
     @NotBlank(message = "Пожалуйсто заполните поле")
-    @Length(min = 2, max = 36)
-    private String LastName;
+    private String lastName;
 
     @NotBlank(message = "Пожалуйсто заполните поле")
-    @Length(max = 255)
     private String city;
 
     @NotBlank(message = "Пожалуйсто заполните поле")
-    @Length(max = 255)
     private String address;
 
     @Email(message = "Некорректный email")
@@ -39,12 +33,13 @@ public class Order {
     private String email;
 
     @NotNull(message = "Номер телефона не может быть пустым")
-//    @Pattern(message = "Некорректный номер телефона", regexp = "((\\+)?\\b(8|38)?(0[\\d]{2}))([\\d-]{5,8})([\\d]{2})")
-//    @Length(min = 12, max = 12, message = "Некорректный номер телефона")
+    @Min(value = 12, message = "Некорректный номер телефона")
+    @Max(value = 12, message = "Некорректный номер телефона")
     private Integer phoneNumber;
 
     @NotNull(message = "Почтовый индекс не может быть пустым")
-//    @Length(min = 5, max = 5, message = "Почтовый индекс должен содержать 5 цифр")
+    @Min(value = 5, message = "Почтовый индекс должен содержать 5 цифр")
+    @Max(value = 5, message = "Почтовый индекс должен содержать 5 цифр")
     private Integer postIndex;
 
     @OrderColumn
@@ -96,11 +91,11 @@ public class Order {
     }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
     public void setLastName(String lastName) {
-        LastName = lastName;
+        this.lastName = lastName;
     }
 
     public String getCity() {
@@ -168,7 +163,7 @@ public class Order {
                 Objects.equals(totalPrice, order.totalPrice) &&
                 Objects.equals(date, order.date) &&
                 Objects.equals(firstName, order.firstName) &&
-                Objects.equals(LastName, order.LastName) &&
+                Objects.equals(lastName, order.lastName) &&
                 Objects.equals(city, order.city) &&
                 Objects.equals(address, order.address) &&
                 Objects.equals(email, order.email) &&
@@ -180,6 +175,6 @@ public class Order {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, totalPrice, date, firstName, LastName, city, address, email, phoneNumber, postIndex, perfumeList, user);
+        return Objects.hash(id, totalPrice, date, firstName, lastName, city, address, email, phoneNumber, postIndex, perfumeList, user);
     }
 }

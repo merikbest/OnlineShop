@@ -11,9 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.IOException;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -39,34 +38,31 @@ public class OrderController {
 
     @PostMapping("/order")
     public String postOrder(
+            @AuthenticationPrincipal User userSession,
+            @Valid Order validOrder,
             BindingResult bindingResult,
-            Model model,
-            @RequestParam("totalPrice") Double totalPrice,
-            @RequestParam("firstName") String firstName,
-            @RequestParam("lastName") String lastName,
-            @RequestParam("city") String city,
-            @RequestParam("address") String address,
-            @RequestParam("postIndex") Integer postIndex,
-            @RequestParam("email") String email,
-            @RequestParam("phoneNumber") Integer phoneNumber,
-            @AuthenticationPrincipal User userSession
+            Model model
     ) {
         User user = userService.findByUsername(userSession.getUsername());
         Order order = new Order(user);
 
         if (bindingResult.hasErrors()) {
             Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
+
             model.mergeAttributes(errorsMap);
+            model.addAttribute("perfumes", user.getPerfumeList());
+
+            return "order";
         } else {
             order.getPerfumeList().addAll(user.getPerfumeList());
-            order.setTotalPrice(totalPrice);
-            order.setFirstName(firstName);
-            order.setLastName(lastName);
-            order.setCity(city);
-            order.setAddress(address);
-            order.setPostIndex(postIndex);
-            order.setEmail(email);
-            order.setPhoneNumber(phoneNumber);
+            order.setTotalPrice(validOrder.getTotalPrice());
+            order.setFirstName(validOrder.getFirstName());
+            order.setLastName(validOrder.getLastName());
+            order.setCity(validOrder.getCity());
+            order.setAddress(validOrder.getAddress());
+            order.setPostIndex(validOrder.getPostIndex());
+            order.setEmail(validOrder.getEmail());
+            order.setPhoneNumber(validOrder.getPhoneNumber());
 
             user.getPerfumeList().clear();
 

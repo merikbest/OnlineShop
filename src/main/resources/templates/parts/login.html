@@ -40,50 +40,6 @@
                 </div>
             </div>
 
-<!--            <div class="form-group row" th:if="${path} == '/registration'">
-                <label class="col-sm-2 col-form-label">Телефон: </label>
-                <div class="col-sm-4">
-                    <input type="text" name="phoneNumber" th:value="${user} ? ${user.phoneNumber} : ''"
-                           class="form-control"/>
-                </div>
-            </div>-->
-
-            <!--<div th:if="${path} == '/registration'">
-                <h6>Ваш адрес</h6>
-                <hr align="left" width="550"/>
-
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Адрес </label>
-                    <div class="col-sm-4">
-                        <input type="text" name="address" th:value="${user} ? ${user.address} : ''"
-                               class="form-control"/>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Город </label>
-                    <div class="col-sm-4">
-                        <input type="text" name="city" th:value="${user} ? ${user.city} : ''" class="form-control"/>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Страна </label>
-                    <div class="col-sm-4">
-                        <input type="text" name="country" th:value="${user} ? ${user.country} : ''"
-                               class="form-control"/>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Индекс </label>
-                    <div class="col-sm-4">
-                        <input type="text" name="postIndex" th:value="${user} ? ${user.postIndex} : ''"
-                               class="form-control"/>
-                    </div>
-                </div>
-            </div>-->
-
             <div class="form-group row">
                 <button type="submit" class="btn btn-dark mx-3"
                         th:text="${path} == '/registration' ? 'Регистрация' : 'Вход'"></button>

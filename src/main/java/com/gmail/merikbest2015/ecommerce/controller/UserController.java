@@ -19,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
@@ -82,14 +83,18 @@ public class UserController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("add")
-    public String addProductToBd(Perfume perfume,
-                      BindingResult bindingResult,
-                      Model model,
-                      @RequestParam("file") MultipartFile file
+    public String addProductToBd(
+            @Valid Perfume perfume,
+            BindingResult bindingResult,
+            Model model,
+            @RequestParam("file") MultipartFile file
     ) throws IOException {
         if (bindingResult.hasErrors()) {
             Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
+
             model.mergeAttributes(errorsMap);
+
+            return "admin/addToDb";
         } else {
             saveFile(perfume, file);
 

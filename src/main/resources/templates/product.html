@@ -8,7 +8,7 @@
 <div th:replace="parts/common :: navbar"></div>
 
 <div id="container">
-    <div class="container mt-5">
+    <div class="container mt-5 pb-5">
         <div class="row">
 
             <div class="col-md-5">
@@ -25,15 +25,13 @@
 
                 <div class="row ml-1">
                     <h6 class="mr-5"><span th:text="${perfume.getPrice()}"></span>,00 грн.</h6>
-                    <label class="px-3">Количество:</label>
+<!--                    <label class="px-3">Количество:</label>-->
 
                     <form action="/addToCart" method="post">
 <!--                        <input type="text" name="amount" placeholder="1">-->
-
                         <button type="submit" name="buttonAddToCart" class="btn btn-dark mx-3"
                                 th:value="${perfume.getId()}">В корзину</button>
                     </form>
-
 <!--                    <input type="text" value="1">-->
 <!--                    <button type="submit" class="btn btn-dark mx-3">В корзину</button>-->
                 </div>
@@ -50,7 +48,6 @@
                         <tr><td>Верхние ноты: </td><td th:text="${perfume.getFragranceTopNotes()}"></td></tr>
                         <tr><td>Средние ноты: </td><td th:text="${perfume.getFragranceMiddleNotes()}"></td></tr>
                         <tr><td>Базовые ноты: </td><td th:text="${perfume.getFragranceBaseNotes()}"></td></tr>
-                        <tr><td>Описание: </td><td th:text="${perfume.getDescription()}"></td></tr>
                     </tbody>
                 </table>
             </div>
