@@ -37,7 +37,7 @@ public class MainController {
 
     @GetMapping("/cabinet")
     public String userCabinet() {
-        return "userCabinet";
+        return "user/userCabinet";
     }
 
     @GetMapping("/search")

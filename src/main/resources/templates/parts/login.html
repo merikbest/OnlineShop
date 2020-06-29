@@ -1,5 +1,5 @@
 <div th:fragment="login(path)" xmlns:th="http://www.thymeleaf.org">
-    <form action="/login" method="post" th:attr="action=${path}">
+    <form method="post" th:attr="action=${path}">
         <div class="container mt-5">
             <h4 th:text="${path} == '/registration' ? 'Регистрация' : 'Вход в личный кабинет'"></h4>
             <hr align="left" width="550"/>

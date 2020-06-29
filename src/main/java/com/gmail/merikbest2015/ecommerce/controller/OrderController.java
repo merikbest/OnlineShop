@@ -33,7 +33,7 @@ public class OrderController {
         User userFromDB = userService.findByUsername(userSession.getUsername());
         model.addAttribute("perfumes", userFromDB.getPerfumeList());
 
-        return "order";
+        return "order/order";
     }
 
     @PostMapping("/order")
@@ -52,7 +52,7 @@ public class OrderController {
             model.mergeAttributes(errorsMap);
             model.addAttribute("perfumes", user.getPerfumeList());
 
-            return "order";
+            return "order/order";
         } else {
             order.getPerfumeList().addAll(user.getPerfumeList());
             order.setTotalPrice(validOrder.getTotalPrice());
@@ -79,7 +79,7 @@ public class OrderController {
 
         model.addAttribute("orderIndex", orderIndex.getId());
 
-        return "finalizeOrder";
+        return "order/finalizeOrder";
     }
 
     @GetMapping("/userOrders")
@@ -88,7 +88,7 @@ public class OrderController {
         List<Order> orders = orderService.findOrderByUser(userFromDB);
         model.addAttribute("orders", orders);
 
-        return "orders";
+        return "order/orders";
     }
 
     @GetMapping("/orders")
@@ -96,6 +96,6 @@ public class OrderController {
         List<Order> orders = orderService.findAll();
         model.addAttribute("orders", orders);
 
-        return "orders";
+        return "order/orders";
     }
 }
