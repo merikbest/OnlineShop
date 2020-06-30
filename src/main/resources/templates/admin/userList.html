@@ -12,22 +12,25 @@
 </div>
 
 <div class="container">
-
-    <table>
+    <table class="table">
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Role</th>
-            <th></th>
+            <th scope="col">Имя</th>
+            <th scope="col">Роль</th>
+            <th scope="col"></th>
         </tr>
         </thead>
-            <tbody>
-            <tr th:each="user : ${users}">
-                <td th:text="${user.username}"></td>
-                <td th:each="userRole : ${user.getRoles()}" th:text="${userRole}"></td>
-                <td><a th:href="@{/user/{path} (path = ${user.getId()})}">edit</a></td>
-            </tr>
-            </tbody>
+        <tbody th:each="user : ${users}">
+        <tr>
+            <th th:text="${user.username}"></th>
+            <th>
+                <div th:each="userRole : ${user.getRoles()}">
+                    <p th:text="${userRole}"></p>
+                </div>
+            </th>
+            <th><a th:href="@{/user/{path} (path = ${user.getId()})}">edit</a></th>
+        </tr>
+        </tbody>
     </table>
 </div>
 

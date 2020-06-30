@@ -32,14 +32,12 @@ public class Order {
     @NotBlank(message = "Email не может быть пустым")
     private String email;
 
-    @NotNull(message = "Номер телефона не может быть пустым")
-    @Min(value = 12, message = "Некорректный номер телефона")
-    @Max(value = 12, message = "Некорректный номер телефона")
-    private Integer phoneNumber;
+    @NotBlank(message = "Номер телефона не может быть пустым")
+//    @Size(min = 12, max = 12, message = "Некорректный номер телефона")
+    private String phoneNumber;
 
     @NotNull(message = "Почтовый индекс не может быть пустым")
     @Min(value = 5, message = "Почтовый индекс должен содержать 5 цифр")
-    @Max(value = 5, message = "Почтовый индекс должен содержать 5 цифр")
     private Integer postIndex;
 
     @OrderColumn
@@ -122,11 +120,11 @@ public class Order {
         this.email = email;
     }
 
-    public Integer getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(Integer phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
