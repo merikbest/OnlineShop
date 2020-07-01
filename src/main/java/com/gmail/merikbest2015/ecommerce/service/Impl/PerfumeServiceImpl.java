@@ -63,39 +63,4 @@ public class PerfumeServiceImpl implements PerfumeService {
     public Perfume save(Perfume perfume) {
         return perfumeRepository.save(perfume);
     }
-
-    /*    public List<Perfume> searchByParameters(Pageable pageable, List<String> perfumers, String gender) {
-
-        List<Perfume> perfumes = new ArrayList<>();
-        Page<Perfume> perfumePage;
-
-        if (perfumers != null || gender != null) {
-
-            if (perfumers != null) {
-                for (String perfumer : perfumers) {
-                    perfumes.addAll(perfumeRepository.findByPerfumer(perfumer));
-                }
-
-                if (perfumes.isEmpty()) {
-                    return perfumes;
-                }
-            }
-
-            if (gender != null) {
-
-                if (perfumes.isEmpty()) {
-                    perfumes.addAll(perfumeRepository.findByPerfumeGender(gender));
-                } else {
-                    perfumes = perfumes.stream()
-                            .filter(p -> p.getPerfumeGender().equals(gender))
-                            .collect(Collectors.toList());
-                }
-
-                if (perfumes.isEmpty()) {
-                    return perfumes;
-                }
-            }
-        }
-        return perfumes;
-    }*/
 }

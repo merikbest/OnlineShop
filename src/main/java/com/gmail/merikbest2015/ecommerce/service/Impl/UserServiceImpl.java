@@ -22,13 +22,13 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     private final MailSender mailSender;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, MailSender mailSender) {
+    public UserServiceImpl(UserRepository userRepository, MailSender mailSender, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.mailSender = mailSender;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -39,7 +39,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             throw new UsernameNotFoundException("User not found");
         }
 
-//        !!!!!!!!!!!!
         if (user.getActivationCode() != null ) {
             throw new LockedException("email not activated");
         }
@@ -55,7 +54,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             return false;
         }
 
-        user.setActive(false); //true
+        user.setActive(false);
         user.setRoles(Collections.singleton(Role.USER));
         user.setActivationCode(UUID.randomUUID().toString());
         user.setPassword(passwordEncoder.encode(user.getPassword()));

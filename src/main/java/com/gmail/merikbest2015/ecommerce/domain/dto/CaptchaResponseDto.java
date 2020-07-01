@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Set;
 
-@JsonIgnoreProperties(ignoreUnknown = true) //игнорим неизвестные поля, а известные описываем в классе
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CaptchaResponseDto {
     private boolean success;
 

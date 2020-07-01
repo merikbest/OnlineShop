@@ -51,7 +51,6 @@ public class RegistrationController {
     ) {
         String url = String.format(CAPTCHA_URL, secret, captchaResponse);
 
-        // .postForObject ожидет объект для запроса, что бы не было ошибок подставляем Collections.emptyList()
         CaptchaResponseDto response = restTemplate.postForObject(url, Collections.emptyList(), CaptchaResponseDto.class);
 
         if (!response.isSuccess()) {

@@ -33,7 +33,6 @@ public class Order {
     private String email;
 
     @NotBlank(message = "Номер телефона не может быть пустым")
-//    @Size(min = 12, max = 12, message = "Некорректный номер телефона")
     private String phoneNumber;
 
     @NotNull(message = "Почтовый индекс не может быть пустым")
