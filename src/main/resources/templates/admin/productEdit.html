@@ -19,8 +19,11 @@
 
         <h5 th:text="${perfume.getId()}"></h5>
 
-        <div th:if="${perfume.getFilename()}">
-            <img th:src="@{/img/{path} (path = ${perfume.getFilename()})}">
+        <div th:if="${perfume.getFilename()}" class="col-md-5 mb-3">
+            <div>
+                <img th:src="@{/img/{path} (path = ${perfume.getFilename()})}" class="rounded mx-auto w-100 mb-5">
+            </div>
+            <input type="file" name="file">
         </div>
 
         <div class="form-group row">
@@ -105,7 +108,6 @@
             <textarea class="form-control col-sm-8" id="exampleFormControlTextarea1" rows="3" th:value="${perfume.getDescription()}"></textarea>
         </div>
             <input type="hidden" name="id" th:value="${perfume.getId()}"/>
-         <input type="file" name="file">
             
         <button type="submit" class="btn btn-dark">Добавить</button>
 
