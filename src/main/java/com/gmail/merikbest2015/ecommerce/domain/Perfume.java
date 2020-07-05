@@ -16,34 +16,34 @@ public class Perfume {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    @NotBlank(message = "Пожалуйсто заполните поле")
+    @NotBlank(message = "Пожалуйста заполните поле")
     @Length(max = 255)
     private String perfumeTitle;
 
-    @NotBlank(message = "Пожалуйсто заполните поле")
+    @NotBlank(message = "Пожалуйста заполните поле")
     @Length(max = 255)
     private String perfumer;
 
-    @NotNull(message = "Пожалуйсто заполните поле")
+    @NotNull(message = "Пожалуйста заполните поле")
     private Integer year;
 
-    @NotBlank(message = "Пожалуйсто заполните поле")
+    @NotBlank(message = "Пожалуйста заполните поле")
     @Length(max = 255)
     private String country;
 
-    @NotBlank(message = "Пожалуйсто заполните поле")
+    @NotBlank(message = "Пожалуйста заполните поле")
     @Length(max = 255)
     private String perfumeGender;
 
-    @NotBlank(message = "Пожалуйсто заполните поле")
+    @NotBlank(message = "Пожалуйста заполните поле")
     @Length(max = 255)
     private String fragranceTopNotes;
 
-    @NotBlank(message = "Пожалуйсто заполните поле")
+    @NotBlank(message = "Пожалуйста заполните поле")
     @Length(max = 255)
     private String fragranceMiddleNotes;
 
-    @NotBlank(message = "Пожалуйсто заполните поле")
+    @NotBlank(message = "Пожалуйста заполните поле")
     @Length(max = 255)
     private String fragranceBaseNotes;
 
@@ -51,14 +51,14 @@ public class Perfume {
 
     private String filename;
 
-    @NotNull(message = "Пожалуйсто заполните поле")
+    @NotNull(message = "Пожалуйста заполните поле")
     private Integer price;
 
-    @NotBlank(message = "Пожалуйсто заполните поле")
+    @NotBlank(message = "Пожалуйста заполните поле")
     @Length(max = 255)
     private String volume;
 
-    @NotBlank(message = "Пожалуйсто заполните поле")
+    @NotBlank(message = "Пожалуйста заполните поле")
     @Length(max = 255)
     private String type;
 

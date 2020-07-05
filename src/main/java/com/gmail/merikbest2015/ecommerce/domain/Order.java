@@ -16,16 +16,16 @@ public class Order {
     private Double totalPrice;
     private LocalDate date;
 
-    @NotBlank(message = "Пожалуйсто заполните поле")
+    @NotBlank(message = "Пожалуйста заполните поле")
     private String firstName;
 
-    @NotBlank(message = "Пожалуйсто заполните поле")
+    @NotBlank(message = "Пожалуйста заполните поле")
     private String lastName;
 
-    @NotBlank(message = "Пожалуйсто заполните поле")
+    @NotBlank(message = "Пожалуйста заполните поле")
     private String city;
 
-    @NotBlank(message = "Пожалуйсто заполните поле")
+    @NotBlank(message = "Пожалуйста заполните поле")
     private String address;
 
     @Email(message = "Некорректный email")
