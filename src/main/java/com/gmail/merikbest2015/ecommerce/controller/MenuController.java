@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,10 +34,29 @@ public class MenuController {
     public String main(@PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC, size = 12) Pageable pageable, Model model) {
         Page<Perfume> page = perfumeService.findAll(pageable);
         int[] pagination = ControllerUtils.computePagination(page);
+        getMinMaxPerfumePrice(model);
 
         model.addAttribute("pagination", pagination);
         model.addAttribute("url", "/menu");
         model.addAttribute("page", page);
+
+        return "menu";
+    }
+
+    @GetMapping("/menu/price")
+    public String findByPrice(
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC, size = 12) Pageable pageable,
+            @RequestParam(required = false, defaultValue = "0") Integer startingPrice,
+            @RequestParam(required = false, defaultValue = "0") Integer endingPrice,
+            Model model
+    ) {
+        Page<Perfume> priceRange = perfumeService.findByPriceBetween(startingPrice, endingPrice, pageable);
+        int[] pagination = ControllerUtils.computePagination(priceRange);
+        getMinMaxPerfumePrice(model);
+
+        model.addAttribute("pagination", pagination);
+        model.addAttribute("url", "/menu/price" + priceRange);
+        model.addAttribute("page", priceRange);
 
         return "menu";
     }
@@ -49,6 +69,7 @@ public class MenuController {
     ) {
         Page<Perfume> perfumeList = perfumeService.findByPerfumer(perfumer, pageable);
         int[] pagination = ControllerUtils.computePagination(perfumeList);
+        getMinMaxPerfumePrice(model);
 
         model.addAttribute("pagination", pagination);
         model.addAttribute("url", "/menu/" + perfumer);
@@ -65,6 +86,7 @@ public class MenuController {
     ) {
         Page<Perfume> gender = perfumeService.findByPerfumeGender(perfumeGender, pageable);
         int[] pagination = ControllerUtils.computePagination(gender);
+        getMinMaxPerfumePrice(model);
 
         model.addAttribute("pagination", pagination);
         model.addAttribute("url", "/menu/gender/" + perfumeGender);
@@ -82,6 +104,7 @@ public class MenuController {
     ) {
         StringBuilder urlBuilder = new StringBuilder();
         Page<Perfume> perfumesSearch = null;
+        getMinMaxPerfumePrice(model);
 
         if (gender.isEmpty() && perfumers.isEmpty()) {
             return "redirect:/menu";
@@ -107,5 +130,13 @@ public class MenuController {
         model.addAttribute("page", perfumesSearch);
 
         return "menu";
+    }
+
+    private void getMinMaxPerfumePrice(Model model) {
+        BigDecimal minPerfumePrice = perfumeService.minPerfumePrice();
+        BigDecimal maxPerfumePrice = perfumeService.maxPerfumePrice();
+
+        model.addAttribute("minPerfumePrice", minPerfumePrice);
+        model.addAttribute("maxPerfumePrice", maxPerfumePrice);
     }
 }

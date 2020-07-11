@@ -8,10 +8,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface PerfumeRepository extends CrudRepository<Perfume, Long> {
     Page<Perfume> findAll(Pageable pageable);
+
+    Page<Perfume> findByPriceBetween(Integer startingPrice, Integer endingPrice, Pageable pageable);
 
     Page<Perfume> findByPerfumer(String perfumer, Pageable pageable);
 
@@ -26,6 +29,12 @@ public interface PerfumeRepository extends CrudRepository<Perfume, Long> {
     Page<Perfume> findByPerfumerInOrPerfumeGenderIn (List<String> perfumers, List<String> gender, Pageable pageable);
 
     Page<Perfume> findByPerfumerIn (List<String> perfumers, Pageable pageable);
+
+    @Query(value = "SELECT min(price) FROM Perfume ")
+    BigDecimal minPerfumePrice();
+
+    @Query(value = "SELECT max(price) FROM Perfume ")
+    BigDecimal maxPerfumePrice();
 
     @Modifying
     @Transactional

@@ -16,7 +16,9 @@
                 <div class="sidebar-header">
                     <h3>Парфюмерия</h3>
                 </div>
+
                 <form action="/menu/search" method="get">
+                <form th:action="@{/menu/price/{path} (path = ${search})}" method="get">
 
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary ml-auto d-inline-block bg-success" style="width: 80px;">Найти</button>
@@ -29,7 +31,21 @@
                         <a href="#homeSubmenu1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Цена</a>
                         <ul class="collapse list-unstyled" id="homeSubmenu1" >
                             <li>
-                                <a href="#">Тут будет ценовой диапазон</a>
+                                <div class="form-row form-group">
+                                    <div class="col">
+                                        <input type="text" name="startingPrice" class="form-control"  id="value" th:value="${minPerfumePrice}"/>
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" name="endingPrice" class="form-control" th:value="${maxPerfumePrice}" />
+                                    </div>
+                                </div>
+                                <input type="range" th:min="${minPerfumePrice}" th:max="${maxPerfumePrice}" th:value="${minPerfumePrice}"
+                                       class="custom-range" oninput="updateTextInput(this.value);">
+                                <script>
+                                    function updateTextInput(val) {
+                                        document.getElementById('value').value=val;
+                                    }
+                                </script>
                             </li>
                         </ul>
                     </li>
@@ -279,8 +295,6 @@
                             </li>
                         </ul>
                     </li>
-
-
                 </ul>
                 </form>
             </nav>

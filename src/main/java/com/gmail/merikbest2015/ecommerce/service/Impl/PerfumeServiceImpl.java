@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -30,6 +31,11 @@ public class PerfumeServiceImpl implements PerfumeService {
     }
 
     @Override
+    public Page<Perfume> findByPriceBetween(Integer startingPrice, Integer endingPrice, Pageable pageable) {
+        return perfumeRepository.findByPriceBetween(startingPrice, endingPrice, pageable);
+    }
+
+    @Override
     public Page<Perfume> findByPerfumer(String perfumer, Pageable pageable) {
         return perfumeRepository.findByPerfumer(perfumer, pageable);
     }
@@ -47,6 +53,16 @@ public class PerfumeServiceImpl implements PerfumeService {
     @Override
     public Page<Perfume> findByPerfumerIn(List<String> perfumers, Pageable pageable) {
         return perfumeRepository.findByPerfumerIn(perfumers, pageable);
+    }
+
+    @Override
+    public BigDecimal minPerfumePrice() {
+        return perfumeRepository.minPerfumePrice();
+    }
+
+    @Override
+    public BigDecimal maxPerfumePrice() {
+        return perfumeRepository.maxPerfumePrice();
     }
 
     @Override
