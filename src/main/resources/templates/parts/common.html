@@ -169,7 +169,7 @@
 
             <th:block th:unless="${c} == ${page.getSize()}">
                 <li class="page-item">
-                    <a class="page-link text-dark" th:href="${url + '?page=' + page.getNumber()+ '&size=' + c}"
+                    <a class="page-link text-dark" th:href="${url + '&page=' + page.getNumber()+ '&size=' + c}"
                        th:text="${c}"></a>
                 </li>
             </th:block>
