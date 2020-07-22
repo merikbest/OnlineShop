@@ -1,6 +1,9 @@
 # :hibiscus: Perfume web store
 
-This project is a simple web store built in Spring Boot.
+<img src="https://i.ibb.co/6YNPHCd/LOGO3.jpg" width="45%" height="45%">
+
+This project is a simple web store built in Spring Boot.<br>
+Look demo below.
 
 ## Used Technologies:
 
