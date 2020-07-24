@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.ecommerce.domain;
 
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Entity;
@@ -8,9 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.Objects;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(of = {"id", "perfumer", "perfumeTitle", "perfumeGender", "price"})
 public class Perfume {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -61,164 +66,4 @@ public class Perfume {
     @NotBlank(message = "Пожалуйста заполните поле")
     @Length(max = 255)
     private String type;
-
-    public Perfume() {
-    }
-
-    public Perfume(String perfumeTitle, String perfumer, Integer year, String country, String perfumeGender,
-                   String fragranceTopNotes, String fragranceMiddleNotes, String fragranceBaseNotes, String description,
-                   Integer price, String volume, String type
-    ) {
-        this.perfumeTitle = perfumeTitle;
-        this.perfumer = perfumer;
-        this.year = year;
-        this.country = country;
-        this.perfumeGender = perfumeGender;
-        this.fragranceTopNotes = fragranceTopNotes;
-        this.fragranceMiddleNotes = fragranceMiddleNotes;
-        this.fragranceBaseNotes = fragranceBaseNotes;
-        this.description = description;
-        this.price = price;
-        this.volume = volume;
-        this.type = type;
-
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getPerfumeTitle() {
-        return perfumeTitle;
-    }
-
-    public void setPerfumeTitle(String perfumeTitle) {
-        this.perfumeTitle = perfumeTitle;
-    }
-
-    public String getPerfumer() {
-        return perfumer;
-    }
-
-    public void setPerfumer(String perfumer) {
-        this.perfumer = perfumer;
-    }
-
-    public Integer getYear() {
-        return year;
-    }
-
-    public void setYear(Integer year) {
-        this.year = year;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getPerfumeGender() {
-        return perfumeGender;
-    }
-
-    public void setPerfumeGender(String gender) {
-        this.perfumeGender = gender;
-    }
-
-    public String getFragranceTopNotes() {
-        return fragranceTopNotes;
-    }
-
-    public void setFragranceTopNotes(String fragranceTopNotes) {
-        this.fragranceTopNotes = fragranceTopNotes;
-    }
-
-    public String getFragranceMiddleNotes() {
-        return fragranceMiddleNotes;
-    }
-
-    public void setFragranceMiddleNotes(String fragranceMiddleNotes) {
-        this.fragranceMiddleNotes = fragranceMiddleNotes;
-    }
-
-    public String getFragranceBaseNotes() {
-        return fragranceBaseNotes;
-    }
-
-    public void setFragranceBaseNotes(String fragranceBaseNotes) {
-        this.fragranceBaseNotes = fragranceBaseNotes;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getFilename() {
-        return filename;
-    }
-
-    public void setFilename(String filename) {
-        this.filename = filename;
-    }
-
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
-
-    public String getVolume() {
-        return volume;
-    }
-
-    public void setVolume(String volume) {
-        this.volume = volume;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Perfume perfume = (Perfume) o;
-        return Objects.equals(id, perfume.id) &&
-                Objects.equals(perfumeTitle, perfume.perfumeTitle) &&
-                Objects.equals(perfumer, perfume.perfumer) &&
-                Objects.equals(year, perfume.year) &&
-                Objects.equals(country, perfume.country) &&
-                Objects.equals(perfumeGender, perfume.perfumeGender) &&
-                Objects.equals(fragranceTopNotes, perfume.fragranceTopNotes) &&
-                Objects.equals(fragranceMiddleNotes, perfume.fragranceMiddleNotes) &&
-                Objects.equals(fragranceBaseNotes, perfume.fragranceBaseNotes) &&
-                Objects.equals(description, perfume.description) &&
-                Objects.equals(filename, perfume.filename) &&
-                Objects.equals(price, perfume.price) &&
-                Objects.equals(volume, perfume.volume) &&
-                Objects.equals(type, perfume.type);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, perfumeTitle, perfumer, year, country, perfumeGender, fragranceTopNotes, fragranceMiddleNotes, fragranceBaseNotes, description, filename, price, volume, type);
-    }
 }

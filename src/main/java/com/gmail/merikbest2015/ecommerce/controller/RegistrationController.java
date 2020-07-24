@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.ecommerce.controller;
 import com.gmail.merikbest2015.ecommerce.domain.User;
 import com.gmail.merikbest2015.ecommerce.domain.dto.CaptchaResponseDto;
 import com.gmail.merikbest2015.ecommerce.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,7 @@ import java.util.Collections;
 import java.util.Map;
 
 @Controller
+@Slf4j
 public class RegistrationController {
     public static final String CAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s";
 
@@ -81,19 +83,26 @@ public class RegistrationController {
             return "registration";
         }
 
+        log.debug("User {} registered", user.getUsername());
+
         return "redirect:/login";
     }
 
     @GetMapping("/activate/{code}")
     public String activateEmailCode(@PathVariable String code, Model model) {
         boolean isActivated = userService.activateUser(code);
+        String username = userService.findByActivationCode(code).getUsername();
 
         if (isActivated) {
             model.addAttribute("messageType","alert-success");
             model.addAttribute("message","Пользователь успешно активирован");
+
+            log.debug("User {} successfully activated", username);
         } else {
             model.addAttribute("messageType","alert-danger");
             model.addAttribute("message","Код активации не найден");
+
+            log.error("Cant find activation code.");
         }
         
         return "login";

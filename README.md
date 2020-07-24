@@ -1,6 +1,6 @@
 # :hibiscus: Perfume web store
 
-This project is a simple web store built in Spring Boot.
+This E-commerce project built on Spring Boot.
 
 ## Used Technologies:
 
@@ -11,6 +11,7 @@ This project is a simple web store built in Spring Boot.
 * Bootstrap, CSS
 * Maven
 * Junit, Mockito
+* Lombok, slf4j
 
 ## About This Project
 * Customers can register / log in.

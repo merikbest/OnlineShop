@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.ecommerce.domain.Order;
 import com.gmail.merikbest2015.ecommerce.domain.User;
 import com.gmail.merikbest2015.ecommerce.service.OrderService;
 import com.gmail.merikbest2015.ecommerce.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@Slf4j
 public class OrderController {
     private final UserService userService;
 
@@ -67,6 +69,11 @@ public class OrderController {
             user.getPerfumeList().clear();
 
             orderService.save(order);
+
+            log.debug("User {} id={} made an order: FirstName={}, LastName={}, TotalPrice={}, City={}, " +
+                    "Address={}, PostIndex={}, Email={}, PhoneNumber={}",
+                    user.getUsername(), user.getId(), order.getFirstName(), order.getLastName(), order.getTotalPrice(),
+                    order.getCity(), order.getAddress(), order.getPostIndex(), order.getEmail(), order.getPhoneNumber());
         }
 
         return "redirect:/finalizeOrder";

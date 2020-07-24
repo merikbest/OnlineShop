@@ -5,6 +5,7 @@ import com.gmail.merikbest2015.ecommerce.domain.Role;
 import com.gmail.merikbest2015.ecommerce.domain.User;
 import com.gmail.merikbest2015.ecommerce.service.PerfumeService;
 import com.gmail.merikbest2015.ecommerce.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -26,6 +27,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Controller
+@Slf4j
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;
@@ -57,7 +59,7 @@ public class UserController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("productlist/{perfume}")
     public String editProduct(@PathVariable Perfume perfume, Model model) {
-        model.addAttribute("perfume" , perfume);
+        model.addAttribute("perfume", perfume);
 
         return "admin/productEdit";
     }
@@ -71,6 +73,9 @@ public class UserController {
                 perfume.getCountry(), perfume.getPerfumeGender(), perfume.getFragranceTopNotes(), perfume.getFragranceMiddleNotes(),
                 perfume.getFragranceBaseNotes(), perfume.getDescription(), perfume.getFilename(), perfume.getPrice(),
                 perfume.getVolume(), perfume.getType(), perfume.getId());
+
+        log.debug("ADMIN save edited product to DB: id={}, perfumer={}, perfume={}",
+                perfume.getId(), perfume.getPerfumer(), perfume.getPerfumeTitle());
 
         return "redirect:/user/productlist";
     }
@@ -99,6 +104,9 @@ public class UserController {
             saveFile(perfume, file);
 
             perfumeService.save(perfume);
+
+            log.debug("ADMIN added product to DB: id={}, perfumer={}, perfume={}",
+                    perfume.getId(), perfume.getPerfumer(), perfume.getPerfumeTitle());
         }
 
         return "admin/addToDb";
@@ -130,6 +138,8 @@ public class UserController {
     ) {
         userService.userSave(username, form, user);
 
+        log.debug("ADMIN save edited user form: id={}, name={}, form={}", user.getId(), username, form);
+
         return "redirect:/user";
     }
 
@@ -148,6 +158,8 @@ public class UserController {
             @RequestParam String email
     ) {
         userService.updateProfile(user, password, email);
+
+        log.debug("{} change personal info: password={}, email={}", user.getUsername(), password, email);
 
         return "redirect:/cabinet";
     }
