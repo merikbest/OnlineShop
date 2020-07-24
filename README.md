@@ -1,6 +1,9 @@
 # :hibiscus: Perfume web store
 
-This E-commerce project built on Spring Boot.
+<img src="https://i.ibb.co/6YNPHCd/LOGO3.jpg" width="45%" height="45%">
+
+This E-commerce project built on Spring Boot.<br>
+Look demo below.
 
 ## Used Technologies:
 
