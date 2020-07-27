@@ -27,9 +27,9 @@
                     <h6 class="mr-5"><span th:text="${perfume.getPrice()}"></span>,00 грн.</h6>
 <!--                    <label class="px-3">Количество:</label>-->
 
-                    <form action="/addToCart" method="post">
+                    <form action="/cart/add" method="post">
 <!--                        <input type="text" name="amount" placeholder="1">-->
-                        <button type="submit" name="buttonAddToCart" class="btn btn-dark mx-3"
+                        <button type="submit" name="add" class="btn btn-dark mx-3"
                                 th:value="${perfume.getId()}">В корзину</button>
                     </form>
 <!--                    <input type="text" value="1">-->

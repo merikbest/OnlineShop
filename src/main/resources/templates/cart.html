@@ -37,7 +37,7 @@
                         <div class="card-body">
                             <h5 class="card-title"><span th:text="${perfume.getPrice()}"></span> грн.</h5>
 
-                            <form class="d-inline" action="/removeFromCart" method="post">
+                            <form class="d-inline" action="/cart/remove" method="post">
                                 <button class="btn btn-warning">Удалить</button>
                                 <input type="hidden" name="perfumeId" th:value="${perfume.getId()}">
                                 <div class="from-group mb-2">

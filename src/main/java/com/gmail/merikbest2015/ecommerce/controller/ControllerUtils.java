@@ -9,7 +9,19 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * Class with utility methods for controller classes.
+ *
+ * @author Miroslav Khotinskiy (merikbest2015@gmail.com)
+ * @version 1.0
+ */
 public class ControllerUtils {
+    /**
+     * Returns validation errors to html page.
+     *
+     * @param bindingResult errors in validating http request.
+     * @return validation errors to html page.
+     */
     static Map<String, String> getErrors(BindingResult bindingResult) {
         Collector<FieldError, ?, Map<String, String>> collector = Collectors.toMap(
                 fieldError -> fieldError.getField() + "Error",
@@ -18,6 +30,12 @@ public class ControllerUtils {
         return bindingResult.getFieldErrors().stream().collect(collector);
     }
 
+    /**
+     * Returns computed pagination.
+     *
+     * @param page is a sublist of a list of objects.
+     * @return computed pagination.
+     */
     static int[] computePagination(Page page) {
         Integer totalPages = page.getTotalPages();
         if (totalPages > 7) {
@@ -41,6 +59,12 @@ public class ControllerUtils {
         }
     }
 
+    /**
+     * Returns processed URL string depending on the incoming search parameters on the page in the menu.
+     *
+     * @param urlArray incoming search parameters.
+     * @return processed URL string.
+     */
     static StringBuilder getUrlBuilder(List<String> urlArray) {
         StringBuilder stringBuilder = new StringBuilder();
 

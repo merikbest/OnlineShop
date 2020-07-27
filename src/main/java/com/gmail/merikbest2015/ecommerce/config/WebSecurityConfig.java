@@ -9,30 +9,70 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * Security configuration class.
+ * The class extends the {@link WebSecurityConfigurerAdapter} class.
+ * Marked with @Configuration annotation - the class is the source of the bean definition.
+ * The @EnableWebSecurity annotation in conjunction with the {@link WebSecurityConfigurerAdapter} class
+ * works to provide authentication.
+ *
+ * @author Miroslav Khotinskiy (merikbest2015@gmail.com)
+ * @version 1.0
+ * @see UserServiceImpl
+ * @see PasswordEncoder
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    /**
+     * Service object for working with registered users.
+     * The @Autowired annotation will allow Spring to automatically initialize objects.
+     */
     @Autowired
     private UserServiceImpl userService;
 
+    /**
+     * Service object for encoding passwords.
+     * The @Autowired annotation will allow Spring to automatically initialize objects.
+     */
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * Implementation of PasswordEncoder that uses the BCrypt strong hashing function.
+     *
+     * @return strength the log rounds to use, between 4 and 31.
+     */
     @Bean
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder(8);
     }
 
+    /**
+     * Configuring rules for user access to site pages.
+     * The addresses of resources with limited access are indicated.
+     *
+     * @param http object of the {@link HttpSecurity} for setting access rights to pages.
+     * @throws Exception exception methods of the {@link HttpSecurity} class.
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/", "/search", "/registration", "/contacts", "/img/**", "/static/**",
-                            "/activate/*", "/product/*", "/menu/**").permitAll()
+                    .antMatchers("/",
+                            "/search",
+                            "/registration",
+                            "/contacts",
+                            "/img/**",
+                            "/static/**",
+                            "/activate/*",
+                            "/product/*",
+                            "/menu/**").permitAll()
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
@@ -44,6 +84,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().csrf().disable();
     }
 
+    /**
+     * Setting up users with their roles. Users will be loaded from the database
+     * using the implementation of the {@link UserDetailsService} interface methods.
+     *
+     * @param auth object of the {@link AuthenticationManagerBuilder}.
+     * @throws Exception exception methods of the {@link AuthenticationManagerBuilder}.
+     */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService)
