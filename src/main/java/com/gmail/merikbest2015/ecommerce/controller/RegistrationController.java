@@ -148,13 +148,11 @@ public class RegistrationController {
     @GetMapping("/activate/{code}")
     public String activateEmailCode(@PathVariable String code, Model model) {
         boolean isActivated = userService.activateUser(code);
-        String username = userService.findByActivationCode(code).getUsername();
 
         if (isActivated) {
             model.addAttribute("messageType", "alert-success");
             model.addAttribute("message", "Пользователь успешно активирован");
 
-            log.debug("User {} successfully activated", username);
         } else {
             model.addAttribute("messageType", "alert-danger");
             model.addAttribute("message", "Код активации не найден");

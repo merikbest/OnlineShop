@@ -1,1 +1,0 @@
-INSERT INTO parfume_db.usr (id, activation_code, active, email, password, username) VALUES (1, null, true, 'merikbest2015@gmail.com', '$2a$08$eApn9x3qPiwp6cBVRYaDXed3J/usFEkcZbuc3FDa74bKOpUzHR.S.', 'admin');

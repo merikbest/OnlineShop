@@ -5,6 +5,7 @@ import com.gmail.merikbest2015.ecommerce.domain.User;
 import com.gmail.merikbest2015.ecommerce.repos.UserRepository;
 import com.gmail.merikbest2015.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -50,6 +51,12 @@ public class UserServiceImpl implements UserDetailsService, UserService {
      * for encoding passwords.
      */
     private final PasswordEncoder passwordEncoder;
+
+    /**
+     * Host name.
+     */
+    @Value("${hostname}")
+    private String hostname;
 
     /**
      * Constructor for initializing the main variables of the user service.
@@ -130,8 +137,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         if (!StringUtils.isEmpty(user.getEmail())) {
             String message = String.format("Привет, %s! \n " +
                     "Добро пожаловать в интернет магазин Perfume." +
-                    "Пожалуйста, пройдите по ссылке http://localhost:8080/activate/%s",
-                    user.getUsername(), user.getActivationCode()
+                    "Пожалуйста, пройдите по ссылке http://%s/activate/%s",
+                    user.getUsername(),
+                    hostname,
+                    user.getActivationCode()
             );
             mailSender.send(user.getEmail(), "Activation code", message);
         }

@@ -15,7 +15,6 @@ import java.util.Set;
  * @author Miroslav Khotinskiy (merikbest2015@gmail.com)
  * @version 1.0
  */
-@Value
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CaptchaResponseDto {
     /**
@@ -30,4 +29,20 @@ public class CaptchaResponseDto {
      */
     @JsonAlias("error-codes")
     private Set<String> errorCodes;
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public Set<String> getErrorCodes() {
+        return errorCodes;
+    }
+
+    public void setErrorCodes(Set<String> errorCodes) {
+        this.errorCodes = errorCodes;
+    }
 }

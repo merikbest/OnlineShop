@@ -1,15 +1,21 @@
 # :hibiscus: Perfume web store
 
-<img src="https://i.ibb.co/6YNPHCd/LOGO3.jpg" width="45%" height="45%">
+<a href="http://perfumeweb.tk/">
+    <img src="https://i.ibb.co/6YNPHCd/LOGO3.jpg" width="45%" height="45%">
+</a>
 
 This E-commerce project built on Spring Boot.<br>
 Look demo below.
+
+Or visit website http://perfumeweb.tk <br>
+Login: admin <br>
+Password: admin
 
 ## Used Technologies:
 
 * Spring (Boot, Data, Security)
 * JPA / Hibernate
-* MySQL
+* PostgreSQL
 * Thymeleaf
 * Bootstrap, CSS
 * Maven
