@@ -5,6 +5,7 @@
 </a>
 
 This E-commerce project built on Spring Boot.<br>
+Deployed on Amazon web services EC2.<br>
 Look demo below.
 
 Or visit website http://perfumeweb.tk <br>
