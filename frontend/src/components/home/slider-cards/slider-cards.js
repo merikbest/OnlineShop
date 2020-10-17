@@ -1,5 +1,9 @@
 import React, {Component} from 'react';
 import Carousel from "react-bootstrap/Carousel";
+import "./slider-cards.css"
+import {Link} from "react-router-dom";
+
+const perfumesId = [39, 56, 119, 59, 47, 95, 89, 98, 52, 40, 92, 99];
 
 class SliderCards extends Component {
 
@@ -13,6 +17,40 @@ class SliderCards extends Component {
         this.setState({perfumes: body});
     }
 
+    addCarouselItems(array, counter) {
+
+        return (
+            <Carousel.Item>
+                <div className="card-deck">
+                    {array.map((perfume) => {
+                        for (let i = counter; i < counter + 4; i++) {
+                            if (perfume.id === perfumesId[i]) {
+                                return (
+                                    <div className="card">
+                                        <img
+                                            className="d-block mx-auto w-50"
+                                            src={`/img/${perfume.filename}`}/>
+                                        <div className="card-body text-center">
+                                            <h5>{perfume.perfumeTitle}</h5>
+                                            <h6>{perfume.perfumer}</h6>
+                                            <h6><span>{perfume.price}</span>,00 грн.
+                                            </h6>
+                                            <Link to={`/rest/product/${perfume.id}`}>
+                                                <span className="btn btn-dark">
+                                                    Купить
+                                                </span>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                )
+                            }
+                        }
+                    })}
+                </div>
+            </Carousel.Item>
+        )
+    }
+
     render() {
         const {perfumes} = this.state;
 
@@ -22,43 +60,17 @@ class SliderCards extends Component {
                     <h4>Новинки</h4>
                 </div>
 
-                <div className="container mt-5">
+                <div className="container mt-5" id="indicators">
                     <form method="get" action="/rest">
-                        <div className="row">
-                            <div className="col-sm-12">
-                                <Carousel>
-                                    <Carousel.Item>
-                                        <div className="row">
-                                            <div className="col-lg-3 d-flex align-items-stretch">
-                                                <div className="card mb-5">
-                                                    {perfumes.map((perfume) => {
-                                                        if (perfume.id === 39) {
-                                                            return (
-                                                                <div>
-                                                                    <img
-                                                                        src={`/img/${perfume.filename}`}
-                                                                        className="rounded mx-auto w-50"/>
-                                                                    <div className="card-body text-center">
-                                                                        <h5>{perfume.perfumeTitle}</h5>
-                                                                        <h6>{perfume.perfumer}</h6>
-                                                                        <h6><span>{perfume.price}</span>,00 грн.</h6>
-                                                                        <a className="btn btn-dark" href={`/product/${perfume.id}`}>Купить</a>
-                                                                    </div>
-                                                                </div>
-                                                            )
-                                                        }
-                                                    })}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Carousel.Item>
-                                </Carousel>
-                            </div>
-                        </div>
+                        <Carousel>
+                            {this.addCarouselItems(perfumes, 0)}
+                            {this.addCarouselItems(perfumes, 4)}
+                            {this.addCarouselItems(perfumes, 8)}
+                        </Carousel>
                     </form>
                 </div>
             </div>
-        );
+        )
     }
 }
 

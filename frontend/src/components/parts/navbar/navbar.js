@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
+import {Link} from "react-router-dom";
 
 class NavBar extends Component {
     render() {
         return (
             <div>
-
                 <div className="container-fluid bg-black header-top d-none d-md-block pb-5 pt-5">
-                    <img id="logo-main" src="https://i.ibb.co/fqYvrL8/LOGO4.jpg" className="rounded mx-auto d-block "/>
+                    <img id="logo-main" src="https://i.ibb.co/fqYvrL8/LOGO4.jpg"
+                         className="rounded mx-auto d-block "/>
                 </div>
-
                 <div className="container-fluid bg-black">
-                    <nav className="container navbar navbar-expand-lg bg-black text-white" style={{fontSize: "18px"}}>
+                    <nav className="container navbar navbar-expand-lg bg-black text-white"
+                         style={{fontSize: "18px"}}>
                         <button className="navbar-toggler" type="button" data-toggle="collapse"
                                 data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                                 aria-expanded="false" aria-label="Toggle navigation">
@@ -19,13 +20,13 @@ class NavBar extends Component {
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul className="navbar-nav mr-auto ">
                                 <li className="nav-item">
-                                    <a className="nav-link text-light pl-5 pr-5" href="/">Главная</a>
+                                    <Link  to={"/rest"}><span className="nav-link text-light pl-5 pr-5">Главная</span></Link>
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link text-light pl-5 pr-5" href="/menu">Парфюмерия</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link text-light pl-5 pr-5" href="/contacts">Контакты</a>
+                                    <Link to={"/rest/contacts"}><span className="nav-link text-light pl-5 pr-5">Контакты</span></Link>
                                 </li>
                             </ul>
 
@@ -45,7 +46,7 @@ class NavBar extends Component {
                                 <li className="nav-item">
                                     <a className="nav-link" href="/cart">
                                         <i className="fas fa-shopping-cart fa-1 pl-2 pr-2"
-                                        style={{color: "white"}}></i></a>
+                                           style={{color: "white"}}></i></a>
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link text-light " href="/cabinet">Личный кабинет</a>
@@ -58,7 +59,6 @@ class NavBar extends Component {
                         </div>
                     </nav>
                 </div>
-
             </div>
         );
     }
