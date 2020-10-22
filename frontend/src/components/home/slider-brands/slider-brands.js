@@ -12,6 +12,7 @@ class SliderBrands extends Component {
             indicators: true
         }
 
+        //TODO rewrite this crap
         return (
             <div className="container text-center my-3 mt-5">
                 <h3>Бренды</h3>

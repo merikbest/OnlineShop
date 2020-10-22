@@ -49,7 +49,7 @@ class NavBar extends Component {
                                            style={{color: "white"}}></i></a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link text-light " href="/cabinet">Личный кабинет</a>
+                                    <Link to={"/rest/login"}><a className="nav-link text-light ">Личный кабинет</a></Link>
                                 </li>
                             </ul>
                             {/*sec:authorize="isAuthenticated()"*/}
