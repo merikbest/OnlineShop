@@ -23,7 +23,7 @@ class Login extends Component {
 
         ShopService.login(user)
             .then((response) => {
-                this.props.history.push("/rest/login")
+                this.props.history.push("/login")
             });
     }
 

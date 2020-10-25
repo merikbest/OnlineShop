@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
  * @see UserRepository
  * @see MailSender
  */
-@Service
+@Service("userDetailsServiceImpl")
 public class UserServiceImpl implements UserDetailsService, UserService {
     /**
      * Implementation of the {@link UserRepository} interface
@@ -87,8 +87,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
      * @throws LockedException           if an authentication request is rejected because the account is locked.
      */
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, LockedException {
-        User user = userRepository.findByUsername(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException, LockedException {
+        User user = userRepository.findByEmail(email);
 
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
@@ -265,5 +265,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     public User save(User user) {
         return userRepository.save(user);
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }

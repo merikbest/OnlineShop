@@ -28,4 +28,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @return The {@link User} class object.
      */
     User findByActivationCode(String code);
+
+    User findByEmail(String email);
 }

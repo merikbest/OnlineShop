@@ -119,6 +119,13 @@
             <version>2.3.0</version>
         </dependency>
 
+        <!-- JSON -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+
         <!--test-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -86,4 +86,6 @@ public interface UserService {
      * @return The {@link User} class object which will be saved in the database.
      */
     User save(User user);
+
+    User findByEmail(String email);
 }
