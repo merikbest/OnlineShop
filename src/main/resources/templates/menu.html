@@ -17,12 +17,12 @@
                     <h3>Парфюмерия</h3>
                 </div>
 
-                <form action="/menu/search" method="get">
-<!--                <form th:action="@{/menu/price/{path} (path = ${search})}" method="get">-->
+                <form action="/perfume/search" method="get">
+<!--                <form th:action="@{/perfume/price/{path} (path = ${search})}" method="get">-->
 
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary ml-auto d-inline-block bg-success" style="width: 80px;">Найти</button>
-                    <a href="/menu" class="btn btn-secondary ml-2 d-inline-block" role="button" style="width: 100px;">Обновить</a>
+                    <a href="/perfume" class="btn btn-secondary ml-2 d-inline-block" role="button" style="width: 100px;">Обновить</a>
                 </div>
 
                 <ul class="list-unstyled components">
@@ -312,7 +312,7 @@
                                         <h6><span th:text="${perfume.getPrice()}"></span>,00 грн.</h6>
                                     </div>
                                     <div class="text-center align-items-end mb-3">
-                                        <a th:href="@{/product/{path} (path = ${perfume.getId()})}" class="btn btn-dark">Купить</a>
+                                        <a th:href="@{/perfume/{perfumeId} (perfumeId = ${perfume.getId()})}" class="btn btn-dark">Купить</a>
                                     </div>
                                 </div>
                             </div>

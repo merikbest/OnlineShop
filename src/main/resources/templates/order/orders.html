@@ -36,7 +36,7 @@
             <th>
                 <div th:each="product : ${order.getPerfumeList()}">
                     <p>Id товара:
-                        <a th:href="@{/product/{path} (path = ${product.getId()})}" th:text="${product.getId()}"></a>
+                        <a th:href="@{/perfume/{perfumeId} (perfumeId = ${product.getId()})}" th:text="${product.getId()}"></a>
                     </p>
                 </div>
             </th>

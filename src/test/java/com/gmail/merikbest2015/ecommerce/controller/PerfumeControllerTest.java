@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
 @SpringBootTest
-public class MenuControllerTest {
+public class PerfumeControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -38,7 +38,7 @@ public class MenuControllerTest {
     private PerfumeService perfumeService;
 
     @Autowired
-    private MenuController menuController;
+    private PerfumeController perfumeController;
 
     @Test
     public void mainMenuTest() throws Exception {
@@ -52,7 +52,7 @@ public class MenuControllerTest {
         when(perfumeRepository.findAll(pageable)).thenReturn(page);
 
         assertNotNull(perfumes);
-        assertEquals(1, perfumeService.findAll(pageable).getSize());
+        assertEquals(1, perfumeService.getPerfumes(pageable).getSize());
     }
 
     @Test
@@ -68,8 +68,8 @@ public class MenuControllerTest {
         when(perfumeRepository.findByPerfumer(perfume.getPerfumer(), pageable)).thenReturn(page);
 
         assertNotNull(perfumes);
-        assertEquals(1, perfumeService.findByPerfumer(perfume.getPerfumer(), pageable).getSize());
-        assertEquals("Dior", perfumeService.findByPerfumer(perfume.getPerfumer(), pageable)
+        assertEquals(1, perfumeService.getPerfumesByPerfumer(perfume.getPerfumer(), pageable).getSize());
+        assertEquals("Dior", perfumeService.getPerfumesByPerfumer(perfume.getPerfumer(), pageable)
                 .getContent().get(0).getPerfumer());
     }
 
@@ -86,8 +86,8 @@ public class MenuControllerTest {
         when(perfumeRepository.findByPerfumeGender(perfume.getPerfumeGender(), pageable)).thenReturn(page);
 
         assertNotNull(perfumes);
-        assertEquals(1, perfumeService.findByPerfumeGender(perfume.getPerfumeGender(), pageable).getSize());
-        assertEquals("мужской", perfumeService.findByPerfumeGender(perfume.getPerfumeGender(), pageable)
+        assertEquals(1, perfumeService.getPerfumesByGender(perfume.getPerfumeGender(), pageable).getSize());
+        assertEquals("мужской", perfumeService.getPerfumesByGender(perfume.getPerfumeGender(), pageable)
                 .getContent().get(0).getPerfumeGender());
     }
 

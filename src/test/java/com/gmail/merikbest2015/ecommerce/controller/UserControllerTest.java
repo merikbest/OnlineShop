@@ -57,7 +57,7 @@ public class UserControllerTest {
 
         when(perfumeRepository.findAll(pageable)).thenReturn(page);
 
-        assertEquals(1, perfumeService.findAll(pageable).getSize());
+        assertEquals(1, perfumeService.getPerfumes(pageable).getSize());
     }
 
     @Test

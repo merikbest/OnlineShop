@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.ecommerce.controller;
+package com.gmail.merikbest2015.ecommerce.utils;
 
 import org.springframework.data.domain.Page;
 import org.springframework.validation.BindingResult;
@@ -9,20 +9,9 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-/**
- * Class with utility methods for controller classes.
- *
- * @author Miroslav Khotinskiy (merikbest2015@gmail.com)
- * @version 1.0
- */
 public class ControllerUtils {
-    /**
-     * Returns validation errors to html page.
-     *
-     * @param bindingResult errors in validating http request.
-     * @return validation errors to html page.
-     */
-    static Map<String, String> getErrors(BindingResult bindingResult) {
+
+    public static Map<String, String> getErrors(BindingResult bindingResult) {
         Collector<FieldError, ?, Map<String, String>> collector = Collectors.toMap(
                 fieldError -> fieldError.getField() + "Error",
                 FieldError::getDefaultMessage
@@ -30,13 +19,7 @@ public class ControllerUtils {
         return bindingResult.getFieldErrors().stream().collect(collector);
     }
 
-    /**
-     * Returns computed pagination.
-     *
-     * @param page is a sublist of a list of objects.
-     * @return computed pagination.
-     */
-    static int[] computePagination(Page page) {
+    public static int[] computePagination(Page page) {
         Integer totalPages = page.getTotalPages();
         if (totalPages > 7) {
             Integer pageNumber = page.getNumber() + 1;
@@ -59,13 +42,7 @@ public class ControllerUtils {
         }
     }
 
-    /**
-     * Returns processed URL string depending on the incoming search parameters on the page in the menu.
-     *
-     * @param urlArray incoming search parameters.
-     * @return processed URL string.
-     */
-    static StringBuilder getUrlBuilder(List<String> urlArray) {
+    public static StringBuilder getUrlBuilder(List<String> urlArray) {
         StringBuilder stringBuilder = new StringBuilder();
 
         if (urlArray.get(0).contains("женский") || urlArray.get(0).contains("мужской")) {
