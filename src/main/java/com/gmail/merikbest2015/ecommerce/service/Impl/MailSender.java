@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.ecommerce.service.Impl;
 
+import com.gmail.merikbest2015.ecommerce.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -15,11 +16,21 @@ public class MailSender {
     @Value("${spring.mail.username}")
     private String username;
 
-    public void send(String emailTo, String subject, String message) {
+    @Value("${hostname}")
+    private String hostname;
+
+    public void sendEmail(User user) {
+        String message = String.format("Привет, %s! \n " +
+                        "Добро пожаловать в интернет магазин Perfume." +
+                        "Пожалуйста, пройдите по ссылке http://%s/registration/activate/%s",
+                user.getUsername(),
+                hostname,
+                user.getActivationCode()
+        );
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setFrom(username);
-        mailMessage.setTo(emailTo);
-        mailMessage.setSubject(subject);
+        mailMessage.setTo(user.getEmail());
+        mailMessage.setSubject("Activation code");
         mailMessage.setText(message);
         mailSender.send(mailMessage);
     }

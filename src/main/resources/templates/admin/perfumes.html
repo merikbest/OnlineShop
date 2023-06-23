@@ -17,7 +17,7 @@
     <div class="container mt-5">
         <div th:insert="~{parts/common :: pagination}"></div>
 
-        <form method="get" action="/user/productlist">
+        <form method="get" action="/admin/perfumes">
             <div class="container-fluid mt-5">
                 <form method="get" action="/">
                     <div class="row" th:fragment="list">
@@ -30,7 +30,7 @@
                                     <h6><span th:text="${perfume.getPrice()}"></span>,00 грн.</h6>
                                 </div>
                                 <div class="text-center align-items-end mb-3">
-                                    <a th:href="@{/user/productlist/{path} (path = ${perfume.getId()})}" class="btn btn-dark">EDIT</a>
+                                    <a th:href="@{/admin/perfume/{perfumeId} (perfumeId = ${perfume.getId()})}" class="btn btn-dark">EDIT</a>
                                 </div>
                             </div>
                         </div>

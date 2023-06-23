@@ -3,11 +3,14 @@ package com.gmail.merikbest2015.ecommerce.service.Impl;
 import com.gmail.merikbest2015.ecommerce.domain.Order;
 import com.gmail.merikbest2015.ecommerce.domain.Perfume;
 import com.gmail.merikbest2015.ecommerce.domain.User;
+import com.gmail.merikbest2015.ecommerce.domain.dto.OrderRequest;
 import com.gmail.merikbest2015.ecommerce.repos.OrderRepository;
 import com.gmail.merikbest2015.ecommerce.repos.UserRepository;
 import com.gmail.merikbest2015.ecommerce.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,38 +20,33 @@ public class OrderServiceImpl implements OrderService {
 
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
+    private final ModelMapper modelMapper;
 
     @Override
-    public List<Perfume> getOrder(String username) {
-        User user = userRepository.findByUsername(username);
-        return user.getPerfumeList();
-    }
-
-    @Override
-    public Long finalizeOrder() {
-        List<Order> orderList = orderRepository.findAll();
-        Order order = orderList.get(orderList.size() - 1);
-        return order.getId();
-    }
-
-    @Override
-    public List<Order> getUserOrdersList(String username) {
-        User user = userRepository.findByUsername(username);
-        return orderRepository.findOrderByUserId(user.getId());
-    }
-
-    @Override
-    public List<Order> findAll() {
+    public List<Order> getAllOrders() {
         return orderRepository.findAll();
     }
 
     @Override
-    public Order save(Order order) {
-        return orderRepository.save(order);
+    public List<Perfume> getOrder(String email) {
+        User user = userRepository.findByEmail(email);
+        return user.getPerfumeList();
     }
 
     @Override
-    public List<Order> findOrderByUser(User user) {
-        return orderRepository.findOrderByUser(user);
+    @Transactional
+    public Long postOrder(User user, OrderRequest orderRequest) {
+        Order order = modelMapper.map(orderRequest, Order.class);
+        order.setUser(user);
+        order.getPerfumeList().addAll(user.getPerfumeList());
+        orderRepository.save(order);
+        user.getPerfumeList().clear();
+        return order.getId();
+    }
+
+    @Override
+    public List<Order> getUserOrdersList(String email) {
+        User user = userRepository.findByEmail(email);
+        return orderRepository.findOrderByUserId(user.getId());
     }
 }

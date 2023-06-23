@@ -1,6 +1,11 @@
 package com.gmail.merikbest2015.ecommerce.utils;
 
+import com.gmail.merikbest2015.ecommerce.domain.Perfume;
+import com.gmail.merikbest2015.ecommerce.service.PerfumeService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
@@ -9,9 +14,13 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+@Component
+@RequiredArgsConstructor
 public class ControllerUtils {
 
-    public static Map<String, String> getErrors(BindingResult bindingResult) {
+    private final PerfumeService perfumeService;
+
+    public Map<String, String> getErrors(BindingResult bindingResult) {
         Collector<FieldError, ?, Map<String, String>> collector = Collectors.toMap(
                 fieldError -> fieldError.getField() + "Error",
                 FieldError::getDefaultMessage
@@ -19,7 +28,15 @@ public class ControllerUtils {
         return bindingResult.getFieldErrors().stream().collect(collector);
     }
 
-    public static int[] computePagination(Page page) {
+    public void processModel(Model model, String url, Page<Perfume> perfumes) {
+        model.addAttribute("url", url);
+        model.addAttribute("pagination", computePagination(perfumes));
+        model.addAttribute("page", perfumes);
+        model.addAttribute("minPerfumePrice", perfumeService.minPerfumePrice());
+        model.addAttribute("maxPerfumePrice", perfumeService.maxPerfumePrice());
+    }
+
+    private int[] computePagination(Page<?> page) {
         Integer totalPages = page.getTotalPages();
         if (totalPages > 7) {
             Integer pageNumber = page.getNumber() + 1;
@@ -35,30 +52,9 @@ public class ControllerUtils {
             Collections.addAll(list, bodyAfter);
             Collections.addAll(list, tail);
             Integer[] arr = list.toArray(new Integer[0]);
-            int[] res = Arrays.stream(arr).mapToInt(Integer::intValue).toArray();
-            return res;
+            return Arrays.stream(arr).mapToInt(Integer::intValue).toArray();
         } else {
             return IntStream.rangeClosed(1, totalPages).toArray();
         }
-    }
-
-    public static StringBuilder getUrlBuilder(List<String> urlArray) {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        if (urlArray.get(0).contains("женский") || urlArray.get(0).contains("мужской")) {
-            stringBuilder.append("?gender=" + urlArray.get(0));
-        } else {
-            stringBuilder.append("?perfumers=" + urlArray.get(0).replaceAll("\\s+", "+"));
-        }
-
-        for (int i = 1; i < urlArray.size(); i++) {
-            if (urlArray.get(i).contains("женский") || urlArray.get(i).contains("мужской")) {
-                stringBuilder.append("&gender=" + urlArray.get(i));
-            } else {
-                stringBuilder.append("&perfumers=" + urlArray.get(i).replaceAll("\\s+", "+"));
-            }
-        }
-
-        return stringBuilder;
     }
 }

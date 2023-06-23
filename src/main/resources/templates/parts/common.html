@@ -6,10 +6,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" />
     <link rel="stylesheet" href="/static/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
@@ -38,20 +40,20 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto ">
                     <li class="nav-item">
-                        <a class="nav-link text-light pl-5 pr-5" href="/">Главная</a>
+                        <a class="nav-link text-light pl-5 pr-5" href="/">HOME</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light pl-5 pr-5" href="/perfume">Парфюмерия</a>
+                        <a class="nav-link text-light pl-5 pr-5" href="/perfume">PERFUMES</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light pl-5 pr-5" href="/contacts">Контакты</a>
+                        <a class="nav-link text-light pl-5 pr-5" href="/user/contacts">CONTACTS</a>
                     </li>
                 </ul>
 
                 <ul class="navbar-nav ml-auto">
 
-                    <form class="form-inline d-flex justify-content-center md-form form-sm mr-3" method="get" action="/search">
-                        <input class="form-control form-control-sm mr-3 w-75 rounded-0" type="text" name="text" placeholder="Поиск"
+                    <form class="form-inline d-flex justify-content-center md-form form-sm mr-3" method="get" action="/perfume/search">
+                        <input class="form-control form-control-sm mr-3 w-75 rounded-0" type="text" name="text" placeholder="Search"
                                aria-label="Search" />
                         <button type="submit" class="bg-black"><i class="fas fa-search fa-1x" aria-hidden="true" style="color:white"></i></button>
                     </form>
@@ -60,16 +62,25 @@
                         <a class="nav-link" href="/cart"><i class="fas fa-shopping-cart fa-1 pl-2 pr-2" style="color:white"></i></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light " href="/cabinet">Личный кабинет</a>
+                        <a class="nav-link text-light " href="/user/cabinet">MY ACCOUNT</a>
                     </li>
                 </ul>
 
                 <form action="/logout" method="post" sec:authorize="isAuthenticated()">
-                    <input type="submit" class="bg-black" style="color:white" value="Выход"/>
+                    <input type="submit" class="bg-black" style="color:white" value="Exit"/>
                 </form>
             </div>
         </nav>
     </div>
+</div>
+
+<!--carousel-indicators-->
+<div th:fragment="carousel-indicators (id)" class="container pt-3">
+    <ol class="carousel-indicators">
+        <li th:data-target="${id}" data-slide-to="0" class="active" style="background-color: black"></li>
+        <li th:data-target="${id}" data-slide-to="1" style="background-color: black"></li>
+        <li th:data-target="${id}" data-slide-to="2" style="background-color: black"></li>
+    </ol>
 </div>
 
 <!--User navbar-->
@@ -82,27 +93,27 @@
             <a class="nav-link text-light mx-3" href="/user/edit">Изменить пароль</a>
         </li>
         <li class="nav-item" sec:authorize="hasAuthority('USER')">
-            <a class="nav-link text-light mx-3" href="/userOrders">Список заказов</a>
+            <a class="nav-link text-light mx-3" href="/order/user/orders">Список заказов</a>
         </li>
     </ul>
 
     <ul class="navbar-nav" sec:authorize="hasAuthority('ADMIN')">
         <li class="nav-item">
-            <a class="nav-link text-light mx-3" href="/orders">Список всех заказов</a>
+            <a class="nav-link text-light mx-3" href="/order/all/orders">Список всех заказов</a>
         </li>
         <li class="nav-item">
-            <form action="/user" method="get">
-                <a class="nav-link text-light mx-3" href="/user">Список пользователей</a>
+            <form action="/admin/users" method="get">
+                <a class="nav-link text-light mx-3" href="/admin/users">Список пользователей</a>
             </form>
         </li>
         <li class="nav-item">
-            <form action="/user/add" method="get">
-                <a class="nav-link text-light mx-3" href="/user/add">Добавить товар</a>
+            <form action="/admin/add/perfume" method="get">
+                <a class="nav-link text-light mx-3" href="/admin/add/perfume">Добавить товар</a>
             </form>
         </li>
         <li class="nav-item">
-            <form action="/user/productlist" method="get">
-                <a class="nav-link text-light mx-3" href="/user/productlist">Список товаров</a>
+            <form action="/admin/perfumes" method="get">
+                <a class="nav-link text-light mx-3" href="/admin/perfumes">Список товаров</a>
             </form>
         </li>
     </ul>
@@ -114,7 +125,6 @@
         <li class="page-item disabled">
             <a class="page-link " href="#" tabindex="-1">Страницы</a>
         </li>
-        <!--<th:block th:each="i : ${#numbers.sequence( 1, page.getTotalPages())}">-->
         <th:block th:each="i : ${pagination}">
             <th:block th:if="${i - 1 == page.getNumber()}">
                 <li class="page-item active">
@@ -144,8 +154,6 @@
             </th:block>
 
         </th:block>
-    <!--</ul>
-    <ul class="pagination">-->
 
         <li class="page-item disabled ml-5">
             <a class="page-link text-dark" href="#" tabindex="-1">Элементов на странице</a>
@@ -183,10 +191,10 @@
                 <h3>Perfume</h3>
                 <p>(066) 696-66-23</p>
                 <br/>
-                <p>c 08:00 до 20:00 без перерыва и выходных</p>
+                <p>from 08:00 to 20:00 without breaks and weekends</p>
             </div>
             <div class="footer-right">
-                <h3>Мы в соцсетях</h3>
+                <h3>Social networks</h3>
                 <a href="https://www.linkedin.com/in/merikbest/"><i class="fab fa-linkedin fa-2x mr-3" style="color:white"></i></a>
                 <a href="#"><i class="fab fa-facebook-f fa-2x mr-3" style="color:white"></i></a>
                 <a href="#"><i class="fab fa-twitter fa-2x mr-3" style="color:white"></i></a>

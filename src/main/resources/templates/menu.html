@@ -17,8 +17,7 @@
                     <h3>Парфюмерия</h3>
                 </div>
 
-                <form action="/perfume/search" method="get">
-<!--                <form th:action="@{/perfume/price/{path} (path = ${search})}" method="get">-->
+                <form action="/perfume/filter" method="post">
 
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary ml-auto d-inline-block bg-success" style="width: 80px;">Найти</button>
@@ -278,7 +277,7 @@
                             <li>
                                 <div class="checkbox ml-3">
                                     <label>
-                                        <input type="checkbox" name="gender" th:value="${'женский'}">
+                                        <input type="checkbox" name="genders" th:value="${'женский'}">
                                         <span class="cr"><i class="cr-icon fas fa-check"></i></span>
                                         для женщин
                                     </label>
@@ -287,7 +286,7 @@
                             <li>
                                 <div class="checkbox ml-3">
                                     <label>
-                                        <input type="checkbox" name="gender" th:value="${'мужской'}">
+                                        <input type="checkbox" name="genders" th:value="${'мужской'}">
                                         <span class="cr"><i class="cr-icon fas fa-check"></i></span>
                                         для мужчин
                                     </label>

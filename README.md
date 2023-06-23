@@ -8,8 +8,7 @@ This E-commerce project built on Spring Boot.<br>
 Deployed on Amazon web services EC2.<br>
 Look demo below.
 
-Or visit website http://perfumeweb.tk <br>
-Login: admin <br>
+Login: admin@gmail.com <br>
 Password: admin
 
 ## Used Technologies:
@@ -33,20 +32,6 @@ Password: admin
 * Admin can add or modify product.
 * Admin can change the data of any user.
 * Admin can view orders of all users.
-
-## Demo
-**Main page**
-:------------------------:
-![Main page1](img/gif/1_Main.gif)
-
-
-**Registration and authorization**
-:------------------------:
-![R&A](img/gif/2_Reg.gif)
-
-**Shopping**
-:------------------------:
-![Shopping](img/gif/3_Shop.gif)
 
 ## Screenshots
 

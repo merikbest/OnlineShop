@@ -4,6 +4,8 @@
             <h4 th:text="${path} == '/registration' ? 'Регистрация' : 'Вход в личный кабинет'"></h4>
             <hr align="left" width="550"/>
 
+            <div th:if="${success}" class="alert alert-success" role="alert" th:text="${success}"></div>
+
             <div class="form-group row" th:if="${path} == '/registration'">
                 <label class="col-sm-2 col-form-label">Электронная почта: </label>
                 <div class="col-sm-4">

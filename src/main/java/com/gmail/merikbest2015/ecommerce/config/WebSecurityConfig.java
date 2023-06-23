@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.ecommerce.config;
 
+import com.gmail.merikbest2015.ecommerce.security.UserDetailsServiceImpl;
 import com.gmail.merikbest2015.ecommerce.service.Impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserServiceImpl userService;
+    private final UserDetailsServiceImpl userDetailsService;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -24,12 +26,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                     .antMatchers("/",
-                            "/search",
                             "/registration",
-                            "/contacts",
+                            "/registration/*",
+                            "/user/contacts",
                             "/img/**",
                             "/static/**",
-                            "/activate/*",
                             "/product/*",
                             "/menu/**",
                             "/perfume/**"
@@ -47,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService)
+        auth.userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder);
     }
 }

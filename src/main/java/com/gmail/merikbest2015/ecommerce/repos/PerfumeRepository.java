@@ -17,21 +17,11 @@ public interface PerfumeRepository extends JpaRepository<Perfume, Long> {
 
     Page<Perfume> findAll(Pageable pageable);
 
-    Page<Perfume> findByPriceBetween(Integer startingPrice, Integer endingPrice, Pageable pageable);
-
     Page<Perfume> findByPerfumer(String perfumer, Pageable pageable);
 
     Page<Perfume> findByPerfumeGender(String perfumeGender, Pageable pageable);
 
-    Page<Perfume> findByPerfumeGenderIn(List<String> perfumeGenders, Pageable pageable);
-
     Page<Perfume> findByPerfumerOrPerfumeTitle(String perfumer, String perfumeTitle, Pageable pageable);
-
-    Page<Perfume> findByPerfumerInAndPerfumeGenderIn(List<String> perfumers, List<String> genders, Pageable pageable);
-
-    Page<Perfume> findByPerfumerInOrPerfumeGenderIn (List<String> perfumers, List<String> genders, Pageable pageable);
-
-    Page<Perfume> findByPerfumerIn (List<String> perfumers, Pageable pageable);
 
     @Query(value = "SELECT min(price) FROM Perfume ")
     BigDecimal minPerfumePrice();
@@ -39,12 +29,14 @@ public interface PerfumeRepository extends JpaRepository<Perfume, Long> {
     @Query(value = "SELECT max(price) FROM Perfume ")
     BigDecimal maxPerfumePrice();
 
-    @Modifying
-    @Transactional
-    @Query("update Perfume p set p.perfumeTitle = ?1, p.perfumer = ?2, p.year = ?3, p.country = ?4, " +
-            "p.perfumeGender = ?5, p.fragranceTopNotes = ?6, p.fragranceMiddleNotes = ?7, p.fragranceBaseNotes = ?8," +
-            "p.description = ?9, p.filename = ?10, p.price = ?11, p.volume = ?12, p.type = ?13  where p.id = ?14")
-    void saveProductInfoById(String perfumeTitle, String perfumer, Integer year, String country, String perfumeGender,
-                             String fragranceTopNotes, String fragranceMiddleNotes, String fragranceBaseNotes, String description,
-                             String filename, Integer price, String volume, String type, Long id);
+    @Query("SELECT perfume FROM Perfume perfume " +
+            "WHERE (coalesce(:perfumers, null) IS NULL OR perfume.perfumer IN :perfumers) " +
+            "AND (coalesce(:genders, null) IS NULL OR perfume.perfumeGender IN :genders) " +
+            "AND (coalesce(:priceStart, null) IS NULL OR perfume.price BETWEEN :priceStart AND :priceEnd)")
+    Page<Perfume> getPerfumesByFilterParams(
+            List<String> perfumers,
+            List<String> genders,
+            Integer priceStart,
+            Integer priceEnd,
+            Pageable pageable);
 }

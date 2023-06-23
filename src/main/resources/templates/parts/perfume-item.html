@@ -1,0 +1,13 @@
+<div th:fragment="perfume-item (perfume)" class="col-lg-3 d-flex align-items-stretch">
+    <div class="card mb-5" th:if="${perfume.getFilename()}">
+        <img th:src="@{/img/{path} (path = ${perfume.getFilename()})}" class="rounded mx-auto w-50">
+        <div class="card-body text-center">
+            <h5 th:text="${perfume.getPerfumeTitle()}"></h5>
+            <h6 th:text="${perfume.getPerfumer()}"></h6>
+            <h6>$<span th:text="${perfume.getPrice()}"></span>.00</h6>
+            <a th:href="@{/perfume/{perfumeId} (perfumeId = ${perfume.getId()})}" class="btn btn-dark">
+                SHOW MORE
+            </a>
+        </div>
+    </div>
+</div>

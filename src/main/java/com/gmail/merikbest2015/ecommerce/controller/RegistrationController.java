@@ -1,93 +1,65 @@
 package com.gmail.merikbest2015.ecommerce.controller;
 
-import com.gmail.merikbest2015.ecommerce.domain.User;
-import com.gmail.merikbest2015.ecommerce.domain.dto.CaptchaResponseDto;
-import com.gmail.merikbest2015.ecommerce.service.UserService;
+import com.gmail.merikbest2015.ecommerce.domain.dto.UserRequest;
+import com.gmail.merikbest2015.ecommerce.service.RegistrationService;
 import com.gmail.merikbest2015.ecommerce.utils.ControllerUtils;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.Collections;
-import java.util.Map;
+
+import static com.gmail.merikbest2015.ecommerce.constants.PathConstants.REGISTRATION;
 
 @Controller
+@RequestMapping(REGISTRATION)
 @RequiredArgsConstructor
 public class RegistrationController {
 
-    public static final String CAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s";
-    private final UserService userService;
-    private final RestTemplate restTemplate;
+    private final RegistrationService registrationService;
+    private final ControllerUtils controllerUtils;
 
-    @Value("${recaptcha.secret}")
-    private String secret;
-
-    @GetMapping("/registration")
+    @GetMapping
     public String registration() {
         return "registration";
     }
 
-    @PostMapping("/registration")
-    public String registration(@RequestParam("password2") String passwordConfirm,
-                               @RequestParam("g-recaptcha-response") String captchaResponse,
-                               @Valid User user,
+    @PostMapping
+    public String registration(@RequestParam("g-recaptcha-response") String captchaResponse,
+                               @Valid UserRequest user,
                                BindingResult bindingResult,
+                               RedirectAttributes redirectAttributes,
                                Model model) {
-        String url = String.format(CAPTCHA_URL, secret, captchaResponse);
+        String registrationResponse = registrationService.registration(captchaResponse, user);
 
-        CaptchaResponseDto response = restTemplate.postForObject(url, Collections.emptyList(), CaptchaResponseDto.class);
-
-        if (!response.isSuccess()) {
-            model.addAttribute("captchaError", "Fill captcha");
-        }
-
-        boolean isConfirmEmpty = StringUtils.isEmpty(passwordConfirm);
-        boolean isPasswordDifferent = user.getPassword() != null && !user.getPassword().equals(passwordConfirm);
-
-        if (isConfirmEmpty) {
-            model.addAttribute("password2Error", "Подтверждение пароля не может быть пустым");
-        }
-
-        if (isPasswordDifferent) {
-            model.addAttribute("passwordError", "Пароли не совпадают");
-        }
-
-        if (isConfirmEmpty || isPasswordDifferent || bindingResult.hasErrors() || !response.isSuccess()) {
-            Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
-
-            model.mergeAttributes(errors);
-
+        if (registrationResponse.equals("captchaError")) {
+            model.addAttribute(registrationResponse, "Fill captcha");
             return "registration";
         }
-
-        if (!userService.addUser(user)) {
-            model.addAttribute("usernameError", "Пользователь существует!");
+        if (registrationResponse.equals("passwordError")) {
+            model.addAttribute(registrationResponse, "Пароли не совпадают");
             return "registration";
         }
+        if (bindingResult.hasErrors()) {
+            model.mergeAttributes(controllerUtils.getErrors(bindingResult));
+            return "registration";
+        }
+        if (registrationResponse.equals("usernameError")) {
+            model.addAttribute(registrationResponse, "Пользователь существует!");
+            return "registration";
+        }
+        redirectAttributes.addFlashAttribute(registrationResponse, "Письмо активации выслано на ваш email");
         return "redirect:/login";
     }
 
     @GetMapping("/activate/{code}")
     public String activateEmailCode(@PathVariable String code, Model model) {
-        boolean isActivated = userService.activateUser(code);
-
-        if (isActivated) {
-            model.addAttribute("messageType", "alert-success");
-            model.addAttribute("message", "Пользователь успешно активирован");
-        } else {
-            model.addAttribute("messageType", "alert-danger");
-            model.addAttribute("message", "Код активации не найден");
-        }
+        boolean isActivated = registrationService.activateEmailCode(code);
+        model.addAttribute("messageType", isActivated ? "alert-success" : "alert-danger");
+        model.addAttribute("message", isActivated ? "Пользователь успешно активирован" : "Код активации не найден");
         return "login";
     }
 }

@@ -28,7 +28,7 @@
                     <p th:text="${userRole}"></p>
                 </div>
             </th>
-            <th><a th:href="@{/user/{path} (path = ${user.getId()})}">edit</a></th>
+            <th><a th:href="@{/admin/user/{userId} (userId = ${user.getId()})}">edit</a></th>
         </tr>
         </tbody>
     </table>

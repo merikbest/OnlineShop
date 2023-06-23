@@ -3,20 +3,17 @@ package com.gmail.merikbest2015.ecommerce.service;
 import com.gmail.merikbest2015.ecommerce.domain.Order;
 import com.gmail.merikbest2015.ecommerce.domain.Perfume;
 import com.gmail.merikbest2015.ecommerce.domain.User;
+import com.gmail.merikbest2015.ecommerce.domain.dto.OrderRequest;
 
 import java.util.List;
 
 public interface OrderService {
 
-    List<Perfume> getOrder(String username);
+    List<Order> getAllOrders();
 
-    Long finalizeOrder();
+    List<Perfume> getOrder(String email);
 
-    List<Order> getUserOrdersList(String username);
+    Long postOrder(User user, OrderRequest orderRequest);
 
-    List<Order> findAll();
-
-    Order save(Order order);
-
-    List<Order> findOrderByUser(User user);
+    List<Order> getUserOrdersList(String email);
 }

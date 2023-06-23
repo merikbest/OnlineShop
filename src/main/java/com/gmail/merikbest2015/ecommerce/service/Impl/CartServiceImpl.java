@@ -19,15 +19,15 @@ public class CartServiceImpl implements CartService {
     private final PerfumeRepository perfumeRepository;
 
     @Override
-    public List<Perfume> getPerfumesInCart(String username) {
-        User user = userRepository.findByUsername(username);
+    public List<Perfume> getPerfumesInCart(String email) {
+        User user = userRepository.findByEmail(email);
         return user.getPerfumeList();
     }
 
     @Override
     @Transactional
     public void addPerfumeToCart(String username, Long perfumeId) {
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByEmail(username);
         Perfume perfume = perfumeRepository.getOne(perfumeId);
         user.getPerfumeList().add(perfume);
     }
@@ -35,7 +35,7 @@ public class CartServiceImpl implements CartService {
     @Override
     @Transactional
     public void removePerfumeFromCart(String username, Long perfumeId) {
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByEmail(username);
         Perfume perfume = perfumeRepository.getOne(perfumeId);
         user.getPerfumeList().remove(perfume);
     }
