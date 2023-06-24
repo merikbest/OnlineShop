@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.ecommerce.repos;
+package com.gmail.merikbest2015.ecommerce.repository;
 
 import com.gmail.merikbest2015.ecommerce.domain.Order;
 import com.gmail.merikbest2015.ecommerce.domain.User;

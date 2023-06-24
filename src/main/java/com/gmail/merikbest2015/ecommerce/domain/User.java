@@ -20,10 +20,20 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String username;
-    private String password;
+
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "username")
+    private String username;
+
+    @Column(name = "activation_code")
     private String activationCode;
+
+    @Column(name = "active")
     private boolean active;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)

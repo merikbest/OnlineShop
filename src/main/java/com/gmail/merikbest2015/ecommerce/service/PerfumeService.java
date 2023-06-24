@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.ecommerce.service;
 
 import com.gmail.merikbest2015.ecommerce.domain.Perfume;
-import com.gmail.merikbest2015.ecommerce.domain.dto.PerfumeRequest;
-import com.gmail.merikbest2015.ecommerce.domain.dto.PerfumeSearchRequest;
+import com.gmail.merikbest2015.ecommerce.dto.PerfumeRequest;
+import com.gmail.merikbest2015.ecommerce.dto.PerfumeSearchRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;

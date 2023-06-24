@@ -1,10 +1,11 @@
 package com.gmail.merikbest2015.ecommerce.service;
 
-import com.gmail.merikbest2015.ecommerce.domain.dto.UserRequest;
+import com.gmail.merikbest2015.ecommerce.dto.RegistrationResponse;
+import com.gmail.merikbest2015.ecommerce.dto.UserRequest;
 
 public interface RegistrationService {
 
-    String registration(String captchaResponse, UserRequest user);
+    RegistrationResponse registration(String captchaResponse, UserRequest user);
 
     boolean activateEmailCode(String code);
 }

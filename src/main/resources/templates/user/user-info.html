@@ -1,0 +1,46 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="parts/common :: head"></head>
+<body>
+<div th:insert="~{parts/common :: scripts}"></div>
+<div th:replace="parts/common :: navbar"></div>
+<div id="container" class="account-container container">
+    <div class="row mt-5">
+        <th:block th:replace="parts/user-fragments :: account-sidebar"></th:block>
+        <div class="col-md-9">
+            <div class="row">
+                <div class="personal_data col-md-5">
+                    <th:block th:replace="parts/common :: info-title(
+                        text='Personal data',
+                        titleClass='personal_data_title',
+                        icon='fas fa-address-card ml-2 mr-2'
+                    )"></th:block>
+                    <p class="personal_data_item">
+                        Email:<span th:text="${user.getEmail()}" class="personal_data_text"></span>
+                    </p>
+                    <p class="personal_data_item">
+                        First name:<span th:text="${user.getUsername()}" class="personal_data_text"></span>
+                    </p>
+                    <p class="personal_data_item">
+                        Last name:<span th:text="${user.getUsername()}" class="personal_data_text"></span>
+                    </p>
+                    <p class="personal_data_item">
+                        City:<span class="personal_data_text"></span>
+                    </p>
+                    <p class="personal_data_item">
+                        Address:<span class="personal_data_text"></span>
+                    </p>
+                    <p class="personal_data_item">
+                        Phone number:<span class="personal_data_text"></span>
+                    </p>
+                    <p class="personal_data_item">
+                        Post index:<span class="personal_data_text"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:insert="~{parts/common :: footer}"></footer>
+</body>
+</html>

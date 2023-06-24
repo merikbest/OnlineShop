@@ -2,7 +2,7 @@ package com.gmail.merikbest2015.ecommerce.controller;
 
 import com.gmail.merikbest2015.ecommerce.domain.Perfume;
 import com.gmail.merikbest2015.ecommerce.domain.User;
-import com.gmail.merikbest2015.ecommerce.repos.UserRepository;
+import com.gmail.merikbest2015.ecommerce.repository.UserRepository;
 import com.gmail.merikbest2015.ecommerce.service.Impl.MailSender;
 import com.gmail.merikbest2015.ecommerce.service.UserService;
 import org.junit.Test;

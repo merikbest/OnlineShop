@@ -1,19 +1,52 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head th:replace="parts/common :: head"></head>
-
 <body>
-
 <div th:insert="~{parts/common :: scripts}"></div>
 <div th:replace="parts/common :: navbar"></div>
-
 <div id="container" class="container mt-5">
-    <div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']}" class="alert alert-danger col-sm-8" role="alert">Неверные учетные данные</div>
     <div th:if="${messageType}" class="alert " th:classappend="${messageType}" th:text="${message}" role="alert"></div>
-    <div th:replace="parts/login :: login(path=${'/login'})"></div>
+    <form method="post" action="/login">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4 class="mr-3">
+                        <i class="fas fa-sign-in-alt mr-3"></i>
+                        SIGN IN
+                    </h4>
+                    <hr />
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">E-mail: </label>
+                        <i class="fas fa-envelope" style="position: relative; top: 8px"></i>
+                        <div class="col-sm-7">
+                            <input type="email" name="username" th:value="${user} ? ${user.username} : ''" class="form-control"
+                                   th:classappend="${usernameError} ? ' is-invalid'"/>
+                            <div th:if="${usernameError}" class="invalid-feedback" th:text="${usernameError}"></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Password: </label>
+                        <i class="fas fa-lock" style="position: relative; top: 8px"></i>
+                        <div class="col-sm-7">
+                            <input type="password" name="password" class="form-control"
+                                   th:classappend="${passwordError} ? ' is-invalid'"/>
+                            <div th:if="${passwordError}" class="invalid-feedback" th:text="${passwordError}"></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <button type="submit" class="btn btn-dark mx-2">
+                            <i class="fas fa-sign-in-alt mr-3"></i>
+                            Sign in
+                        </button>
+                    </div>
+                    <a href="#" class="forgot-password">
+                        Forgot password?
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
-
 <footer th:insert="~{parts/common :: footer}"></footer>
 </body>
 </html>

@@ -3,7 +3,7 @@ package com.gmail.merikbest2015.ecommerce.service;
 import com.gmail.merikbest2015.ecommerce.domain.Order;
 import com.gmail.merikbest2015.ecommerce.domain.Perfume;
 import com.gmail.merikbest2015.ecommerce.domain.User;
-import com.gmail.merikbest2015.ecommerce.domain.dto.OrderRequest;
+import com.gmail.merikbest2015.ecommerce.dto.OrderRequest;
 
 import java.util.List;
 

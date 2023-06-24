@@ -1,20 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head th:replace="parts/common :: head"></head>
-
 <body>
 <div th:insert="~{parts/common :: scripts}"></div>
 <div th:replace="parts/common :: navbar"></div>
-
 <div id="container">
     <div class="container text-center mt-5">
-        <h2>Спасибо за заказ!</h2>
-        <p>Ваш номер заказа: <span th:text="${orderId}"></span></p>
+        <h2>Thank you for the order!</h2>
+        <p>Your order number is: <span th:text="${orderId}"></span></p>
     </div>
 </div>
-
 <footer th:insert="~{parts/common :: footer}"></footer>
 </body>
 </html>

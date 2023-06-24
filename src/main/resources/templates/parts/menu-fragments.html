@@ -1,0 +1,25 @@
+<div th:fragment="menu-brand-checkbox(brand)" class="checkbox">
+    <label>
+        <input th:value="${brand}" type="checkbox" name="perfumers">
+        <span class="cr"><i class="cr-icon fas fa-check"></i></span>
+        <th:block th:text="${brand}"></th:block>
+    </label>
+</div>
+
+<div th:fragment="menu-gender-checkbox(gender)" class="checkbox">
+    <label>
+        <input th:value="${gender}" type="checkbox" name="genders">
+        <span class="cr"><i class="cr-icon fas fa-check"></i></span>
+        <th:block th:text="${#strings.capitalize(gender)}"></th:block>
+    </label>
+</div>
+
+<div th:fragment="menu-price-checkbox" class="checkbox">
+    <label>
+        <input th:value="${startingPrice}" type="radio" name="price">
+        <span class="cr"><i class="cr-icon fas fa-check"></i></span>
+        <th:block th:text="${startingPrice == 0} ? 'any' : ${startingPrice} + ' - ' + ${endingPrice} + ' $'"></th:block>
+    </label>
+    <input type="hidden" name="startingPrice" th:value="${startingPrice}"/>
+    <input type="hidden" name="endingPrice" th:value="${endingPrice}"/>
+</div>

@@ -5,6 +5,8 @@
             <h5 th:text="${perfume.getPerfumeTitle()}"></h5>
             <h6 th:text="${perfume.getPerfumer()}"></h6>
             <h6>$<span th:text="${perfume.getPrice()}"></span>.00</h6>
+        </div>
+        <div class="text-center align-items-end mb-3">
             <a th:href="@{/perfume/{perfumeId} (perfumeId = ${perfume.getId()})}" class="btn btn-dark">
                 SHOW MORE
             </a>

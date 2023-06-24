@@ -1,14 +1,12 @@
-
 <!--Header-->
 <head th:fragment="head" xmlns:th="http://www.thymeleaf.org">
     <title>Perfume</title>
-
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" />
-    <link rel="stylesheet" href="/static/style.css" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"/>
+    <link rel="stylesheet" href="/static/style.css"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&display=swap" rel="stylesheet">
@@ -18,57 +16,74 @@
 
 <!--Scripts-->
 <div th:fragment="scripts" xmlns:th="http://www.thymeleaf.org">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
 </div>
 
-
 <!--Navbar-->
-<div th:fragment="navbar" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-
+<div th:fragment="navbar" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     <div class="container-fluid bg-black header-top d-none d-md-block pb-5 pt-5">
-            <img id="logo-main" src="https://i.ibb.co/fqYvrL8/LOGO4.jpg"
-                 class="rounded mx-auto d-block " />
+        <img id="logo-main" src="https://i.ibb.co/fqYvrL8/LOGO4.jpg" class="rounded mx-auto d-block"/>
     </div>
-
     <div class="container-fluid bg-black">
-        <nav class="container navbar navbar-expand-lg bg-black text-white" style="font-size: 18px" >
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+        <nav id="navbar-main" class="container navbar navbar-expand-lg bg-black text-white navbar-main">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto ">
+                <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link text-light pl-5 pr-5" href="/">HOME</a>
+                        <a class="nav-link pl-5 pr-5" href="/">HOME</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light pl-5 pr-5" href="/perfume">PERFUMES</a>
+                        <a class="nav-link pl-5 pr-5" href="/perfume">PERFUMES</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light pl-5 pr-5" href="/user/contacts">CONTACTS</a>
+                        <a class="nav-link pl-5 pr-5" href="/user/contacts">CONTACTS</a>
                     </li>
                 </ul>
-
                 <ul class="navbar-nav ml-auto">
-
-                    <form class="form-inline d-flex justify-content-center md-form form-sm mr-3" method="get" action="/perfume/search">
-                        <input class="form-control form-control-sm mr-3 w-75 rounded-0" type="text" name="text" placeholder="Search"
-                               aria-label="Search" />
-                        <button type="submit" class="bg-black"><i class="fas fa-search fa-1x" aria-hidden="true" style="color:white"></i></button>
-                    </form>
-
                     <li class="nav-item">
-                        <a class="nav-link" href="/cart"><i class="fas fa-shopping-cart fa-1 pl-2 pr-2" style="color:white"></i></a>
+                        <a class="nav-link" href="/cart">
+                            <i class="fas fa-shopping-cart fa-lg pl-5"></i>
+                        </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light " href="/user/cabinet">MY ACCOUNT</a>
-                    </li>
+                    <th:block sec:authorize="isAuthenticated()">
+                        <li class="nav-item">
+                            <a class="nav-link pl-5" href="/user/account">
+                                <i class="fas fa-user mr-2"></i>
+                                MY ACCOUNT
+                            </a>
+                        </li>
+                        <form id="logout" action="/logout" method="post">
+                            <li class="nav-item">
+                                <a class="nav-link" href=# onclick="document.getElementById('logout').submit()">
+                                    <input type="hidden"/>
+                                    <i class="fas fa-sign-out-alt mr-2"></i>
+                                    EXIT
+                                </a>
+                            </li>
+                        </form>
+                    </th:block>
+                    <th:block sec:authorize="!isAuthenticated()">
+                        <li class="nav-item">
+                            <a class="nav-link pl-5" href="/login">
+                                <i class="fas fa-sign-in-alt mr-2"></i>
+                                LOGIN
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-5" href="/registration">
+                                <i class="fas fa-user-plus mr-2"></i>
+                                REGISTRATION
+                            </a>
+                        </li>
+                    </th:block>
                 </ul>
-
-                <form action="/logout" method="post" sec:authorize="isAuthenticated()">
-                    <input type="submit" class="bg-black" style="color:white" value="Exit"/>
-                </form>
             </div>
         </nav>
     </div>
@@ -83,108 +98,99 @@
     </ol>
 </div>
 
-<!--User navbar-->
-<nav th:fragment="userNavbar" class="navbar navbar-expand-lg navbar-dark bg-dark" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <ul class="navbar-nav">
-        <li class="nav-item active">
-            <a class="nav-link text-light mx-3" href="/user/edit">Изменить пароль</a>
-        </li>
-        <li class="nav-item" sec:authorize="hasAuthority('USER')">
-            <a class="nav-link text-light mx-3" href="/order/user/orders">Список заказов</a>
-        </li>
+<!--pagination-->
+<th:block th:fragment="pagination">
+    <ul class="pagination mx-3 d-flex justify-content-between">
+        <div class="d-flex">
+            <li class="page-item disabled">
+                <a class="page-link " href="#" tabindex="-1">Pages</a>
+            </li>
+            <th:block th:each="i : ${pagination}">
+                <th:block th:if="${i - 1 == page.getNumber()}">
+                    <li class="page-item active">
+                        <a class="page-link bg-dark border-dark" href="#" th:text="${i}"></a>
+                    </li>
+                </th:block>
+                <th:block th:if="${i != -1 and i - 1 != page.getNumber()}">
+                    <th:block th:if="${!url.contains('search')}">
+                        <li class="page-item">
+                            <a class="page-link text-dark"
+                               th:href="${url + '?page=' + (i - 1)+ '&size=' + page.getSize()}"
+                               th:text="${i}"></a>
+                        </li>
+                    </th:block>
+                    <th:block th:if="${url.contains('search')}">
+                        <li class="page-item">
+                            <a class="page-link text-dark"
+                               th:href="${url + '&page=' + (i - 1)+ '&size=' + page.getSize()}"
+                               th:text="${i}"></a>
+                        </li>
+                    </th:block>
+                </th:block>
+                <th:block th:if="${i == -1}">
+                    <li class="page-item disabled">
+                        <a class="page-link text-dark" href="#">...</a>
+                    </li>
+                </th:block>
+            </th:block>
+        </div>
+        <div class="d-flex">
+            <li class="page-item disabled ml-5">
+                <a class="page-link text-dark" href="#" tabindex="-1">Items per page</a>
+            </li>
+            <th:block th:each="c : ${#numbers.sequence(12, 36, 12)}">
+                <th:block th:if="${c} == ${page.getSize()}">
+                    <li class="page-item active">
+                        <a class="page-link bg-dark border-dark" href="#" th:text="${c}"></a>
+                    </li>
+                </th:block>
+                <th:block th:unless="${c} == ${page.getSize()}">
+                    <th:block th:if="${!url.contains('search')}">
+                        <li class="page-item">
+                            <a class="page-link text-dark"
+                               th:href="${url + '?page=' + page.getNumber()+ '&size=' + c}"
+                               th:text="${c}"></a>
+                        </li>
+                    </th:block>
+                    <th:block th:if="${url.contains('search')}">
+                        <li class="page-item">
+                            <a class="page-link text-dark"
+                               th:href="${url + '&page=' + page.getNumber()+ '&size=' + c}"
+                               th:text="${c}"></a>
+                        </li>
+                    </th:block>
+                </th:block>
+            </th:block>
+        </div>
     </ul>
+</th:block>
 
-    <ul class="navbar-nav" sec:authorize="hasAuthority('ADMIN')">
-        <li class="nav-item">
-            <a class="nav-link text-light mx-3" href="/order/all/orders">Список всех заказов</a>
-        </li>
-        <li class="nav-item">
-            <form action="/admin/users" method="get">
-                <a class="nav-link text-light mx-3" href="/admin/users">Список пользователей</a>
-            </form>
-        </li>
-        <li class="nav-item">
-            <form action="/admin/add/perfume" method="get">
-                <a class="nav-link text-light mx-3" href="/admin/add/perfume">Добавить товар</a>
-            </form>
-        </li>
-        <li class="nav-item">
-            <form action="/admin/perfumes" method="get">
-                <a class="nav-link text-light mx-3" href="/admin/perfumes">Список товаров</a>
-            </form>
-        </li>
-    </ul>
-</nav>
+<!--search-->
+<th:block th:fragment="search">
+    <form style="justify-content: center">
+        <div class="row">
+            <div class="col-md-4">
+                <select class="form-control">
+                    <option value="perfumer">Brand</option>
+                    <option value="perfumeTitle">Perfume title</option>
+                    <option value="country">Manufacturer country</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control" placeholder="Search..." value=""/>
+            </div>
+            <div class="col-md-5">
+                <button type="submit" class="btn btn-dark">
+                    <i class="fas fa-search mr-2"></i>
+                    Search
+                </button>
+            </div>
+        </div>
+    </form>
+</th:block>
 
-<!--Pager-->
-<div th:fragment="pagination" xmlns:th="http://www.thymeleaf.org">
-    <ul class="pagination">
-        <li class="page-item disabled">
-            <a class="page-link " href="#" tabindex="-1">Страницы</a>
-        </li>
-        <th:block th:each="i : ${pagination}">
-            <th:block th:if="${i - 1 == page.getNumber()}">
-                <li class="page-item active">
-                    <a class="page-link bg-dark border-dark" href="#" th:text="${i}"></a>
-                </li>
-            </th:block>
-
-            <th:block th:if="${i != -1 and i - 1 != page.getNumber()}">
-                <th:block th:if="${!url.contains('search')}">
-                    <li class="page-item">
-                        <a class="page-link text-dark" th:href="${url + '?page=' + (i - 1)+ '&size=' + page.getSize()}"
-                           th:text="${i}"></a>
-                    </li>
-                </th:block>
-                <th:block th:if="${url.contains('search')}">
-                    <li class="page-item">
-                        <a class="page-link text-dark" th:href="${url + '&page=' + (i - 1)+ '&size=' + page.getSize()}"
-                           th:text="${i}"></a>
-                    </li>
-                </th:block>
-            </th:block>
-
-            <th:block th:if="${i == -1}">
-                <li class="page-item disabled">
-                    <a class="page-link text-dark" href="#">...</a>
-                </li>
-            </th:block>
-
-        </th:block>
-
-        <li class="page-item disabled ml-5">
-            <a class="page-link text-dark" href="#" tabindex="-1">Элементов на странице</a>
-        </li>
-        <th:block th:each="c : ${#numbers.sequence(12, 36, 12)}">
-            <th:block th:if="${c} == ${page.getSize()}">
-                <li class="page-item active">
-                    <a class="page-link bg-dark border-dark" href="#" th:text="${c}"></a>
-                </li>
-            </th:block>
-
-            <th:block th:unless="${c} == ${page.getSize()}">
-                <th:block th:if="${!url.contains('search')}">
-                    <li class="page-item">
-                        <a class="page-link text-dark" th:href="${url + '?page=' + page.getNumber()+ '&size=' + c}"
-                           th:text="${c}"></a>
-                    </li>
-                </th:block>
-                <th:block th:if="${url.contains('search')}">
-                    <li class="page-item">
-                        <a class="page-link text-dark" th:href="${url + '&page=' + page.getNumber()+ '&size=' + c}"
-                           th:text="${c}"></a>
-                    </li>
-                </th:block>
-            </th:block>
-        </th:block>
-    </ul>
-</div>
-
-<!--Footer-->
-<footer th:fragment="footer" xmlns:th="http://www.thymeleaf.org" class="page-footer p-5 bg-black text-white">
+<!--footer-->
+<footer th:fragment="footer" class="page-footer p-5 bg-black text-white">
     <div class="container">
         <div class="d-flex justify-content-between">
             <div class="footer-left">
@@ -195,7 +201,8 @@
             </div>
             <div class="footer-right">
                 <h3>Social networks</h3>
-                <a href="https://www.linkedin.com/in/merikbest/"><i class="fab fa-linkedin fa-2x mr-3" style="color:white"></i></a>
+                <a href="https://www.linkedin.com/in/merikbest/"><i class="fab fa-linkedin fa-2x mr-3"
+                                                                    style="color:white"></i></a>
                 <a href="#"><i class="fab fa-facebook-f fa-2x mr-3" style="color:white"></i></a>
                 <a href="#"><i class="fab fa-twitter fa-2x mr-3" style="color:white"></i></a>
             </div>
@@ -206,4 +213,22 @@
     </div>
     </nav>
 </footer>
+
+<!-- info-title -->
+<th:block th:fragment="info-title">
+    <h4 th:class="${titleClass}">
+        <i th:class="${icon}"></i>
+        <th:block th:text="${text}"></th:block>
+    </h4>
+</th:block>
+
+<!-- icon-button -->
+<th:block th:fragment="icon-button">
+    <button type="submit" class="btn btn-dark " th:classappend="${buttonClassName}">
+        <i th:class="${icon}"></i>
+        <th:block th:text="${text}"></th:block>
+    </button>
+</th:block>
+
+
 

@@ -2,7 +2,7 @@ package com.gmail.merikbest2015.ecommerce.service.Impl;
 
 import com.gmail.merikbest2015.ecommerce.domain.Role;
 import com.gmail.merikbest2015.ecommerce.domain.User;
-import com.gmail.merikbest2015.ecommerce.repos.UserRepository;
+import com.gmail.merikbest2015.ecommerce.repository.UserRepository;
 import com.gmail.merikbest2015.ecommerce.service.UserService;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.ecommerce.controller;
 
 import com.gmail.merikbest2015.ecommerce.domain.Perfume;
-import com.gmail.merikbest2015.ecommerce.domain.dto.PerfumeSearchRequest;
+import com.gmail.merikbest2015.ecommerce.dto.PerfumeSearchRequest;
 import com.gmail.merikbest2015.ecommerce.service.PerfumeService;
 import com.gmail.merikbest2015.ecommerce.utils.ControllerUtils;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ public class PerfumeController {
     @GetMapping("/{perfumeId}")
     public String getPerfumeById(@PathVariable("perfumeId") Long perfumeId, Model model) {
         model.addAttribute("perfume", perfumeService.getPerfumeById(perfumeId));
-        return "product";
+        return "perfume";
     }
 
     @GetMapping

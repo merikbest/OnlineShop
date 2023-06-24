@@ -28,9 +28,16 @@ public class UserController {
         return "contacts";
     }
 
-    @GetMapping("/cabinet")
-    public String userCabinet() {
-        return "user/user-cabinet";
+    @GetMapping("/account")
+    public String userAccount(@AuthenticationPrincipal UserPrincipal userPrincipal, Model model) {
+        model.addAttribute("user", userService.findByEmail(userPrincipal.getUsername()));
+        return "user/user-account";
+    }
+
+    @GetMapping("/info")
+    public String userInfo(@AuthenticationPrincipal UserPrincipal userPrincipal, Model model) {
+        model.addAttribute("user", userService.findByEmail(userPrincipal.getUsername()));
+        return "user/user-info";
     }
 
     @GetMapping("/edit")

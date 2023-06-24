@@ -3,7 +3,7 @@ package com.gmail.merikbest2015.ecommerce.controller;
 import com.gmail.merikbest2015.ecommerce.domain.Perfume;
 import com.gmail.merikbest2015.ecommerce.domain.Role;
 import com.gmail.merikbest2015.ecommerce.domain.User;
-import com.gmail.merikbest2015.ecommerce.domain.dto.PerfumeRequest;
+import com.gmail.merikbest2015.ecommerce.dto.PerfumeRequest;
 import com.gmail.merikbest2015.ecommerce.service.PerfumeService;
 import com.gmail.merikbest2015.ecommerce.service.UserService;
 import com.gmail.merikbest2015.ecommerce.utils.ControllerUtils;
@@ -49,9 +49,11 @@ public class AdminController {
     @PostMapping("/edit/perfume")
     public String editPerfume(@Valid PerfumeRequest perfume, BindingResult bindingResult, Model model,
                               @RequestParam("file") MultipartFile file) {
+        System.out.println(perfume.toString());
         if (bindingResult.hasErrors()) {
             model.mergeAttributes(controllerUtils.getErrors(bindingResult));
-            return "admin/add-perfume";
+            model.addAttribute("perfume", perfume);
+            return "admin/edit-perfume";
         }
         perfumeService.savePerfume(perfume, file);
         return "redirect:/admin/perfumes";
@@ -67,6 +69,7 @@ public class AdminController {
                              @RequestParam("file") MultipartFile file) {
         if (bindingResult.hasErrors()) {
             model.mergeAttributes(controllerUtils.getErrors(bindingResult));
+            model.addAttribute("perfume", perfume);
             return "admin/add-perfume";
         }
         perfumeService.savePerfume(perfume, file);

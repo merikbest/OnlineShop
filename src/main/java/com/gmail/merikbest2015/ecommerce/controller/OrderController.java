@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.ecommerce.controller;
 
 import com.gmail.merikbest2015.ecommerce.domain.User;
-import com.gmail.merikbest2015.ecommerce.domain.dto.OrderRequest;
+import com.gmail.merikbest2015.ecommerce.dto.OrderRequest;
 import com.gmail.merikbest2015.ecommerce.security.UserPrincipal;
 import com.gmail.merikbest2015.ecommerce.service.OrderService;
 import com.gmail.merikbest2015.ecommerce.service.UserService;

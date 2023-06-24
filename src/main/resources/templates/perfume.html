@@ -1,0 +1,81 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="parts/common :: head"></head>
+<body>
+<div th:insert="~{parts/common :: scripts}"></div>
+<div th:replace="parts/common :: navbar"></div>
+<div id="container">
+    <div class="container mt-5 pb-5">
+        <div class="row">
+            <div class="col-md-5">
+                <img th:src="@{/img/{path} (path = ${perfume.getFilename()})}" class="rounded mx-auto w-100">
+            </div>
+            <div class="col-md-7">
+                <h2 th:text="${perfume.getPerfumeTitle()}"></h2>
+                <h3 th:text="${perfume.getPerfumer()}"></h3>
+                <p>Product code: <span th:text="${perfume.getId()}"></span></p>
+                <p class="product-stock" style="color: #54C0A1">In Stock</p>
+                <div class="row ml-1">
+                    <h6 class="mr-5">
+                        $<span th:text="${perfume.getPrice()}"></span>.00
+                    </h6>
+                    <form action="/cart/add" method="post">
+                        <button type="submit" name="perfumeId" class="btn btn-success mx-3"
+                                th:value="${perfume.getId()}">
+                            <i class="fas fa-cart-plus mr-2 fa-lg"></i>
+                            ADD TO CART
+                        </button>
+                    </form>
+                </div>
+                <br>
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <td>Perfume title:</td>
+                        <td th:text="${perfume.getPerfumeTitle()}"></td>
+                    </tr>
+                    <tr>
+                        <td>Brand:</td>
+                        <td th:text="${perfume.getPerfumer()}"></td>
+                    </tr>
+                    <tr>
+                        <td>Perfume type:</td>
+                        <td th:text="${perfume.getType()}"></td>
+                    </tr>
+                    <tr>
+                        <td>Release year:</td>
+                        <td th:text="${perfume.getYear()}"></td>
+                    </tr>
+                    <tr>
+                        <td>Volume:</td>
+                        <td><span th:text="${perfume.getVolume()}"></span> ml.</td>
+                    </tr>
+                    <tr>
+                        <td>Manufacturer country:</td>
+                        <td th:text="${perfume.getCountry()}"></td>
+                    </tr>
+                    <tr>
+                        <td>Gender:</td>
+                        <td th:text="${perfume.getPerfumeGender()}"></td>
+                    </tr>
+                    <tr>
+                        <td>Top notes:</td>
+                        <td th:text="${perfume.getFragranceTopNotes()}"></td>
+                    </tr>
+                    <tr>
+                        <td>Heart notes:</td>
+                        <td th:text="${perfume.getFragranceMiddleNotes()}"></td>
+                    </tr>
+                    <tr>
+                        <td>Base notes:</td>
+                        <td th:text="${perfume.getFragranceBaseNotes()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:insert="~{parts/common :: footer}"></footer>
+</body>
+</html>

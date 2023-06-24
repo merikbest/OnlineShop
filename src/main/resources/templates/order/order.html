@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head th:replace="parts/common :: head"></head>
-
 <body>
 <div th:insert="~{parts/common :: scripts}"></div>
 <div th:replace="parts/common :: navbar"></div>
-
 <div id="container">
     <div class="container mt-5 pb-5">
         <form action="/order" method="post" enctype="multipart/form-data">
-        <p class="h4 mb-4 text-center">Оформление заказа</p>
-        <br>
+        <h4 class="mb-4 text-center">
+            <i class="fas fa-shopping-bag mr-2"></i>
+            Ordering
+        </h4>
+        <br/>
             <div class="row">
                 <div class="col-lg-6">
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Имя:</label>
+                        <label class="col-sm-3 col-form-label">Name:</label>
                         <div class="col-sm-8">
                             <input type="text" name="firstName" th:value="${order} ? ${order.firstName} : ''"
                                    class="form-control" th:classappend="${firstNameError} ? ' is-invalid'" />
@@ -24,7 +24,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Фамилия:</label>
+                        <label class="col-sm-3 col-form-label">Last name:</label>
                         <div class="col-sm-8">
                             <input type="text" name="lastName" th:value="${order} ? ${order.lastName} : ''"
                                    class="form-control" th:classappend="${lastNameError} ? ' is-invalid'" />
@@ -32,7 +32,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Город:</label>
+                        <label class="col-sm-3 col-form-label">City:</label>
                         <div class="col-sm-8">
                             <input type="text" name="city" th:value="${order} ? ${order.city} : ''"
                                    class="form-control" th:classappend="${cityError} ? ' is-invalid'" />
@@ -40,7 +40,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Адрес:</label>
+                        <label class="col-sm-3 col-form-label">Address:</label>
                         <div class="col-sm-8">
                             <input type="text" name="address" th:value="${order} ? ${order.address} : ''"
                                    class="form-control" th:classappend="${addressError} ? ' is-invalid'" />
@@ -48,7 +48,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Индекс:</label>
+                        <label class="col-sm-3 col-form-label">Index:</label>
                         <div class="col-sm-8">
                             <input type="text" name="postIndex" th:value="${order} ? ${order.postIndex} : ''"
                                    class="form-control" th:classappend="${postIndexError} ? ' is-invalid'" />
@@ -56,7 +56,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Телефон:</label>
+                        <label class="col-sm-3 col-form-label">Mobile:</label>
                         <div class="col-sm-8">
                             <input type="text" name="phoneNumber" th:value="${order} ? ${order.phoneNumber} : ''"
                                    class="form-control" th:classappend="${phoneNumberError} ? ' is-invalid'" placeholder="380__ ___ __ __"/>
@@ -64,7 +64,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Email:</label>
+                        <label class="col-sm-3 col-form-label">Email:</label>
                         <div class="col-sm-8">
                             <input type="text" name="email" th:value="${order} ? ${order.email} : ''"
                                    class="form-control" th:classappend="${emailError} ? ' is-invalid'" placeholder="exemple@email.com"/>
@@ -72,7 +72,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-6">
                     <div class="container-fluid">
                         <div class="row" th:fragment="list">
@@ -82,25 +81,25 @@
                                     <div class="card-body text-center">
                                         <h5 th:text="${perfume.getPerfumeTitle()}"></h5>
                                         <h6 th:text="${perfume.getPerfumer()}"></h6>
-                                        <h6><span th:text="${perfume.getPrice()}"></span>,00 грн.</h6>
+                                        <h6>$<span th:text="${perfume.getPrice()}"></span>.00</h6>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                        <button class="btn btn-primary btn-lg btn-success px-5 float-right">Подтвердить заказ</button>
+                        <button class="btn btn-primary btn-lg btn-success px-5 float-right">
+                            <i class="fas fa-check-circle"></i>
+                            Validate order
+                        </button>
                         <input type="hidden" name="totalPrice" th:value="${#aggregates.sum(perfumes.![price])}">
                     <div class="row">
-                        <p> </p>
-                        <h4>К оплате : <span th:text="${#aggregates.sum(perfumes.![price])}"></span> грн.</h4>
+                        <h4>To pay: $ <span th:text="${#aggregates.sum(perfumes.![price])}"></span>.00</h4>
                     </div>
                 </div>
             </div>
         </form>
     </div>
 </div>
-
 <footer th:insert="~{parts/common :: footer}"></footer>
-
 </body>
 </html>

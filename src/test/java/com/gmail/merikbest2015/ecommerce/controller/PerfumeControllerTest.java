@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.ecommerce.controller;
 
 import com.gmail.merikbest2015.ecommerce.domain.Perfume;
-import com.gmail.merikbest2015.ecommerce.repos.PerfumeRepository;
+import com.gmail.merikbest2015.ecommerce.repository.PerfumeRepository;
 import com.gmail.merikbest2015.ecommerce.service.PerfumeService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
