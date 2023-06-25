@@ -112,20 +112,11 @@
                     </li>
                 </th:block>
                 <th:block th:if="${i != -1 and i - 1 != page.getNumber()}">
-                    <th:block th:if="${!url.contains('search')}">
-                        <li class="page-item">
-                            <a class="page-link text-dark"
-                               th:href="${url + '?page=' + (i - 1)+ '&size=' + page.getSize()}"
-                               th:text="${i}"></a>
-                        </li>
-                    </th:block>
-                    <th:block th:if="${url.contains('search')}">
-                        <li class="page-item">
-                            <a class="page-link text-dark"
-                               th:href="${url + '&page=' + (i - 1)+ '&size=' + page.getSize()}"
-                               th:text="${i}"></a>
-                        </li>
-                    </th:block>
+                    <li class="page-item">
+                        <a class="page-link text-dark"
+                           th:href="${url + (#strings.contains(url, '?') ? '&' : '?') + 'page=' + (i - 1) + '&size=' + page.getSize()}"
+                           th:text="${i}"></a>
+                    </li>
                 </th:block>
                 <th:block th:if="${i == -1}">
                     <li class="page-item disabled">
@@ -145,20 +136,11 @@
                     </li>
                 </th:block>
                 <th:block th:unless="${c} == ${page.getSize()}">
-                    <th:block th:if="${!url.contains('search')}">
-                        <li class="page-item">
-                            <a class="page-link text-dark"
-                               th:href="${url + '?page=' + page.getNumber()+ '&size=' + c}"
-                               th:text="${c}"></a>
-                        </li>
-                    </th:block>
-                    <th:block th:if="${url.contains('search')}">
-                        <li class="page-item">
-                            <a class="page-link text-dark"
-                               th:href="${url + '&page=' + page.getNumber()+ '&size=' + c}"
-                               th:text="${c}"></a>
-                        </li>
-                    </th:block>
+                    <li class="page-item">
+                        <a class="page-link text-dark"
+                           th:href="${url + (#strings.contains(url, '?') ? '&' : '?') + 'page=' + page.getNumber() + '&size=' + c}"
+                           th:text="${c}"></a>
+                    </li>
                 </th:block>
             </th:block>
         </div>
@@ -229,6 +211,3 @@
         <th:block th:text="${text}"></th:block>
     </button>
 </th:block>
-
-
-

@@ -6,9 +6,9 @@
     </label>
 </div>
 
-<div th:fragment="menu-gender-checkbox(gender)" class="checkbox">
+<div th:fragment="menu-gender-checkbox" class="checkbox">
     <label>
-        <input th:value="${gender}" type="checkbox" name="genders">
+        <input th:value="${gender}" type="checkbox" name="genders" th:checked="${checked}">
         <span class="cr"><i class="cr-icon fas fa-check"></i></span>
         <th:block th:text="${#strings.capitalize(gender)}"></th:block>
     </label>

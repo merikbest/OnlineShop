@@ -38,5 +38,12 @@
       <jdbc-url>jdbc:postgresql://localhost:5432/perfume123</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="perfume@localhost" uuid="5dad47ec-d7ac-4d17-a5a1-2c4d627f0c51">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/perfume</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

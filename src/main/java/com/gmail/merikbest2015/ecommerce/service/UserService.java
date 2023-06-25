@@ -1,20 +1,16 @@
 package com.gmail.merikbest2015.ecommerce.service;
 
 import com.gmail.merikbest2015.ecommerce.domain.User;
-import com.gmail.merikbest2015.ecommerce.security.UserPrincipal;
 
 import java.util.List;
-import java.util.Map;
 
 public interface UserService {
 
     User getUserById(Long userId);
 
-    User findByEmail(String email);
+    User getAuthenticatedUser();
 
-    List<User> findAll();
+    List<User> getUsers();
 
-    void userSave(String username, Map<String, String> form, User user);
-
-    void updateProfile(UserPrincipal userPrincipal, String password, String email);
+    void changePassword(String password);
 }

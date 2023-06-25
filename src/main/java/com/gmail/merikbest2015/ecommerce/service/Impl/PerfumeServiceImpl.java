@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.ecommerce.service.Impl;
 
 import com.gmail.merikbest2015.ecommerce.domain.Perfume;
-import com.gmail.merikbest2015.ecommerce.dto.PerfumeRequest;
-import com.gmail.merikbest2015.ecommerce.dto.PerfumeSearchRequest;
+import com.gmail.merikbest2015.ecommerce.dto.request.PerfumeRequest;
+import com.gmail.merikbest2015.ecommerce.dto.request.PerfumeSearchRequest;
 import com.gmail.merikbest2015.ecommerce.repository.PerfumeRepository;
 import com.gmail.merikbest2015.ecommerce.service.PerfumeService;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +38,7 @@ public class PerfumeServiceImpl implements PerfumeService {
     }
 
     @Override
-    public List<Perfume> findPopularPerfumes() {
+    public List<Perfume> getPopularPerfumes() {
         List<Long> perfumeIds = Arrays.asList(26L, 43L, 46L, 106L, 34L, 76L, 82L, 85L, 27L, 39L, 79L, 86L);
         return perfumeRepository.findByIdIn(perfumeIds);
     }

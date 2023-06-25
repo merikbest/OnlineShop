@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.ecommerce.service;
 
 import com.gmail.merikbest2015.ecommerce.domain.Perfume;
-import com.gmail.merikbest2015.ecommerce.dto.PerfumeRequest;
-import com.gmail.merikbest2015.ecommerce.dto.PerfumeSearchRequest;
+import com.gmail.merikbest2015.ecommerce.dto.request.PerfumeRequest;
+import com.gmail.merikbest2015.ecommerce.dto.request.PerfumeSearchRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,7 +14,7 @@ public interface PerfumeService {
 
     Perfume getPerfumeById(Long perfumeId);
 
-    List<Perfume> findPopularPerfumes();
+    List<Perfume> getPopularPerfumes();
 
     Page<Perfume> getPerfumes(Pageable pageable);
 

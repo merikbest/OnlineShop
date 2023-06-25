@@ -3,9 +3,9 @@ package com.gmail.merikbest2015.ecommerce.service.Impl;
 import com.gmail.merikbest2015.ecommerce.constants.ErrorMessage;
 import com.gmail.merikbest2015.ecommerce.domain.Role;
 import com.gmail.merikbest2015.ecommerce.domain.User;
-import com.gmail.merikbest2015.ecommerce.dto.CaptchaResponse;
-import com.gmail.merikbest2015.ecommerce.dto.RegistrationResponse;
-import com.gmail.merikbest2015.ecommerce.dto.UserRequest;
+import com.gmail.merikbest2015.ecommerce.dto.response.CaptchaResponse;
+import com.gmail.merikbest2015.ecommerce.dto.response.RegistrationResponse;
+import com.gmail.merikbest2015.ecommerce.dto.request.UserRequest;
 import com.gmail.merikbest2015.ecommerce.repository.UserRepository;
 import com.gmail.merikbest2015.ecommerce.service.RegistrationService;
 import lombok.RequiredArgsConstructor;
@@ -55,8 +55,8 @@ public class RegistrationServiceImpl implements RegistrationService {
         user.setRoles(Collections.singleton(Role.USER));
         user.setActivationCode(UUID.randomUUID().toString());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-//        userRepository.save(user);
-//        mailSender.sendEmail(user);
+        userRepository.save(user);
+        mailSender.sendEmail(user);
         return new RegistrationResponse("success", "Activation email has been sent to your email");
     }
 

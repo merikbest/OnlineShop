@@ -14,7 +14,7 @@ public class MainController {
 
     @GetMapping
     public String home(Model model) {
-        model.addAttribute("perfumes", perfumeService.findPopularPerfumes());
+        model.addAttribute("perfumes", perfumeService.getPopularPerfumes());
         return "home";
     }
 }

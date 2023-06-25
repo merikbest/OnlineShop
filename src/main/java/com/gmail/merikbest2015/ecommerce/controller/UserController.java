@@ -1,17 +1,19 @@
 package com.gmail.merikbest2015.ecommerce.controller;
 
-import com.gmail.merikbest2015.ecommerce.domain.User;
-import com.gmail.merikbest2015.ecommerce.security.UserPrincipal;
+import com.gmail.merikbest2015.ecommerce.constants.ErrorMessage;
+import com.gmail.merikbest2015.ecommerce.dto.request.ChangePasswordRequest;
 import com.gmail.merikbest2015.ecommerce.service.PerfumeService;
 import com.gmail.merikbest2015.ecommerce.service.UserService;
+import com.gmail.merikbest2015.ecommerce.utils.ControllerUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.validation.Valid;
 
 import static com.gmail.merikbest2015.ecommerce.constants.PathConstants.USER;
 
@@ -22,6 +24,7 @@ public class UserController {
 
     private final UserService userService;
     private final PerfumeService perfumeService;
+    private final ControllerUtils controllerUtils;
 
     @GetMapping("/contacts")
     public String contacts() {
@@ -29,31 +32,29 @@ public class UserController {
     }
 
     @GetMapping("/account")
-    public String userAccount(@AuthenticationPrincipal UserPrincipal userPrincipal, Model model) {
-        model.addAttribute("user", userService.findByEmail(userPrincipal.getUsername()));
+    public String userAccount(Model model) {
+        model.addAttribute("user", userService.getAuthenticatedUser());
         return "user/user-account";
     }
 
     @GetMapping("/info")
-    public String userInfo(@AuthenticationPrincipal UserPrincipal userPrincipal, Model model) {
-        model.addAttribute("user", userService.findByEmail(userPrincipal.getUsername()));
+    public String userInfo(Model model) {
+        model.addAttribute("user", userService.getAuthenticatedUser());
         return "user/user-info";
     }
 
-    @GetMapping("/edit")
-    public String getProfileInfo(@AuthenticationPrincipal UserPrincipal userPrincipal, Model model) {
-        User user = userService.findByEmail(userPrincipal.getUsername());
-        model.addAttribute("username", user.getUsername());
-        model.addAttribute("email", user.getEmail());
-        return "user/user-edit-profile";
-    }
-
-    // TODO refactor: remove email edit
-    @PostMapping("/edit")
-    public String updateProfileInfo(@AuthenticationPrincipal UserPrincipal userPrincipal,
-                                    @RequestParam String password,
-                                    @RequestParam String email) {
-        userService.updateProfile(userPrincipal, password, email);
-        return "redirect:/user/user-cabinet";
+    @PostMapping("/change/password")
+    public String changePassword(@Valid ChangePasswordRequest request, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.mergeAttributes(controllerUtils.getErrors(bindingResult));
+            return "user/password-reset";
+        }
+        if (!request.getPassword().equals(request.getPassword2())) {
+            model.addAttribute("passwordError", ErrorMessage.PASSWORDS_DO_NOT_MATCH);
+            return "user/password-reset";
+        }
+        userService.changePassword(request.getPassword());
+        model.addAttribute("success", "Password successfully changed!");
+        return "user/password-reset";
     }
 }

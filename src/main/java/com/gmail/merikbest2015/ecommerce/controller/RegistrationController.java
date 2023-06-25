@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.ecommerce.controller;
 
-import com.gmail.merikbest2015.ecommerce.dto.RegistrationResponse;
-import com.gmail.merikbest2015.ecommerce.dto.UserRequest;
+import com.gmail.merikbest2015.ecommerce.dto.response.RegistrationResponse;
+import com.gmail.merikbest2015.ecommerce.dto.request.UserRequest;
 import com.gmail.merikbest2015.ecommerce.service.RegistrationService;
 import com.gmail.merikbest2015.ecommerce.utils.ControllerUtils;
 import lombok.RequiredArgsConstructor;

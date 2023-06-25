@@ -44,7 +44,7 @@ public class Order {
     private Integer postIndex;
 
     @ManyToMany
-    private List<Perfume> perfumeList = new ArrayList<>();
+    private List<Perfume> perfumes = new ArrayList<>();
 
     @ManyToOne
     private User user;

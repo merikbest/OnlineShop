@@ -44,8 +44,12 @@
                     <h5>Gender</h5>
                     <li class="active mb-2">
                         <ul class="list-unstyled">
-                            <li th:replace="parts/menu-fragments :: menu-gender-checkbox('female')"></li>
-                            <li th:replace="parts/menu-fragments :: menu-gender-checkbox('male')"></li>
+                            <li th:replace="parts/menu-fragments :: menu-gender-checkbox(
+                                gender='female'
+                            )"></li>
+                            <li th:replace="parts/menu-fragments :: menu-gender-checkbox(
+                                gender='male'
+                            )"></li>
                         </ul>
                     </li>
                     <h5>Price</h5>

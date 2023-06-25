@@ -1,9 +1,8 @@
 package com.gmail.merikbest2015.ecommerce.controller;
 
 import com.gmail.merikbest2015.ecommerce.domain.Perfume;
-import com.gmail.merikbest2015.ecommerce.domain.Role;
-import com.gmail.merikbest2015.ecommerce.domain.User;
-import com.gmail.merikbest2015.ecommerce.dto.PerfumeRequest;
+import com.gmail.merikbest2015.ecommerce.dto.request.PerfumeRequest;
+import com.gmail.merikbest2015.ecommerce.service.OrderService;
 import com.gmail.merikbest2015.ecommerce.service.PerfumeService;
 import com.gmail.merikbest2015.ecommerce.service.UserService;
 import com.gmail.merikbest2015.ecommerce.utils.ControllerUtils;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.util.Map;
 
 import static com.gmail.merikbest2015.ecommerce.constants.PathConstants.ADMIN;
 
@@ -31,6 +29,7 @@ public class AdminController {
 
     private final PerfumeService perfumeService;
     private final UserService userService;
+    private final OrderService orderService;
     private final ControllerUtils controllerUtils;
 
     @GetMapping("/perfumes")
@@ -78,23 +77,14 @@ public class AdminController {
 
     @GetMapping("/users")
     public String getUsers(Model model) {
-        model.addAttribute("users", userService.findAll());
+        model.addAttribute("users", userService.getUsers());
         return "admin/users";
     }
 
     @GetMapping("/user/{userId}")
     public String getUserById(@PathVariable("userId") Long userId, Model model) {
         model.addAttribute("user", userService.getUserById(userId));
-        model.addAttribute("roles", Role.values());
-        return "admin/edit-user";
-    }
-
-    // TODO delete
-    @PostMapping("/edit/user")
-    public String editUser(@RequestParam String username,
-                           @RequestParam Map<String, String> form,
-                           @RequestParam("userId") User user) {
-        userService.userSave(username, form, user);
-        return "redirect:/user";
+        model.addAttribute("orders", orderService.getOrdersByUserId(userId));
+        return "admin/user-detail";
     }
 }

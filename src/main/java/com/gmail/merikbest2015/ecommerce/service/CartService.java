@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface CartService {
 
-    List<Perfume> getPerfumesInCart(String email);
+    List<Perfume> getPerfumesInCart();
 
-    void addPerfumeToCart(String username, Long perfumeId);
+    void addPerfumeToCart(Long perfumeId);
 
-    void removePerfumeFromCart(String username, Long perfumeId);
+    void removePerfumeFromCart(Long perfumeId);
 }

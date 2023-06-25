@@ -1,17 +1,17 @@
 package com.gmail.merikbest2015.ecommerce.controller;
 
 import com.gmail.merikbest2015.ecommerce.domain.User;
-import com.gmail.merikbest2015.ecommerce.dto.OrderRequest;
-import com.gmail.merikbest2015.ecommerce.security.UserPrincipal;
+import com.gmail.merikbest2015.ecommerce.dto.request.OrderRequest;
 import com.gmail.merikbest2015.ecommerce.service.OrderService;
 import com.gmail.merikbest2015.ecommerce.service.UserService;
 import com.gmail.merikbest2015.ecommerce.utils.ControllerUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -28,18 +28,25 @@ public class OrderController {
     private final UserService userService;
     private final ControllerUtils controllerUtils;
 
-    @GetMapping
-    public String getOrder(@AuthenticationPrincipal UserPrincipal user, Model model) {
-        model.addAttribute("perfumes", orderService.getOrder(user.getUsername()));
+    @GetMapping("/{orderId}")
+    public String getOrder(@PathVariable("orderId") Long orderId, Model model) {
+        model.addAttribute("order", orderService.getOrder(orderId));
         return "order/order";
     }
 
+    @GetMapping
+    public String getOrdering(Model model) {
+        model.addAttribute("perfumes", orderService.getOrdering());
+        return "order/ordering";
+    }
+
     @GetMapping("/user/orders")
-    public String getUserOrdersList(@AuthenticationPrincipal UserPrincipal user, Model model) {
-        model.addAttribute("orders", orderService.getUserOrdersList(user.getUsername()));
+    public String getUserOrdersList(Model model) {
+        model.addAttribute("orders", orderService.getUserOrdersList());
         return "order/orders";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/all/orders")
     public String getAllOrders(Model model) {
         model.addAttribute("orders", orderService.getAllOrders());
@@ -47,15 +54,13 @@ public class OrderController {
     }
 
     @PostMapping
-    public String postOrder(@AuthenticationPrincipal UserPrincipal userPrincipal,
-                            @Valid OrderRequest orderRequest,
-                            BindingResult bindingResult, Model model) {
-        User user = userService.findByEmail(userPrincipal.getUsername());
+    public String postOrder(@Valid OrderRequest orderRequest, BindingResult bindingResult, Model model) {
+        User user = userService.getAuthenticatedUser();
 
         if (bindingResult.hasErrors()) {
             model.mergeAttributes(controllerUtils.getErrors(bindingResult));
             model.addAttribute("perfumes", user.getPerfumeList());
-            return "order/order";
+            return "order/ordering";
         }
         model.addAttribute("orderId", orderService.postOrder(user, orderRequest));
         return "order/finalize-order";

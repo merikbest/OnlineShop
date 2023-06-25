@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.ecommerce.dto;
+package com.gmail.merikbest2015.ecommerce.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

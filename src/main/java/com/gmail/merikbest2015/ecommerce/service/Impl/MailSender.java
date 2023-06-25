@@ -21,9 +21,9 @@ public class MailSender {
 
     public void sendEmail(User user) {
         String message = String.format("Привет, %s! \n " +
-                        "Добро пожаловать в интернет магазин Perfume." +
-                        "Пожалуйста, пройдите по ссылке http://%s/registration/activate/%s",
-                user.getUsername(),
+                        "Welcome to Perfume online store." +
+                        "To complete registration please follow the link: http://%s/registration/activate/%s",
+                user.getFirstName(),
                 hostname,
                 user.getActivationCode()
         );
