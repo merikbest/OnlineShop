@@ -8,6 +8,7 @@ import java.util.List;
 public class PerfumeSearchRequest {
     private List<String> perfumers;
     private List<String> genders;
-    private Integer startingPrice;
-    private Integer endingPrice;
+    private Integer price = 0;
+    private String searchType;
+    private String text;
 }

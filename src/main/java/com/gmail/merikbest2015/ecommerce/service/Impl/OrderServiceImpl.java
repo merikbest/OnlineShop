@@ -58,6 +58,7 @@ public class OrderServiceImpl implements OrderService {
         order.getPerfumes().addAll(user.getPerfumeList());
         orderRepository.save(order);
         user.getPerfumeList().clear();
+        // TODO send order email
         return order.getId();
     }
 }

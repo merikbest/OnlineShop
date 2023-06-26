@@ -1,0 +1,216 @@
+<!--Header-->
+<head th:fragment="head" xmlns:th="http://www.thymeleaf.org">
+    <title>Perfume</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"/>
+    <link rel="stylesheet" href="/static/style.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+
+
+<!--Scripts-->
+<div th:fragment="scripts" xmlns:th="http://www.thymeleaf.org">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+</div>
+
+<!--Navbar-->
+<div th:fragment="navbar" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <div class="container-fluid bg-black header-top d-none d-md-block pb-5 pt-5">
+        <img id="logo-main" src="https://i.ibb.co/fqYvrL8/LOGO4.jpg" class="rounded mx-auto d-block"/>
+    </div>
+    <div class="container-fluid bg-black">
+        <nav id="navbar-main" class="container navbar navbar-expand-lg bg-black text-white navbar-main">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link pl-5 pr-5" href="/">HOME</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link pl-5 pr-5" href="/perfume">PERFUMES</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link pl-5 pr-5" href="/user/contacts">CONTACTS</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/cart">
+                            <i class="fas fa-shopping-cart fa-lg pl-5"></i>
+                        </a>
+                    </li>
+                    <th:block sec:authorize="isAuthenticated()">
+                        <li class="nav-item">
+                            <a class="nav-link pl-5" href="/user/account">
+                                <i class="fas fa-user mr-2"></i>
+                                MY ACCOUNT
+                            </a>
+                        </li>
+                        <form id="logout" action="/logout" method="post">
+                            <li class="nav-item">
+                                <a class="nav-link" href=# onclick="document.getElementById('logout').submit()">
+                                    <input type="hidden"/>
+                                    <i class="fas fa-sign-out-alt mr-2"></i>
+                                    EXIT
+                                </a>
+                            </li>
+                        </form>
+                    </th:block>
+                    <th:block sec:authorize="!isAuthenticated()">
+                        <li class="nav-item">
+                            <a class="nav-link pl-5" href="/login">
+                                <i class="fas fa-sign-in-alt mr-2"></i>
+                                LOGIN
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pl-5" href="/registration">
+                                <i class="fas fa-user-plus mr-2"></i>
+                                REGISTRATION
+                            </a>
+                        </li>
+                    </th:block>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+
+<!--carousel-indicators-->
+<div th:fragment="carousel-indicators (id)" class="container pt-3">
+    <ol class="carousel-indicators">
+        <li th:data-target="${id}" data-slide-to="0" class="active" style="background-color: black"></li>
+        <li th:data-target="${id}" data-slide-to="1" style="background-color: black"></li>
+        <li th:data-target="${id}" data-slide-to="2" style="background-color: black"></li>
+    </ol>
+</div>
+
+<!--pagination-->
+<th:block th:fragment="pagination">
+    <ul class="pagination mx-3 d-flex justify-content-between"
+        th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}">
+        <div class="d-flex">
+            <li class="page-item disabled">
+                <a class="page-link " href="#" tabindex="-1">Pages</a>
+            </li>
+            <th:block th:each="i : ${pagination}">
+                <th:block th:if="${i - 1 == page.getNumber()}">
+                    <li class="page-item active">
+                        <a class="page-link bg-dark border-dark" href="#" th:text="${i}"></a>
+                    </li>
+                </th:block>
+                <th:block th:if="${i != -1 and i - 1 != page.getNumber()}">
+                    <li class="page-item">
+                        <a class="page-link text-dark"
+                           th:href="${urlBuilder.replaceQueryParam('page', (i - 1)).replaceQueryParam('size', page.getSize()).toUriString()}"
+                           th:text="${i}"></a>
+                    </li>
+                </th:block>
+                <th:block th:if="${i == -1}">
+                    <li class="page-item disabled">
+                        <a class="page-link text-dark" href="#">...</a>
+                    </li>
+                </th:block>
+            </th:block>
+        </div>
+        <div class="d-flex">
+            <li class="page-item disabled ml-5">
+                <a class="page-link text-dark" href="#" tabindex="-1">Items per page</a>
+            </li>
+            <th:block th:each="c : ${#numbers.sequence(12, 36, 12)}">
+                <th:block th:if="${c} == ${page.getSize()}">
+                    <li class="page-item active">
+                        <a class="page-link bg-dark border-dark" href="#" th:text="${c}"></a>
+                    </li>
+                </th:block>
+                <th:block th:unless="${c} == ${page.getSize()}">
+                    <li class="page-item">
+                        <a class="page-link text-dark"
+                           th:href="${urlBuilder.replaceQueryParam('page', page.getNumber()).replaceQueryParam('size', c).toUriString()}"
+                           th:text="${c}"></a>
+                    </li>
+                </th:block>
+            </th:block>
+        </div>
+    </ul>
+</th:block>
+
+<!--search-->
+<th:block th:fragment="search">
+    <form action="/perfume/search" method="get" style="justify-content: center">
+        <div class="row">
+            <div class="col-md-4">
+                <select name="searchType" class="form-control">
+                    <option value="perfumer">Brand</option>
+                    <option value="perfumeTitle">Perfume title</option>
+                    <option value="country">Manufacturer country</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control" placeholder="Search..." name="text"
+                       th:value="${searchRequest} ? ${searchRequest.getText()} : ''"/>
+            </div>
+            <div class="col-md-5">
+                <button type="submit" class="btn btn-dark">
+                    <i class="fas fa-search mr-2"></i>
+                    Search
+                </button>
+            </div>
+        </div>
+    </form>
+</th:block>
+
+<!--footer-->
+<footer th:fragment="footer" class="page-footer p-5 bg-black text-white">
+    <div class="container">
+        <div class="d-flex justify-content-between">
+            <div class="footer-left">
+                <h3>Perfume</h3>
+                <p>(066) 696-66-23</p>
+                <br/>
+                <p>from 08:00 to 20:00 without breaks and weekends</p>
+            </div>
+            <div class="footer-right">
+                <h3>Social networks</h3>
+                <a href="https://www.linkedin.com/in/merikbest/">
+                    <i class="fab fa-linkedin fa-2x mr-3" style="color:white"></i>
+                </a>
+                <a href="#"><i class="fab fa-facebook-f fa-2x mr-3" style="color:white"></i></a>
+                <a href="#"><i class="fab fa-twitter fa-2x mr-3" style="color:white"></i></a>
+            </div>
+        </div>
+        <div class="mx-auto" style="width: 200px;">
+            <p>© Copy right merikbest</p>
+        </div>
+    </div>
+    </nav>
+</footer>
+
+<!-- info-title -->
+<th:block th:fragment="info-title">
+    <h4 th:class="${titleClass}">
+        <i th:class="${icon}"></i>
+        <th:block th:text="${text}"></th:block>
+    </h4>
+</th:block>
+
+<!-- icon-button -->
+<th:block th:fragment="icon-button">
+    <button type="submit" class="btn btn-dark " th:classappend="${buttonClassName}">
+        <i th:class="${icon}"></i>
+        <th:block th:text="${text}"></th:block>
+    </button>
+</th:block>

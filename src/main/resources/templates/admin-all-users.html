@@ -1,0 +1,46 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/common :: head"></head>
+<body>
+<div th:insert="~{fragments/common :: scripts}"></div>
+<div th:replace="fragments/common :: navbar"></div>
+<div class="account-container container">
+    <div class="row mt-5">
+        <th:block th:replace="fragments/account-fragments :: account-sidebar"></th:block>
+        <div class="col-md-10">
+            <th:block th:replace="fragments/common :: info-title(
+                text='List of all users',
+                icon='fas fa-users ml-2 mr-2'
+            )"></th:block>
+            <table class="table mt-4 border text-center">
+                <thead class="table-active">
+                <tr>
+                    <th>id</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>E-mail</th>
+                    <th>Role</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody th:each="user : ${users}">
+                <tr>
+                    <th th:text="${user.getId()}"></th>
+                    <th th:text="${user.getFirstName()}"></th>
+                    <th th:text="${user.getLastName()}"></th>
+                    <th th:text="${user.getEmail()}"></th>
+                    <th th:text="${user.getRoles().iterator().next()}"></th>
+                    <th>
+                        <a th:href="@{/admin/user/{userId} (userId = ${user.getId()})}">
+                            Show more
+                        </a>
+                    </th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<footer th:insert="~{fragments/common :: footer}"></footer>
+</body>
+</html>

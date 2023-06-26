@@ -20,7 +20,7 @@ public class MailSender {
     private String hostname;
 
     public void sendEmail(User user) {
-        String message = String.format("Привет, %s! \n " +
+        String message = String.format("Hello, %s! \n " +
                         "Welcome to Perfume online store." +
                         "To complete registration please follow the link: http://%s/registration/activate/%s",
                 user.getFirstName(),

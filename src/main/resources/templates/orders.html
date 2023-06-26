@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/common :: head"></head>
+<body>
+<div th:insert="~{fragments/common :: scripts}"></div>
+<div th:replace="fragments/common :: navbar"></div>
+<div class="account-container container">
+    <div class="row mt-5">
+        <th:block th:replace="fragments/account-fragments :: account-sidebar"></th:block>
+        <div class="col-md-10">
+            <div class="container">
+                <th:block th:replace="fragments/common :: info-title(
+                    text='List of all orders',
+                    icon='fas fa-shopping-bag ml-2 mr-2'
+                )"></th:block>
+                <table class="table mt-4 border text-center">
+                    <thead class="table-active">
+                    <tr>
+                        <th>Order №</th>
+                        <th>Date</th>
+                        <th>Customer</th>
+                        <th>Email</th>
+                        <th>Sum, $</th>
+                        <th></th>
+                    </tr>
+                    <tbody th:each="order : ${orders}">
+                    <tr>
+                        <th th:text="${order.getId()}"></th>
+                        <th th:text="${order.getDate()}"></th>
+                        <th th:text="${order.getFirstName() + ' ' + order.getLastName()}"></th>
+                        <th th:text="${order.getEmail()}"></th>
+                        <th th:text="'$' + ${order.getTotalPrice()} + '0'"></th>
+                        <th>
+                            <a th:href="@{/order/{orderId} (orderId = ${order.getId()})}">
+                                Show more
+                            </a>
+                        </th>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:insert="~{fragments/common :: footer}"></footer>
+</body>
+</html>

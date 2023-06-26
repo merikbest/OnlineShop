@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -45,42 +44,24 @@ public class PerfumeServiceImpl implements PerfumeService {
 
     @Override
     public Page<Perfume> getPerfumes(Pageable pageable) {
-        return perfumeRepository.findAll(pageable);
-    }
-
-    @Override
-    public Page<Perfume> getPerfumesByPerfumer(String perfumer, Pageable pageable) {
-        return perfumeRepository.findByPerfumer(perfumer, pageable);
-    }
-
-    @Override
-    public Page<Perfume> getPerfumesByGender(String perfumeGender, Pageable pageable) {
-        return perfumeRepository.findByPerfumeGender(perfumeGender, pageable);
-    }
-
-    @Override
-    public Page<Perfume> searchPerfumes(String text, Pageable pageable) {
-        return perfumeRepository.findByPerfumerOrPerfumeTitle(text, text, pageable);
-    }
-
-    @Override
-    public BigDecimal minPerfumePrice() {
-        return perfumeRepository.minPerfumePrice();
-    }
-
-    @Override
-    public BigDecimal maxPerfumePrice() {
-        return perfumeRepository.maxPerfumePrice();
+        return perfumeRepository.findAllByOrderByPriceAsc(pageable);
     }
 
     @Override
     public Page<Perfume> getPerfumesByFilterParams(PerfumeSearchRequest request, Pageable pageable) {
+        Integer startingPrice = request.getPrice();
+        Integer endingPrice = startingPrice + (startingPrice == 0 ? 500 : 50);
         return perfumeRepository.getPerfumesByFilterParams(
                 request.getPerfumers(),
                 request.getGenders(),
-                request.getStartingPrice(),
-                request.getEndingPrice(),
+                startingPrice,
+                endingPrice,
                 pageable);
+    }
+
+    @Override
+    public Page<Perfume> searchPerfumes(PerfumeSearchRequest request, Pageable pageable) {
+        return perfumeRepository.searchPerfumes(request.getSearchType(), request.getText(), pageable);
     }
 
     @Override

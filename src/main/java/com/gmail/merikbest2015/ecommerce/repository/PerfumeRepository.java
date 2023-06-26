@@ -6,31 +6,29 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public interface PerfumeRepository extends JpaRepository<Perfume, Long> {
 
     List<Perfume> findByIdIn(List<Long> perfumesIds);
 
-    Page<Perfume> findAll(Pageable pageable);
+    Page<Perfume> findAllByOrderByPriceAsc(Pageable pageable);
 
-    Page<Perfume> findByPerfumer(String perfumer, Pageable pageable);
-
-    Page<Perfume> findByPerfumeGender(String perfumeGender, Pageable pageable);
-
-    Page<Perfume> findByPerfumerOrPerfumeTitle(String perfumer, String perfumeTitle, Pageable pageable);
-
-    @Query(value = "SELECT min(price) FROM Perfume ")
-    BigDecimal minPerfumePrice();
-
-    @Query(value = "SELECT max(price) FROM Perfume ")
-    BigDecimal maxPerfumePrice();
+    @Query("SELECT perfume FROM Perfume perfume WHERE " +
+            "(CASE " +
+            "   WHEN :searchType = 'perfumeTitle' THEN UPPER(perfume.perfumeTitle) " +
+            "   WHEN :searchType = 'country' THEN UPPER(perfume.country) " +
+            "   ELSE UPPER(perfume.perfumer) " +
+            "END) " +
+            "LIKE UPPER(CONCAT('%',:text,'%')) " +
+            "ORDER BY perfume.price ASC")
+    Page<Perfume> searchPerfumes(String searchType, String text, Pageable pageable);
 
     @Query("SELECT perfume FROM Perfume perfume " +
             "WHERE (coalesce(:perfumers, null) IS NULL OR perfume.perfumer IN :perfumers) " +
             "AND (coalesce(:genders, null) IS NULL OR perfume.perfumeGender IN :genders) " +
-            "AND (coalesce(:priceStart, null) IS NULL OR perfume.price BETWEEN :priceStart AND :priceEnd)")
+            "AND (coalesce(:priceStart, null) IS NULL OR perfume.price BETWEEN :priceStart AND :priceEnd) " +
+            "ORDER BY perfume.price ASC")
     Page<Perfume> getPerfumesByFilterParams(
             List<String> perfumers,
             List<String> genders,

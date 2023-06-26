@@ -14,7 +14,7 @@ public class AuthenticationController {
 
     @GetMapping("/reset")
     public String passwordReset() {
-        return "user/password-reset";
+        return "user-password-reset";
     }
 
     // TODO add password reset endpoint (post /reset)

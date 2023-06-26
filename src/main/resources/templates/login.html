@@ -1,9 +1,9 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="parts/common :: head"></head>
+<head th:replace="fragments/common :: head"></head>
 <body>
-<div th:insert="~{parts/common :: scripts}"></div>
-<div th:replace="parts/common :: navbar"></div>
+<div th:insert="~{fragments/common :: scripts}"></div>
+<div th:replace="fragments/common :: navbar"></div>
 <div id="container" class="container mt-5">
     <div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']}" class="alert alert-danger col-sm-8" role="alert">
         Invalid Email Or Password
@@ -50,6 +50,6 @@
         </div>
     </form>
 </div>
-<footer th:insert="~{parts/common :: footer}"></footer>
+<footer th:insert="~{fragments/common :: footer}"></footer>
 </body>
 </html>

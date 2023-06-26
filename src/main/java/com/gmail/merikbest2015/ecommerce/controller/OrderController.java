@@ -31,26 +31,26 @@ public class OrderController {
     @GetMapping("/{orderId}")
     public String getOrder(@PathVariable("orderId") Long orderId, Model model) {
         model.addAttribute("order", orderService.getOrder(orderId));
-        return "order/order";
+        return "order";
     }
 
     @GetMapping
     public String getOrdering(Model model) {
         model.addAttribute("perfumes", orderService.getOrdering());
-        return "order/ordering";
+        return "ordering";
     }
 
     @GetMapping("/user/orders")
     public String getUserOrdersList(Model model) {
         model.addAttribute("orders", orderService.getUserOrdersList());
-        return "order/orders";
+        return "orders";
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/all/orders")
     public String getAllOrders(Model model) {
         model.addAttribute("orders", orderService.getAllOrders());
-        return "order/orders";
+        return "orders";
     }
 
     @PostMapping
@@ -60,9 +60,9 @@ public class OrderController {
         if (bindingResult.hasErrors()) {
             model.mergeAttributes(controllerUtils.getErrors(bindingResult));
             model.addAttribute("perfumes", user.getPerfumeList());
-            return "order/ordering";
+            return "ordering";
         }
         model.addAttribute("orderId", orderService.postOrder(user, orderRequest));
-        return "order/finalize-order";
+        return "order-finalize";
     }
 }

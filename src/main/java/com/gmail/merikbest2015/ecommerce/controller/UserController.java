@@ -34,27 +34,27 @@ public class UserController {
     @GetMapping("/account")
     public String userAccount(Model model) {
         model.addAttribute("user", userService.getAuthenticatedUser());
-        return "user/user-account";
+        return "user-account";
     }
 
     @GetMapping("/info")
     public String userInfo(Model model) {
         model.addAttribute("user", userService.getAuthenticatedUser());
-        return "user/user-info";
+        return "user-info";
     }
 
     @PostMapping("/change/password")
     public String changePassword(@Valid ChangePasswordRequest request, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.mergeAttributes(controllerUtils.getErrors(bindingResult));
-            return "user/password-reset";
+            return "user-password-reset";
         }
         if (!request.getPassword().equals(request.getPassword2())) {
             model.addAttribute("passwordError", ErrorMessage.PASSWORDS_DO_NOT_MATCH);
-            return "user/password-reset";
+            return "user-password-reset";
         }
         userService.changePassword(request.getPassword());
         model.addAttribute("success", "Password successfully changed!");
-        return "user/password-reset";
+        return "user-password-reset";
     }
 }

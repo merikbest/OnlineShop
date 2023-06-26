@@ -1,0 +1,19 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/common :: head"></head>
+<body>
+<div th:insert="~{fragments/common :: scripts}"></div>
+<div th:replace="fragments/common :: navbar"></div>
+<div id="container" class="account-container container">
+    <div class="row mt-5">
+        <th:block th:replace="fragments/account-fragments :: account-sidebar"></th:block>
+        <div class="col-md-10">
+            <h4 class="text-center">
+                Hello <span th:text="${user.getFirstName()}"></span>
+            </h4>
+        </div>
+    </div>
+</div>
+<footer th:insert="~{fragments/common :: footer}"></footer>
+</body>
+</html>

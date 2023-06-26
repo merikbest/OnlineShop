@@ -41,7 +41,7 @@ public class MainControllerTest {
     private PerfumeService perfumeService;
 
     @Autowired
-    private MainController mainController;
+    private HomeController mainController;
 
     @Test
     public void homeTest() throws Exception {

@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.ecommerce.utils;
 
 import com.gmail.merikbest2015.ecommerce.domain.Perfume;
+import com.gmail.merikbest2015.ecommerce.dto.request.PerfumeSearchRequest;
 import com.gmail.merikbest2015.ecommerce.service.PerfumeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,12 +29,10 @@ public class ControllerUtils {
         return bindingResult.getFieldErrors().stream().collect(collector);
     }
 
-    public void processModel(Model model, String url, Page<Perfume> perfumes) {
-        model.addAttribute("url", url);
+    public void processModel(PerfumeSearchRequest request, Model model, Page<Perfume> perfumes) {
+        model.addAttribute("searchRequest", request);
         model.addAttribute("pagination", computePagination(perfumes));
         model.addAttribute("page", perfumes);
-        model.addAttribute("minPerfumePrice", perfumeService.minPerfumePrice());
-        model.addAttribute("maxPerfumePrice", perfumeService.maxPerfumePrice());
     }
 
     private int[] computePagination(Page<?> page) {
