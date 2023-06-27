@@ -1,12 +1,13 @@
 package com.gmail.merikbest2015.ecommerce.controller;
 
+import com.gmail.merikbest2015.ecommerce.constants.Pages;
+import com.gmail.merikbest2015.ecommerce.constants.PathConstants;
 import com.gmail.merikbest2015.ecommerce.domain.User;
 import com.gmail.merikbest2015.ecommerce.dto.request.OrderRequest;
 import com.gmail.merikbest2015.ecommerce.service.OrderService;
 import com.gmail.merikbest2015.ecommerce.service.UserService;
 import com.gmail.merikbest2015.ecommerce.utils.ControllerUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,11 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
-import static com.gmail.merikbest2015.ecommerce.constants.PathConstants.ORDER;
-
 @Controller
-@RequestMapping(ORDER)
 @RequiredArgsConstructor
+@RequestMapping(PathConstants.ORDER)
 public class OrderController {
 
     private final OrderService orderService;
@@ -31,38 +30,28 @@ public class OrderController {
     @GetMapping("/{orderId}")
     public String getOrder(@PathVariable("orderId") Long orderId, Model model) {
         model.addAttribute("order", orderService.getOrder(orderId));
-        return "order";
+        return Pages.ORDER;
     }
 
     @GetMapping
     public String getOrdering(Model model) {
         model.addAttribute("perfumes", orderService.getOrdering());
-        return "ordering";
+        return Pages.ORDERING;
     }
 
     @GetMapping("/user/orders")
     public String getUserOrdersList(Model model) {
         model.addAttribute("orders", orderService.getUserOrdersList());
-        return "orders";
-    }
-
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @GetMapping("/all/orders")
-    public String getAllOrders(Model model) {
-        model.addAttribute("orders", orderService.getAllOrders());
-        return "orders";
+        return Pages.ORDERS;
     }
 
     @PostMapping
     public String postOrder(@Valid OrderRequest orderRequest, BindingResult bindingResult, Model model) {
         User user = userService.getAuthenticatedUser();
-
-        if (bindingResult.hasErrors()) {
-            model.mergeAttributes(controllerUtils.getErrors(bindingResult));
-            model.addAttribute("perfumes", user.getPerfumeList());
-            return "ordering";
+        if (controllerUtils.validateInputFields(bindingResult, model, "perfumes", user.getPerfumeList())) {
+            return Pages.ORDERING;
         }
         model.addAttribute("orderId", orderService.postOrder(user, orderRequest));
-        return "order-finalize";
+        return Pages.ORDER_FINALIZE;
     }
 }

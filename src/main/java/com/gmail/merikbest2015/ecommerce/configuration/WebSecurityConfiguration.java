@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.ecommerce.config;
+package com.gmail.merikbest2015.ecommerce.configuration;
 
 import com.gmail.merikbest2015.ecommerce.security.UserDetailsServiceImpl;
 import com.gmail.merikbest2015.ecommerce.service.Impl.UserServiceImpl;
@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final UserServiceImpl userService;
     private final UserDetailsServiceImpl userDetailsService;
@@ -26,12 +26,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                     .antMatchers("/",
-                            "/registration",
-                            "/registration/*",
+                            "/registration/**",
                             "/user/contacts",
                             "/img/**",
                             "/static/**",
-                            "/product/*",
+                            "/auth/**",
                             "/menu/**",
                             "/perfume/**"
                     ).permitAll()

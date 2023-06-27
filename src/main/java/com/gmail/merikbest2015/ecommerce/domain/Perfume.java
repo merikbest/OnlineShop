@@ -14,7 +14,9 @@ import javax.persistence.*;
 public class Perfume {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "perfume_id_seq")
+    @SequenceGenerator(name = "perfume_id_seq", sequenceName = "perfume_id_seq", initialValue = 109, allocationSize = 1)
     private Long id;
 
     @Column(name = "perfume_title")

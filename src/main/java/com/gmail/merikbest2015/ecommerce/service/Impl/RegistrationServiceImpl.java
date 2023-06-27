@@ -4,7 +4,7 @@ import com.gmail.merikbest2015.ecommerce.constants.ErrorMessage;
 import com.gmail.merikbest2015.ecommerce.domain.Role;
 import com.gmail.merikbest2015.ecommerce.domain.User;
 import com.gmail.merikbest2015.ecommerce.dto.response.CaptchaResponse;
-import com.gmail.merikbest2015.ecommerce.dto.response.RegistrationResponse;
+import com.gmail.merikbest2015.ecommerce.dto.response.MessageResponse;
 import com.gmail.merikbest2015.ecommerce.dto.request.UserRequest;
 import com.gmail.merikbest2015.ecommerce.repository.UserRepository;
 import com.gmail.merikbest2015.ecommerce.service.RegistrationService;
@@ -17,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -37,18 +39,18 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     @Override
     @Transactional
-    public RegistrationResponse registration(String captchaResponse, UserRequest userRequest) {
+    public MessageResponse registration(String captchaResponse, UserRequest userRequest) {
         String url = String.format(captchaUrl, secret, captchaResponse);
         CaptchaResponse response = restTemplate.postForObject(url, Collections.emptyList(), CaptchaResponse.class);
 
         if (!response.isSuccess()) {
-            return new RegistrationResponse("captchaError", ErrorMessage.CAPTCHA_ERROR);
+            return new MessageResponse("captchaError", ErrorMessage.CAPTCHA_ERROR);
         }
         if (userRequest.getPassword() != null && !userRequest.getPassword().equals(userRequest.getPassword2())) {
-            return new RegistrationResponse("passwordError", ErrorMessage.PASSWORDS_DO_NOT_MATCH);
+            return new MessageResponse("passwordError", ErrorMessage.PASSWORDS_DO_NOT_MATCH);
         }
         if (userRepository.findByEmail(userRequest.getEmail()) != null) {
-            return new RegistrationResponse("usernameError", ErrorMessage.EMAIL_IN_USE);
+            return new MessageResponse("emailError", ErrorMessage.EMAIL_IN_USE);
         }
         User user = modelMapper.map(userRequest, User.class);
         user.setActive(false);
@@ -56,20 +58,24 @@ public class RegistrationServiceImpl implements RegistrationService {
         user.setActivationCode(UUID.randomUUID().toString());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
-        mailSender.sendEmail(user);
-        return new RegistrationResponse("success", "Activation email has been sent to your email");
+        Map<String, Object> attributes = new HashMap<>();
+        attributes.put("firstName", user.getFirstName());
+        attributes.put("activationCode", "/registration/activate/" + user.getActivationCode());
+        mailSender.sendMessageHtml(user.getEmail(), "Activation code", "registration-template", attributes);
+        return new MessageResponse("alert-success", "Activation email has been sent to your email");
     }
 
     @Override
-    public boolean activateEmailCode(String code) {
+    @Transactional
+    public MessageResponse activateEmailCode(String code) {
         User user = userRepository.findByActivationCode(code);
 
         if (user == null) {
-            return false;
+            return new MessageResponse("alert-danger", ErrorMessage.ACTIVATION_CODE_NOT_FOUND);
         }
         user.setActivationCode(null);
         user.setActive(true);
         userRepository.save(user);
-        return true;
+        return new MessageResponse("alert-success", "User successfully activated.");
     }
 }

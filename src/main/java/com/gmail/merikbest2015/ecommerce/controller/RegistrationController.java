@@ -1,7 +1,9 @@
 package com.gmail.merikbest2015.ecommerce.controller;
 
-import com.gmail.merikbest2015.ecommerce.dto.response.RegistrationResponse;
+import com.gmail.merikbest2015.ecommerce.constants.Pages;
+import com.gmail.merikbest2015.ecommerce.constants.PathConstants;
 import com.gmail.merikbest2015.ecommerce.dto.request.UserRequest;
+import com.gmail.merikbest2015.ecommerce.dto.response.MessageResponse;
 import com.gmail.merikbest2015.ecommerce.service.RegistrationService;
 import com.gmail.merikbest2015.ecommerce.utils.ControllerUtils;
 import lombok.RequiredArgsConstructor;
@@ -13,11 +15,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
-import static com.gmail.merikbest2015.ecommerce.constants.PathConstants.REGISTRATION;
-
 @Controller
-@RequestMapping(REGISTRATION)
 @RequiredArgsConstructor
+@RequestMapping(PathConstants.REGISTRATION)
 public class RegistrationController {
 
     private final RegistrationService registrationService;
@@ -25,7 +25,7 @@ public class RegistrationController {
 
     @GetMapping
     public String registration() {
-        return "registration";
+        return Pages.REGISTRATION;
     }
 
     @PostMapping
@@ -34,27 +34,18 @@ public class RegistrationController {
                                BindingResult bindingResult,
                                RedirectAttributes redirectAttributes,
                                Model model) {
-        if (bindingResult.hasErrors()) {
-            model.mergeAttributes(controllerUtils.getErrors(bindingResult));
-            model.addAttribute("user", user);
-            return "registration";
+        if (controllerUtils.validateInputFields(bindingResult, model, "user", user)) {
+            return Pages.REGISTRATION;
         }
-        RegistrationResponse registrationResponse = registrationService.registration(captchaResponse, user);
-
-        if (!registrationResponse.getResponse().equals("success")) {
-            model.addAttribute(registrationResponse.getResponse(), registrationResponse.getMessage());
-            model.addAttribute("user", user);
-            return "registration";
+        MessageResponse messageResponse = registrationService.registration(captchaResponse, user);
+        if (controllerUtils.validateInputField(model, messageResponse, "user", user)) {
+            return Pages.REGISTRATION;
         }
-        redirectAttributes.addFlashAttribute(registrationResponse.getResponse(), registrationResponse.getMessage());
-        return "redirect:/login";
+        return controllerUtils.processAlertMessageAndRedirect(redirectAttributes, messageResponse);
     }
 
     @GetMapping("/activate/{code}")
     public String activateEmailCode(@PathVariable String code, Model model) {
-        boolean isActivated = registrationService.activateEmailCode(code);
-        model.addAttribute("messageType", isActivated ? "alert-success" : "alert-danger");
-        model.addAttribute("message", isActivated ? "User successfully activated." : "Activation code not found");
-        return "login";
+        return controllerUtils.processAlertMessage(model, Pages.LOGIN, registrationService.activateEmailCode(code));
     }
 }

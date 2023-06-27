@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.ecommerce.config;
+package com.gmail.merikbest2015.ecommerce.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -9,7 +9,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import java.util.Properties;
 
 @Configuration
-public class MailConfig {
+public class EmailConfiguration {
 
     @Value("${spring.mail.host}")
     private String host;
@@ -42,13 +42,11 @@ public class MailConfig {
         mailSender.setPort(port);
         mailSender.setUsername(username);
         mailSender.setPassword(password);
-
         Properties mailProperties = mailSender.getJavaMailProperties();
         mailProperties.setProperty("mail.transport.protocol", protocol);
         mailProperties.setProperty("mail.debug", debug);
         mailProperties.setProperty("mail.smtp.auth", auth);
         mailProperties.setProperty("mail.smtp.starttls.enable", enable);
-
         return mailSender;
     }
 }

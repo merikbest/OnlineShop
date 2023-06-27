@@ -86,7 +86,7 @@
                         <th th:text="${order.getPostIndex()}"></th>
                         <th th:text="'$' + ${order.getTotalPrice()} + '0'"></th>
                         <th>
-                            <a th:href="@{/order/{orderId} (orderId = ${order.getId()})}">
+                            <a th:href="@{/admin/order/{orderId} (orderId = ${order.getId()})}">
                                 Show more
                             </a>
                         </th>

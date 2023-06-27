@@ -1,7 +1,9 @@
 package com.gmail.merikbest2015.ecommerce.controller;
 
-import com.gmail.merikbest2015.ecommerce.constants.ErrorMessage;
+import com.gmail.merikbest2015.ecommerce.constants.Pages;
+import com.gmail.merikbest2015.ecommerce.constants.PathConstants;
 import com.gmail.merikbest2015.ecommerce.dto.request.ChangePasswordRequest;
+import com.gmail.merikbest2015.ecommerce.dto.response.MessageResponse;
 import com.gmail.merikbest2015.ecommerce.service.PerfumeService;
 import com.gmail.merikbest2015.ecommerce.service.UserService;
 import com.gmail.merikbest2015.ecommerce.utils.ControllerUtils;
@@ -15,11 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
-import static com.gmail.merikbest2015.ecommerce.constants.PathConstants.USER;
-
 @Controller
-@RequestMapping(USER)
 @RequiredArgsConstructor
+@RequestMapping(PathConstants.USER)
 public class UserController {
 
     private final UserService userService;
@@ -28,33 +28,35 @@ public class UserController {
 
     @GetMapping("/contacts")
     public String contacts() {
-        return "contacts";
+        return Pages.CONTACTS;
+    }
+
+    @GetMapping("/reset")
+    public String passwordReset() {
+        return "user-password-reset";
     }
 
     @GetMapping("/account")
     public String userAccount(Model model) {
         model.addAttribute("user", userService.getAuthenticatedUser());
-        return "user-account";
+        return Pages.USER_ACCOUNT;
     }
 
     @GetMapping("/info")
     public String userInfo(Model model) {
         model.addAttribute("user", userService.getAuthenticatedUser());
-        return "user-info";
+        return Pages.USER_INFO;
     }
 
     @PostMapping("/change/password")
     public String changePassword(@Valid ChangePasswordRequest request, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            model.mergeAttributes(controllerUtils.getErrors(bindingResult));
-            return "user-password-reset";
+        if (controllerUtils.validateInputFields(bindingResult, model, "request", request)) {
+            return Pages.USER_PASSWORD_RESET;
         }
-        if (!request.getPassword().equals(request.getPassword2())) {
-            model.addAttribute("passwordError", ErrorMessage.PASSWORDS_DO_NOT_MATCH);
-            return "user-password-reset";
+        MessageResponse messageResponse = userService.changePassword(request);
+        if (controllerUtils.validateInputField(model, messageResponse, "request", request)) {
+            return Pages.USER_PASSWORD_RESET;
         }
-        userService.changePassword(request.getPassword());
-        model.addAttribute("success", "Password successfully changed!");
-        return "user-password-reset";
+        return controllerUtils.processAlertMessage(model, Pages.USER_PASSWORD_RESET, messageResponse);
     }
 }

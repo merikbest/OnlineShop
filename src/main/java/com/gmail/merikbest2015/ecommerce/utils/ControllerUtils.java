@@ -1,7 +1,9 @@
 package com.gmail.merikbest2015.ecommerce.utils;
 
+import com.gmail.merikbest2015.ecommerce.constants.Pages;
 import com.gmail.merikbest2015.ecommerce.domain.Perfume;
 import com.gmail.merikbest2015.ecommerce.dto.request.PerfumeSearchRequest;
+import com.gmail.merikbest2015.ecommerce.dto.response.MessageResponse;
 import com.gmail.merikbest2015.ecommerce.service.PerfumeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
 import java.util.stream.Collector;
@@ -20,6 +23,24 @@ import java.util.stream.IntStream;
 public class ControllerUtils {
 
     private final PerfumeService perfumeService;
+
+    public boolean validateInputField(Model model, MessageResponse messageResponse, String attributeKey, Object attributeValue) {
+        if (!messageResponse.getResponse().contains("success")) {
+            model.addAttribute(messageResponse.getResponse(), messageResponse.getMessage());
+            model.addAttribute(attributeKey, attributeValue);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean validateInputFields(BindingResult bindingResult, Model model, String attributeKey, Object attributeValue) {
+        if (bindingResult.hasErrors()) {
+            model.mergeAttributes(getErrors(bindingResult));
+            model.addAttribute(attributeKey, attributeValue);
+            return true;
+        }
+        return false;
+    }
 
     public Map<String, String> getErrors(BindingResult bindingResult) {
         Collector<FieldError, ?, Map<String, String>> collector = Collectors.toMap(
@@ -33,6 +54,18 @@ public class ControllerUtils {
         model.addAttribute("searchRequest", request);
         model.addAttribute("pagination", computePagination(perfumes));
         model.addAttribute("page", perfumes);
+    }
+
+    public String processAlertMessage(Model model, String page, MessageResponse messageResponse) {
+        model.addAttribute("messageType", messageResponse.getResponse());
+        model.addAttribute("message", messageResponse.getMessage());
+        return page;
+    }
+
+    public String processAlertMessageAndRedirect(RedirectAttributes redirectAttributes, MessageResponse messageResponse) {
+        redirectAttributes.addFlashAttribute("messageType", messageResponse.getResponse());
+        redirectAttributes.addFlashAttribute("message", messageResponse.getMessage());
+        return "redirect:/" + Pages.LOGIN;
     }
 
     private int[] computePagination(Page<?> page) {

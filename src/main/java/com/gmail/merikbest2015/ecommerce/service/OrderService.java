@@ -11,6 +11,8 @@ public interface OrderService {
 
     Order getOrder(Long orderId);
 
+    Order getUserOrder(Long orderId);
+
     List<Perfume> getOrdering();
 
     List<Order> getUserOrdersList();

@@ -13,7 +13,7 @@ import java.time.LocalDate;
 public class OrderRequest {
     private Long id;
     private Double totalPrice;
-    private LocalDate date;
+    private LocalDate date = LocalDate.now();
 
     @NotBlank(message = ErrorMessage.FILL_IN_THE_INPUT_FIELD)
     private String firstName;

@@ -5,11 +5,11 @@
             Account
         </h4>
         <a class="account-sidebar-link nav-link" href="/user/info">Personal data</a>
-        <a class="account-sidebar-link nav-link" href="/auth/reset">Change password</a>
+        <a class="account-sidebar-link nav-link" href="/user/reset">Change password</a>
         <th:block sec:authorize="hasAuthority('ADMIN')">
             <a class="account-sidebar-link nav-link" href="/admin/add/perfume">Add perfume</a>
             <a class="account-sidebar-link nav-link" href="/admin/perfumes">List of perfumes</a>
-            <a class="account-sidebar-link nav-link" href="/order/all/orders">List of all orders</a>
+            <a class="account-sidebar-link nav-link" href="/admin/orders">List of all orders</a>
             <a class="account-sidebar-link nav-link" href="/admin/users">List of all users</a>
         </th:block>
         <th:block sec:authorize="hasAuthority('USER')">

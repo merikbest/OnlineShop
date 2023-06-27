@@ -1,17 +1,23 @@
 package com.gmail.merikbest2015.ecommerce.service.Impl;
 
-import com.gmail.merikbest2015.ecommerce.domain.User;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+
+import javax.mail.internet.MimeMessage;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class MailSender {
 
     private final JavaMailSender mailSender;
+    private final SpringTemplateEngine thymeleafTemplateEngine;
 
     @Value("${spring.mail.username}")
     private String username;
@@ -19,19 +25,18 @@ public class MailSender {
     @Value("${hostname}")
     private String hostname;
 
-    public void sendEmail(User user) {
-        String message = String.format("Hello, %s! \n " +
-                        "Welcome to Perfume online store." +
-                        "To complete registration please follow the link: http://%s/registration/activate/%s",
-                user.getFirstName(),
-                hostname,
-                user.getActivationCode()
-        );
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setFrom(username);
-        mailMessage.setTo(user.getEmail());
-        mailMessage.setSubject("Activation code");
-        mailMessage.setText(message);
-        mailSender.send(mailMessage);
+    @SneakyThrows
+    public void sendMessageHtml(String to, String subject, String template, Map<String, Object> attributes) {
+        attributes.put("url", "http://" + hostname);
+        Context thymeleafContext = new Context();
+        thymeleafContext.setVariables(attributes);
+        String htmlBody = thymeleafTemplateEngine.process("email/" + template, thymeleafContext);
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+        helper.setFrom(username);
+        helper.setTo(to);
+        helper.setSubject(subject);
+        helper.setText(htmlBody, true);
+        mailSender.send(message);
     }
 }

@@ -1,5 +1,7 @@
 package com.gmail.merikbest2015.ecommerce.controller;
 
+import com.gmail.merikbest2015.ecommerce.constants.Pages;
+import com.gmail.merikbest2015.ecommerce.constants.PathConstants;
 import com.gmail.merikbest2015.ecommerce.dto.request.PerfumeRequest;
 import com.gmail.merikbest2015.ecommerce.service.OrderService;
 import com.gmail.merikbest2015.ecommerce.service.PerfumeService;
@@ -16,10 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
-import static com.gmail.merikbest2015.ecommerce.constants.PathConstants.ADMIN;
-
 @Controller
-@RequestMapping(ADMIN)
+@RequestMapping(PathConstants.ADMIN)
 @PreAuthorize("hasAuthority('ADMIN')")
 @RequiredArgsConstructor
 public class AdminController {
@@ -32,54 +32,62 @@ public class AdminController {
     @GetMapping("/perfumes")
     public String getPerfumes(Pageable pageable, Model model) {
         controllerUtils.processModel(null, model, perfumeService.getPerfumes(pageable));
-        return "admin-perfumes";
+        return Pages.ADMIN_PERFUMES;
     }
 
     @GetMapping("/perfume/{perfumeId}")
     public String getPerfume(@PathVariable Long perfumeId, Model model) {
         model.addAttribute("perfume", perfumeService.getPerfumeById(perfumeId));
-        return "admin-edit-perfume";
+        return Pages.ADMIN_EDIT_PERFUME;
     }
 
     @PostMapping("/edit/perfume")
     public String editPerfume(@Valid PerfumeRequest perfume, BindingResult bindingResult, Model model,
                               @RequestParam("file") MultipartFile file) {
-        if (bindingResult.hasErrors()) {
-            model.mergeAttributes(controllerUtils.getErrors(bindingResult));
-            model.addAttribute("perfume", perfume);
-            return "admin-edit-perfume";
+        if (controllerUtils.validateInputFields(bindingResult, model, "perfume", perfume)) {
+            return Pages.ADMIN_EDIT_PERFUME;
         }
         perfumeService.savePerfume(perfume, file);
-        return "redirect:/admin-perfumes";
+        return "redirect:/" + Pages.ADMIN_PERFUMES;
     }
 
     @GetMapping("/add/perfume")
     public String addPerfume() {
-        return "admin-add-perfume";
+        return Pages.ADMIN_ADD_PERFUME;
     }
 
     @PostMapping("/add/perfume")
     public String addPerfume(@Valid PerfumeRequest perfume, BindingResult bindingResult, Model model,
                              @RequestParam("file") MultipartFile file) {
-        if (bindingResult.hasErrors()) {
-            model.mergeAttributes(controllerUtils.getErrors(bindingResult));
-            model.addAttribute("perfume", perfume);
-            return "admin-add-perfume";
+        if (controllerUtils.validateInputFields(bindingResult, model, "perfume", perfume)) {
+            return Pages.ADMIN_ADD_PERFUME;
         }
         perfumeService.savePerfume(perfume, file);
-        return "admin-add-perfume";
+        return Pages.ADMIN_ADD_PERFUME;
+    }
+
+    @GetMapping("/order/{orderId}")
+    public String getOrder(@PathVariable Long orderId, Model model) {
+        model.addAttribute("order", orderService.getOrder(orderId));
+        return Pages.ORDER;
+    }
+
+    @GetMapping("/orders")
+    public String getAllOrders(Model model) {
+        model.addAttribute("orders", orderService.getAllOrders());
+        return Pages.ORDERS;
     }
 
     @GetMapping("/users")
     public String getUsers(Model model) {
         model.addAttribute("users", userService.getUsers());
-        return "admin-all-users";
+        return Pages.ADMIN_ALL_USERS;
     }
 
     @GetMapping("/user/{userId}")
     public String getUserById(@PathVariable Long userId, Model model) {
         model.addAttribute("user", userService.getUserById(userId));
         model.addAttribute("orders", orderService.getOrdersByUserId(userId));
-        return "admin-user-detail";
+        return Pages.ADMIN_USER_DETAIL;
     }
 }

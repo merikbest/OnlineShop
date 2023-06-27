@@ -16,7 +16,7 @@ public class UserRequest {
     private String email;
 
     @NotBlank(message = EMPTY_FIRST_NAME)
-    private String username;
+    private String firstName;
 
     @Size(min = 6, max = 16, message = PASSWORD_CHARACTER_LENGTH)
     private String password;

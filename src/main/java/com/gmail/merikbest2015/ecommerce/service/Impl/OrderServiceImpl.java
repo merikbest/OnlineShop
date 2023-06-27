@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.ecommerce.service.Impl;
 
+import com.gmail.merikbest2015.ecommerce.constants.ErrorMessage;
 import com.gmail.merikbest2015.ecommerce.domain.Order;
 import com.gmail.merikbest2015.ecommerce.domain.Perfume;
 import com.gmail.merikbest2015.ecommerce.domain.User;
@@ -9,10 +10,14 @@ import com.gmail.merikbest2015.ecommerce.service.OrderService;
 import com.gmail.merikbest2015.ecommerce.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -21,11 +26,19 @@ public class OrderServiceImpl implements OrderService {
     private final UserService userService;
     private final OrderRepository orderRepository;
     private final ModelMapper modelMapper;
+    private final MailSender mailSender;
 
     @Override
     public Order getOrder(Long orderId) {
-        // TODO add query
-        return orderRepository.getById(orderId);
+        return orderRepository.getById(orderId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessage.ORDER_NOT_FOUND));
+    }
+
+    @Override
+    public Order getUserOrder(Long orderId) {
+        User user = userService.getAuthenticatedUser();
+        return orderRepository.getByIdAndUserId(orderId, user.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessage.ORDER_NOT_FOUND));
     }
 
     @Override
@@ -58,7 +71,9 @@ public class OrderServiceImpl implements OrderService {
         order.getPerfumes().addAll(user.getPerfumeList());
         orderRepository.save(order);
         user.getPerfumeList().clear();
-        // TODO send order email
+        Map<String, Object> attributes = new HashMap<>();
+        attributes.put("order", order);
+        mailSender.sendMessageHtml(order.getEmail(), "Order #" + order.getId(), "order-template", attributes);
         return order.getId();
     }
 }
