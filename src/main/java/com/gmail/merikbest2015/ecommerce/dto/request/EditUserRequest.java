@@ -18,4 +18,5 @@ public class EditUserRequest {
     private String address;
     private String phoneNumber;
     private String postIndex;
+    private String email;
 }

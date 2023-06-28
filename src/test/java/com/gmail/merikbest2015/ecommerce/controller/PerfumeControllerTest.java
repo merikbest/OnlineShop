@@ -1,123 +1,133 @@
 package com.gmail.merikbest2015.ecommerce.controller;
 
-import com.gmail.merikbest2015.ecommerce.domain.Perfume;
-import com.gmail.merikbest2015.ecommerce.repository.PerfumeRepository;
-import com.gmail.merikbest2015.ecommerce.service.PerfumeService;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import com.gmail.merikbest2015.ecommerce.constants.ErrorMessage;
+import com.gmail.merikbest2015.ecommerce.constants.Pages;
+import com.gmail.merikbest2015.ecommerce.constants.PathConstants;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import static com.gmail.merikbest2015.ecommerce.util.TestConstants.*;
+import static org.hamcrest.Matchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.when;
-
-@RunWith(SpringRunner.class)
-@AutoConfigureMockMvc
 @SpringBootTest
+@AutoConfigureMockMvc
+@TestPropertySource("/application-test.properties")
+@Sql(value = {"/sql/create-perfumes-before.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value = {"/sql/create-perfumes-after.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class PerfumeControllerTest {
+
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
-    private PerfumeRepository perfumeRepository;
-
-    @Autowired
-    private PerfumeService perfumeService;
-
-    @Autowired
-    private PerfumeController perfumeController;
-
     @Test
-    public void mainMenuTest() throws Exception {
-        List<Perfume> perfumes = new ArrayList<>();
-        Perfume perfume = new Perfume();
-        perfumes.add(perfume);
-
-        Pageable pageable = PageRequest.of(0, 12);
-        Page<Perfume> page = new PageImpl<>(perfumes);
-
-        when(perfumeRepository.findAll(pageable)).thenReturn(page);
-
-        assertNotNull(perfumes);
-        assertEquals(1, perfumeService.getPerfumes(pageable).getSize());
+    @DisplayName("[200] GET /perfume/1 - Get Perfumes")
+    public void getPerfumeById() throws Exception {
+        mockMvc.perform(get(PathConstants.PERFUME + "/{perfumeId}", PERFUME_ID))
+                .andExpect(status().isOk())
+                .andExpect(view().name(Pages.PERFUME))
+                .andExpect(model().attribute("perfume", hasProperty("id", is(PERFUME_ID))))
+                .andExpect(model().attribute("perfume", hasProperty("perfumeTitle", is(PERFUME_TITLE))))
+                .andExpect(model().attribute("perfume", hasProperty("perfumer", is(PERFUMER))))
+                .andExpect(model().attribute("perfume", hasProperty("year", is(YEAR))))
+                .andExpect(model().attribute("perfume", hasProperty("country", is(COUNTRY))))
+                .andExpect(model().attribute("perfume", hasProperty("perfumeGender", is(PERFUME_GENDER))))
+                .andExpect(model().attribute("perfume", hasProperty("fragranceTopNotes", is(FRAGRANCE_TOP_NOTES))))
+                .andExpect(model().attribute("perfume", hasProperty("fragranceMiddleNotes", is(FRAGRANCE_MIDDLE_NOTES))))
+                .andExpect(model().attribute("perfume", hasProperty("fragranceBaseNotes", is(FRAGRANCE_BASE_NOTES))))
+                .andExpect(model().attribute("perfume", hasProperty("filename", is(FILENAME))))
+                .andExpect(model().attribute("perfume", hasProperty("price", is(PRICE))))
+                .andExpect(model().attribute("perfume", hasProperty("volume", is(VOLUME))))
+                .andExpect(model().attribute("perfume", hasProperty("type", is(TYPE))));
     }
 
     @Test
-    public void findByPerfumerTest() throws Exception {
-        List<Perfume> perfumes = new ArrayList<>();
-        Perfume perfume = new Perfume();
-        perfume.setPerfumer("Dior");
-        perfumes.add(perfume);
-
-        Pageable pageable = PageRequest.of(0, 12);
-        Page<Perfume> page = new PageImpl<>(perfumes);
-
-        when(perfumeRepository.findByPerfumer(perfume.getPerfumer(), pageable)).thenReturn(page);
-
-        assertNotNull(perfumes);
-        assertEquals(1, perfumeService.getPerfumesByPerfumer(perfume.getPerfumer(), pageable).getSize());
-        assertEquals("Dior", perfumeService.getPerfumesByPerfumer(perfume.getPerfumer(), pageable)
-                .getContent().get(0).getPerfumer());
+    @DisplayName("[404] GET /perfume/111 - Get Perfume By Id NotFound")
+    public void getPerfumeById_NotFound() throws Exception {
+        mockMvc.perform(get(PathConstants.PERFUME + "/{perfumeId}", 111))
+                .andExpect(status().isNotFound())
+                .andExpect(status().reason(ErrorMessage.PERFUME_NOT_FOUND));
     }
 
     @Test
-    public void findByPerfumeGenderTest() throws Exception {
-        List<Perfume> perfumes = new ArrayList<>();
-        Perfume perfume = new Perfume();
-        perfume.setPerfumeGender("мужской");
-        perfumes.add(perfume);
-
-        Pageable pageable = PageRequest.of(0, 12);
-        Page<Perfume> page = new PageImpl<>(perfumes);
-
-        when(perfumeRepository.findByPerfumeGender(perfume.getPerfumeGender(), pageable)).thenReturn(page);
-
-        assertNotNull(perfumes);
-        assertEquals(1, perfumeService.getPerfumesByGender(perfume.getPerfumeGender(), pageable).getSize());
-        assertEquals("мужской", perfumeService.getPerfumesByGender(perfume.getPerfumeGender(), pageable)
-                .getContent().get(0).getPerfumeGender());
+    @DisplayName("[200] GET /perfume - Get Perfumes By Filter Params")
+    public void getPerfumesByFilterParams() throws Exception {
+        mockMvc.perform(get(PathConstants.PERFUME))
+                .andExpect(status().isOk())
+                .andExpect(view().name(Pages.PERFUMES))
+                .andExpect(model().attribute("page", hasProperty("content", hasSize(12))));
     }
 
     @Test
-    public void searchByParametersTest() throws Exception {
-        List<Perfume> perfumes = new ArrayList<>();
-        Perfume perfume = new Perfume();
-        perfume.setPerfumeGender("мужской");
-        perfume.setPerfumer("Dior");
-        perfume.setPrice(1000);
-        perfumes.add(perfume);
+    @DisplayName("[200] GET /perfume - Get Perfumes By Filter Params: perfumers")
+    public void getPerfumesByFilterParams_Perfumers() throws Exception {
+        mockMvc.perform(get(PathConstants.PERFUME)
+                        .param("perfumers", "Creed"))
+                .andExpect(status().isOk())
+                .andExpect(view().name(Pages.PERFUMES))
+                .andExpect(model().attribute("page", hasProperty("content", hasSize(7))));
+    }
 
-        Pageable pageable = PageRequest.of(0, 12);
-        Page<Perfume> page = new PageImpl<>(perfumes);
+    @Test
+    @DisplayName("[200] GET /perfume - Get Perfumes By Filter Params: perfumers, genders")
+    public void getPerfumesByFilterParams_PerfumersAndGenders() throws Exception {
+        mockMvc.perform(get(PathConstants.PERFUME)
+                        .param("perfumers", "Creed")
+                        .param("genders", "male"))
+                .andExpect(status().isOk())
+                .andExpect(view().name(Pages.PERFUMES))
+                .andExpect(model().attribute("page", hasProperty("content", hasSize(3))));
+    }
 
-        when(perfumeRepository.findByPriceBetween(900, 1100, pageable)).thenReturn(page);
-        when(perfumeRepository.findByPerfumerIn(Collections.singletonList(perfumes.get(0).getPerfumer()), pageable)).thenReturn(page);
-        when(perfumeRepository.findByPerfumerInAndPerfumeGenderIn(
-                Collections.singletonList(perfumes.get(0).getPerfumer()),
-                Collections.singletonList(perfumes.get(0).getPerfumeGender()),
-                pageable)).thenReturn(page);
+    @Test
+    @DisplayName("[200] GET /perfume - Get Perfumes By Filter Params: perfumers, genders, price")
+    public void getPerfumesByFilterParams_PerfumersAndGendersAndPrice() throws Exception {
+        mockMvc.perform(get(PathConstants.PERFUME)
+                        .param("perfumers", "Creed", "Dior")
+                        .param("genders", "male")
+                        .param("price", "60"))
+                .andExpect(status().isOk())
+                .andExpect(view().name(Pages.PERFUMES))
+                .andExpect(model().attribute("page", hasProperty("content", hasSize(5))));
+    }
 
-        assertNotNull(perfumes);
-        assertEquals(1000, perfumeService.findByPriceBetween(900, 1100, pageable)
-                .getContent().get(0).getPrice());
-        assertEquals("Dior", perfumeService.findByPerfumerIn(Collections.singletonList(perfumes.get(0).getPerfumer()), pageable)
-                .getContent().get(0).getPerfumer());
-        assertEquals(1, perfumeService.findByPerfumerInAndPerfumeGenderIn(
-                Collections.singletonList(perfumes.get(0).getPerfumer()),
-                Collections.singletonList(perfumes.get(0).getPerfumeGender()),
-                pageable).getSize());
+    @Test
+    @DisplayName("[200] GET /perfume/search - Search Perfumes By Perfumer")
+    public void searchPerfumes_ByPerfumer() throws Exception {
+        mockMvc.perform(get(PathConstants.PERFUME + "/search")
+                        .param("searchType", "perfumer")
+                        .param("text", "Creed"))
+                .andExpect(status().isOk())
+                .andExpect(view().name(Pages.PERFUMES))
+                .andExpect(model().attribute("page", hasProperty("content", hasSize(7))));
+    }
+
+    @Test
+    @DisplayName("[200] GET /perfume/search - Search Perfumes By Country")
+    public void searchPerfumes_ByCountry() throws Exception {
+        mockMvc.perform(get(PathConstants.PERFUME + "/search")
+                        .param("searchType", "country")
+                        .param("text", "Spain"))
+                .andExpect(status().isOk())
+                .andExpect(view().name(Pages.PERFUMES))
+                .andExpect(model().attribute("page", hasProperty("content", hasSize(2))));
+    }
+
+    @Test
+    @DisplayName("[200] GET /perfume/search - Search Perfumes By Perfume Title")
+    public void searchPerfumes_PerfumeTitle() throws Exception {
+        mockMvc.perform(get(PathConstants.PERFUME + "/search")
+                        .param("searchType", "perfumeTitle")
+                        .param("text", "Aventus"))
+                .andExpect(status().isOk())
+                .andExpect(view().name(Pages.PERFUMES))
+                .andExpect(model().attribute("page", hasProperty("content", hasSize(2))));
     }
 }

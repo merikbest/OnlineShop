@@ -8,7 +8,7 @@
     <div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']}" class="alert alert-danger col-sm-8" role="alert">
         Invalid Email Or Password
     </div>
-    <div th:if="${messageType}" class="alert " th:classappend="${messageType}" th:text="${message}" role="alert"></div>
+    <th:block th:replace="fragments/common-fragments :: alert-message"/>
     <form method="post" action="/login">
         <div class="container mt-5">
             <div class="row">

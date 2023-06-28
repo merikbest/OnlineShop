@@ -1,120 +1,122 @@
 package com.gmail.merikbest2015.ecommerce.controller;
 
-import com.gmail.merikbest2015.ecommerce.domain.Order;
-import com.gmail.merikbest2015.ecommerce.domain.Perfume;
-import com.gmail.merikbest2015.ecommerce.domain.User;
-import com.gmail.merikbest2015.ecommerce.repository.OrderRepository;
-import com.gmail.merikbest2015.ecommerce.repository.UserRepository;
-import com.gmail.merikbest2015.ecommerce.service.Impl.MailSender;
-import com.gmail.merikbest2015.ecommerce.service.OrderService;
-import com.gmail.merikbest2015.ecommerce.service.UserService;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mockito;
+import com.gmail.merikbest2015.ecommerce.constants.ErrorMessage;
+import com.gmail.merikbest2015.ecommerce.constants.Pages;
+import com.gmail.merikbest2015.ecommerce.constants.PathConstants;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import static com.gmail.merikbest2015.ecommerce.util.TestConstants.*;
+import static org.hamcrest.Matchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.when;
-
-@RunWith(SpringRunner.class)
-@AutoConfigureMockMvc
 @SpringBootTest
+@AutoConfigureMockMvc
+@TestPropertySource("/application-test.properties")
+@Sql(value = {"/sql/create-perfumes-before.sql", "/sql/create-user-before.sql", "/sql/create-orders-before.sql"},
+        executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value = {"/sql/create-orders-after.sql", "/sql/create-user-after.sql", "/sql/create-perfumes-after.sql"},
+        executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class OrderControllerTest {
+
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private OrderService orderService;
-
-    @Autowired
-    private OrderController orderController;
-
-    @MockBean
-    private UserRepository userRepository;
-
-    @MockBean
-    private OrderRepository orderRepository;
-
-    @MockBean
-    private MailSender mailSender;
-
-    @MockBean
-    private PasswordEncoder passwordEncoder;
-
     @Test
-    public void getOrderTest() throws Exception {
-        List<Perfume> perfumes = new ArrayList<>();
-        User user = new User();
-        Perfume perfume = new Perfume();
-
-        user.setPerfumeList(perfumes);
-        user.getPerfumeList().add(perfume);
-
-        assertNotNull(user.getPerfumeList());
-        assertEquals(1, user.getPerfumeList().size());
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /order/{orderId} - Get Order")
+    public void getOrder() throws Exception {
+        mockMvc.perform(get(PathConstants.ORDER + "/{orderId}", 111))
+                .andExpect(status().isOk())
+                .andExpect(view().name(Pages.ORDER))
+                .andExpect(model().attribute("order", hasProperty("id", is(ORDER_ID))))
+                .andExpect(model().attribute("order", hasProperty("totalPrice", is(ORDER_TOTAL_PRICE))))
+                .andExpect(model().attribute("order", hasProperty("firstName", is(ORDER_FIRST_NAME))))
+                .andExpect(model().attribute("order", hasProperty("lastName", is(ORDER_LAST_NAME))))
+                .andExpect(model().attribute("order", hasProperty("city", is(ORDER_CITY))))
+                .andExpect(model().attribute("order", hasProperty("address", is(ORDER_ADDRESS))))
+                .andExpect(model().attribute("order", hasProperty("email", is(ORDER_EMAIL))))
+                .andExpect(model().attribute("order", hasProperty("phoneNumber", is(ORDER_PHONE_NUMBER))))
+                .andExpect(model().attribute("order", hasProperty("postIndex", is(ORDER_POST_INDEX))))
+                .andExpect(model().attribute("order", hasProperty("perfumes", hasSize(2))));
     }
 
     @Test
-    public void postOrderTest() throws Exception {
-        List<Perfume> perfumes = new ArrayList<>();
-        User user = new User();
-        Perfume perfume = new Perfume();
-
-        user.setPerfumeList(perfumes);
-        user.getPerfumeList().add(perfume);
-
-        userService.save(user);
-
-        Order order = new Order(user);
-        order.setId(1L);
-        order.setFirstName("John");
-        order.setPerfumeList(user.getPerfumeList());
-
-        orderService.save(order);
-
-        assertNotNull(user);
-        assertNotNull(user.getPerfumeList());
-        assertEquals(1, user.getPerfumeList().size());
-        assertNotNull(order);
-        assertEquals(1L, order.getId());
-        assertEquals("John", order.getFirstName());
-        assertEquals(1, order.getPerfumeList().size());
-
-        Mockito.verify(userRepository, Mockito.times(1)).save(user);
-        Mockito.verify(orderRepository, Mockito.times(1)).save(order);
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[404] GET /order/{orderId} - Get Order Not Found")
+    public void getOrder_NotFound() throws Exception {
+        mockMvc.perform(get(PathConstants.ORDER + "/{orderId}", 222))
+                .andExpect(status().isNotFound())
+                .andExpect(status().reason(ErrorMessage.ORDER_NOT_FOUND));
     }
 
     @Test
-    public void finalizeOrderTest() throws Exception {
-        List<Perfume> perfumes = new ArrayList<>();
-        User user = new User();
-        Perfume perfume = new Perfume();
-        Order order = new Order(user);
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /order - Get Ordering")
+    public void getOrdering() throws Exception {
+        mockMvc.perform(get(PathConstants.ORDER))
+                .andExpect(status().isOk())
+                .andExpect(view().name(Pages.ORDERING))
+                .andExpect(model().attribute("perfumes", hasSize(2)));
+    }
 
-        user.setPerfumeList(perfumes);
-        user.getPerfumeList().add(perfume);
-        order.setPerfumeList(user.getPerfumeList());
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /order/user/orders - Get User Orders List")
+    public void getUserOrdersList() throws Exception {
+        mockMvc.perform(get(PathConstants.ORDER + "/user/orders"))
+                .andExpect(status().isOk())
+                .andExpect(view().name(Pages.ORDERS))
+                .andExpect(model().attribute("page", hasProperty("content", hasSize(1))));
+    }
 
-        when(orderService.findAll()).thenReturn(Collections.singletonList(order));
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] POST /order - Post Order")
+    public void postOrder() throws Exception {
+        mockMvc.perform(post(PathConstants.ORDER)
+                        .param("firstName", ORDER_FIRST_NAME)
+                        .param("lastName", ORDER_LAST_NAME)
+                        .param("city", ORDER_CITY)
+                        .param("address", ORDER_ADDRESS)
+                        .param("email", ORDER_EMAIL)
+                        .param("phoneNumber", ORDER_PHONE_NUMBER)
+                        .param("postIndex", String.valueOf(ORDER_POST_INDEX))
+                        .param("totalPrice", String.valueOf(171)))
+                .andExpect(status().isOk())
+                .andExpect(view().name(Pages.ORDER_FINALIZE));
+    }
 
-        assertNotNull(user);
-        assertNotNull(user.getPerfumeList());
-        assertEquals(1, user.getPerfumeList().size());
-        assertNotNull(order);
-        assertEquals(1, order.getPerfumeList().size());
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] POST /order - Post Order Return Input Errors")
+    public void postOrder_ReturnInputErrors() throws Exception {
+        mockMvc.perform(post(PathConstants.ORDER)
+                        .param("firstName", "")
+                        .param("lastName", "")
+                        .param("city", "")
+                        .param("address", "")
+                        .param("email", "")
+                        .param("phoneNumber", "")
+                        .param("postIndex", "0")
+                        .param("totalPrice", ""))
+                .andExpect(status().isOk())
+                .andExpect(view().name(Pages.ORDERING))
+                .andExpect(model().attribute("firstNameError", is(ErrorMessage.FILL_IN_THE_INPUT_FIELD)))
+                .andExpect(model().attribute("lastNameError", is(ErrorMessage.FILL_IN_THE_INPUT_FIELD)))
+                .andExpect(model().attribute("cityError", is(ErrorMessage.FILL_IN_THE_INPUT_FIELD)))
+                .andExpect(model().attribute("addressError", is(ErrorMessage.FILL_IN_THE_INPUT_FIELD)))
+                .andExpect(model().attribute("emailError", is(ErrorMessage.EMAIL_CANNOT_BE_EMPTY)))
+                .andExpect(model().attribute("phoneNumberError", is(ErrorMessage.EMPTY_PHONE_NUMBER)))
+                .andExpect(model().attribute("postIndexError", is(ErrorMessage.EMPTY_POST_INDEX)));
     }
 }

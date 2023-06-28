@@ -1,8 +1,7 @@
-package com.gmail.merikbest2015.ecommerce.utils;
+package com.gmail.merikbest2015.ecommerce.service.Impl.utils;
 
 import com.gmail.merikbest2015.ecommerce.dto.request.SearchRequest;
 import com.gmail.merikbest2015.ecommerce.dto.response.MessageResponse;
-import com.gmail.merikbest2015.ecommerce.service.PerfumeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
@@ -19,8 +18,6 @@ import java.util.stream.IntStream;
 @Component
 @RequiredArgsConstructor
 public class ControllerUtils {
-
-    private final PerfumeService perfumeService;
 
     public boolean validateInputField(Model model, MessageResponse messageResponse, String attributeKey, Object attributeValue) {
         if (!messageResponse.getResponse().contains("success")) {
@@ -40,34 +37,34 @@ public class ControllerUtils {
         return false;
     }
 
-    public Map<String, String> getErrors(BindingResult bindingResult) {
-        Collector<FieldError, ?, Map<String, String>> collector = Collectors.toMap(
-                fieldError -> fieldError.getField() + "Error",
-                FieldError::getDefaultMessage
-        );
-        return bindingResult.getFieldErrors().stream().collect(collector);
-    }
-
-    public <T> void processModel(Model model, Page<T> page) {
+    public <T> void addPagination(Model model, Page<T> page) {
         model.addAttribute("pagination", computePagination(page));
         model.addAttribute("page", page);
     }
 
-    public <T> void processModel(SearchRequest searchRequest, Model model, Page<T> page) {
+    public <T> void addPagination(SearchRequest searchRequest, Model model, Page<T> page) {
         model.addAttribute("searchRequest", searchRequest);
-        processModel(model, page);
+        addPagination(model, page);
     }
 
-    public String processAlertMessage(Model model, String page, MessageResponse messageResponse) {
+    public String setAlertMessage(Model model, String page, MessageResponse messageResponse) {
         model.addAttribute("messageType", messageResponse.getResponse());
         model.addAttribute("message", messageResponse.getMessage());
         return page;
     }
 
-    public String processAlertMessageAndRedirect(RedirectAttributes redirectAttributes, String page, MessageResponse messageResponse) {
+    public String setAlertFlashMessage(RedirectAttributes redirectAttributes, String page, MessageResponse messageResponse) {
         redirectAttributes.addFlashAttribute("messageType", messageResponse.getResponse());
         redirectAttributes.addFlashAttribute("message", messageResponse.getMessage());
         return "redirect:" + page;
+    }
+
+    private Map<String, String> getErrors(BindingResult bindingResult) {
+        Collector<FieldError, ?, Map<String, String>> collector = Collectors.toMap(
+                fieldError -> fieldError.getField() + "Error",
+                FieldError::getDefaultMessage
+        );
+        return bindingResult.getFieldErrors().stream().collect(collector);
     }
 
     private int[] computePagination(Page<?> page) {

@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.ecommerce.service.Impl;
 
 import com.gmail.merikbest2015.ecommerce.constants.ErrorMessage;
+import com.gmail.merikbest2015.ecommerce.constants.SuccessMessage;
 import com.gmail.merikbest2015.ecommerce.domain.Role;
 import com.gmail.merikbest2015.ecommerce.domain.User;
 import com.gmail.merikbest2015.ecommerce.dto.response.CaptchaResponse;
@@ -40,17 +41,17 @@ public class RegistrationServiceImpl implements RegistrationService {
     @Override
     @Transactional
     public MessageResponse registration(String captchaResponse, UserRequest userRequest) {
-        String url = String.format(captchaUrl, secret, captchaResponse);
-        CaptchaResponse response = restTemplate.postForObject(url, Collections.emptyList(), CaptchaResponse.class);
-
-        if (!response.isSuccess()) {
-            return new MessageResponse("captchaError", ErrorMessage.CAPTCHA_ERROR);
-        }
         if (userRequest.getPassword() != null && !userRequest.getPassword().equals(userRequest.getPassword2())) {
             return new MessageResponse("passwordError", ErrorMessage.PASSWORDS_DO_NOT_MATCH);
         }
         if (userRepository.findByEmail(userRequest.getEmail()) != null) {
             return new MessageResponse("emailError", ErrorMessage.EMAIL_IN_USE);
+        }
+
+        String url = String.format(captchaUrl, secret, captchaResponse);
+        CaptchaResponse response = restTemplate.postForObject(url, Collections.emptyList(), CaptchaResponse.class);
+        if (!response.isSuccess()) {
+            return new MessageResponse("captchaError", ErrorMessage.CAPTCHA_ERROR);
         }
         User user = modelMapper.map(userRequest, User.class);
         user.setActive(false);
@@ -62,7 +63,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         attributes.put("firstName", user.getFirstName());
         attributes.put("activationCode", "/registration/activate/" + user.getActivationCode());
         mailSender.sendMessageHtml(user.getEmail(), "Activation code", "registration-template", attributes);
-        return new MessageResponse("alert-success", "Activation email has been sent to your email");
+        return new MessageResponse("alert-success", SuccessMessage.ACTIVATION_CODE_SEND);
     }
 
     @Override
@@ -76,6 +77,6 @@ public class RegistrationServiceImpl implements RegistrationService {
         user.setActivationCode(null);
         user.setActive(true);
         userRepository.save(user);
-        return new MessageResponse("alert-success", "User successfully activated.");
+        return new MessageResponse("alert-success", SuccessMessage.USER_ACTIVATED);
     }
 }

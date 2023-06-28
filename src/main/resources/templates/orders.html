@@ -6,12 +6,12 @@
 <div th:replace="fragments/common-fragments :: navbar"></div>
 <div class="account-container container">
     <div class="row mt-5">
-        <th:block th:replace="fragments/account-fragments :: account-sidebar"></th:block>
+        <th:block th:replace="fragments/account-fragments :: account-sidebar"/>
         <div class="col-md-10">
             <th:block th:replace="fragments/common-fragments :: info-title(
                 text='List of all orders',
                 icon='fas fa-shopping-bag ml-2 mr-2'
-            )"></th:block>
+            )"/>
             <form class="my-3" action="/admin/orders/search" method="get" style="justify-content: center">
                 <div th:replace="~{fragments/common-fragments :: search(
                     options=(${ {

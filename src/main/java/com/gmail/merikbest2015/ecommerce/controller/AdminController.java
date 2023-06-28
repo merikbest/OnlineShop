@@ -4,10 +4,9 @@ import com.gmail.merikbest2015.ecommerce.constants.Pages;
 import com.gmail.merikbest2015.ecommerce.constants.PathConstants;
 import com.gmail.merikbest2015.ecommerce.dto.request.PerfumeRequest;
 import com.gmail.merikbest2015.ecommerce.dto.request.SearchRequest;
-import com.gmail.merikbest2015.ecommerce.service.OrderService;
-import com.gmail.merikbest2015.ecommerce.service.PerfumeService;
-import com.gmail.merikbest2015.ecommerce.service.UserService;
-import com.gmail.merikbest2015.ecommerce.utils.ControllerUtils;
+import com.gmail.merikbest2015.ecommerce.dto.response.UserInfoResponse;
+import com.gmail.merikbest2015.ecommerce.service.AdminService;
+import com.gmail.merikbest2015.ecommerce.service.Impl.utils.ControllerUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -25,67 +25,64 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class AdminController {
 
-    private final PerfumeService perfumeService;
-    private final UserService userService;
-    private final OrderService orderService;
+    private final AdminService adminService;
     private final ControllerUtils controllerUtils;
 
     @GetMapping("/perfumes")
     public String getPerfumes(Pageable pageable, Model model) {
-        controllerUtils.processModel(model, perfumeService.getPerfumes(pageable));
+        controllerUtils.addPagination(model, adminService.getPerfumes(pageable));
         return Pages.ADMIN_PERFUMES;
     }
 
     @GetMapping("/perfumes/search")
     public String searchPerfumes(SearchRequest request, Pageable pageable, Model model) {
-        controllerUtils.processModel(request, model, perfumeService.searchPerfumes(request, pageable));
+        controllerUtils.addPagination(request, model, adminService.searchPerfumes(request, pageable));
         return Pages.ADMIN_PERFUMES;
     }
 
     @GetMapping("/users")
     public String getUsers(Pageable pageable, Model model) {
-        controllerUtils.processModel(model, userService.getUsers(pageable));
+        controllerUtils.addPagination(model, adminService.getUsers(pageable));
         return Pages.ADMIN_ALL_USERS;
     }
 
     @GetMapping("/users/search")
     public String searchUsers(SearchRequest request, Pageable pageable, Model model) {
-        controllerUtils.processModel(request, model, userService.searchUsers(request, pageable));
+        controllerUtils.addPagination(request, model, adminService.searchUsers(request, pageable));
         return Pages.ADMIN_ALL_USERS;
     }
 
     @GetMapping("/order/{orderId}")
     public String getOrder(@PathVariable Long orderId, Model model) {
-        model.addAttribute("order", orderService.getOrder(orderId));
+        model.addAttribute("order", adminService.getOrder(orderId));
         return Pages.ORDER;
     }
 
     @GetMapping("/orders")
     public String getOrders(Pageable pageable, Model model) {
-        controllerUtils.processModel(model, orderService.getOrders(pageable));
+        controllerUtils.addPagination(model, adminService.getOrders(pageable));
         return Pages.ORDERS;
     }
 
     @GetMapping("/orders/search")
     public String searchOrders(SearchRequest request, Pageable pageable, Model model) {
-        controllerUtils.processModel(request, model, orderService.searchOrders(request, pageable));
+        controllerUtils.addPagination(request, model, adminService.searchOrders(request, pageable));
         return Pages.ORDERS;
     }
 
     @GetMapping("/perfume/{perfumeId}")
     public String getPerfume(@PathVariable Long perfumeId, Model model) {
-        model.addAttribute("perfume", perfumeService.getPerfumeById(perfumeId));
+        model.addAttribute("perfume", adminService.getPerfumeById(perfumeId));
         return Pages.ADMIN_EDIT_PERFUME;
     }
 
     @PostMapping("/edit/perfume")
     public String editPerfume(@Valid PerfumeRequest perfume, BindingResult bindingResult, Model model,
-                              @RequestParam("file") MultipartFile file) {
+                              @RequestParam("file") MultipartFile file, RedirectAttributes attributes) {
         if (controllerUtils.validateInputFields(bindingResult, model, "perfume", perfume)) {
             return Pages.ADMIN_EDIT_PERFUME;
         }
-        perfumeService.savePerfume(perfume, file);
-        return "redirect:/" + Pages.ADMIN_PERFUMES;
+        return controllerUtils.setAlertFlashMessage(attributes, "/admin/perfumes", adminService.editPerfume(perfume, file));
     }
 
     @GetMapping("/add/perfume")
@@ -95,18 +92,18 @@ public class AdminController {
 
     @PostMapping("/add/perfume")
     public String addPerfume(@Valid PerfumeRequest perfume, BindingResult bindingResult, Model model,
-                             @RequestParam("file") MultipartFile file) {
+                             @RequestParam("file") MultipartFile file, RedirectAttributes attributes) {
         if (controllerUtils.validateInputFields(bindingResult, model, "perfume", perfume)) {
             return Pages.ADMIN_ADD_PERFUME;
         }
-        perfumeService.savePerfume(perfume, file);
-        return Pages.ADMIN_ADD_PERFUME;
+        return controllerUtils.setAlertFlashMessage(attributes, "/admin/perfumes", adminService.addPerfume(perfume, file));
     }
 
     @GetMapping("/user/{userId}")
     public String getUserById(@PathVariable Long userId, Model model, Pageable pageable) {
-        model.addAttribute("user", userService.getUserById(userId));
-        controllerUtils.processModel(model, orderService.getOrdersByUserId(userId, pageable));
+        UserInfoResponse userResponse = adminService.getUserById(userId, pageable);
+        model.addAttribute("user", userResponse.getUser());
+        controllerUtils.addPagination(model, userResponse.getOrders());
         return Pages.ADMIN_USER_DETAIL;
     }
 }

@@ -5,7 +5,7 @@ import com.gmail.merikbest2015.ecommerce.constants.PathConstants;
 import com.gmail.merikbest2015.ecommerce.dto.request.PasswordResetRequest;
 import com.gmail.merikbest2015.ecommerce.dto.response.MessageResponse;
 import com.gmail.merikbest2015.ecommerce.service.AuthenticationService;
-import com.gmail.merikbest2015.ecommerce.utils.ControllerUtils;
+import com.gmail.merikbest2015.ecommerce.service.Impl.utils.ControllerUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,7 +30,7 @@ public class AuthenticationController {
 
     @PostMapping("/forgot")
     public String forgotPassword(@RequestParam String email, Model model) {
-        return controllerUtils.processAlertMessage(model, Pages.FORGOT_PASSWORD, authService.sendPasswordResetCode(email));
+        return controllerUtils.setAlertMessage(model, Pages.FORGOT_PASSWORD, authService.sendPasswordResetCode(email));
     }
 
     @GetMapping("/reset/{code}")
@@ -49,6 +49,6 @@ public class AuthenticationController {
         if (controllerUtils.validateInputField(model, messageResponse, "email", request.getEmail())) {
             return Pages.RESET_PASSWORD;
         }
-        return controllerUtils.processAlertMessageAndRedirect(redirectAttributes, PathConstants.LOGIN, messageResponse);
+        return controllerUtils.setAlertFlashMessage(redirectAttributes, PathConstants.LOGIN, messageResponse);
     }
 }

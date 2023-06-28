@@ -27,12 +27,12 @@ public class CartController {
     @PostMapping("/add")
     public String addPerfumeToCart(@RequestParam("perfumeId") Long perfumeId) {
         cartService.addPerfumeToCart(perfumeId);
-        return "redirect:/" + Pages.CART;
+        return "redirect:" + PathConstants.CART;
     }
 
     @PostMapping("/remove")
     public String removePerfumeFromCart(@RequestParam("perfumeId") Long perfumeId) {
         cartService.removePerfumeFromCart(perfumeId);
-        return "redirect:/" + Pages.CART;
+        return "redirect:" + PathConstants.CART;
     }
 }

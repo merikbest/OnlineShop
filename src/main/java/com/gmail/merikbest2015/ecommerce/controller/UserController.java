@@ -5,9 +5,8 @@ import com.gmail.merikbest2015.ecommerce.constants.PathConstants;
 import com.gmail.merikbest2015.ecommerce.dto.request.ChangePasswordRequest;
 import com.gmail.merikbest2015.ecommerce.dto.request.EditUserRequest;
 import com.gmail.merikbest2015.ecommerce.dto.response.MessageResponse;
-import com.gmail.merikbest2015.ecommerce.service.PerfumeService;
 import com.gmail.merikbest2015.ecommerce.service.UserService;
-import com.gmail.merikbest2015.ecommerce.utils.ControllerUtils;
+import com.gmail.merikbest2015.ecommerce.service.Impl.utils.ControllerUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +24,6 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserService userService;
-    private final PerfumeService perfumeService;
     private final ControllerUtils controllerUtils;
 
     @GetMapping("/contacts")
@@ -35,7 +33,7 @@ public class UserController {
 
     @GetMapping("/reset")
     public String passwordReset() {
-        return "user-password-reset";
+        return Pages.USER_PASSWORD_RESET;
     }
 
     @GetMapping("/account")
@@ -57,10 +55,13 @@ public class UserController {
     }
 
     @PostMapping("/info/edit")
-    public String editUserInfo(EditUserRequest request, BindingResult bindingResult,
+    public String editUserInfo(@Valid EditUserRequest request, BindingResult bindingResult,
                                RedirectAttributes redirectAttributes, Model model) {
+        if (controllerUtils.validateInputFields(bindingResult, model, "user", request)) {
+            return Pages.USER_INFO_EDIT;
+        }
         MessageResponse messageResponse = userService.editUserInfo(request);
-        return controllerUtils.processAlertMessageAndRedirect(redirectAttributes, "/user/info", messageResponse);
+        return controllerUtils.setAlertFlashMessage(redirectAttributes, "/user/info", messageResponse);
     }
 
     @PostMapping("/change/password")
@@ -72,6 +73,6 @@ public class UserController {
         if (controllerUtils.validateInputField(model, messageResponse, "request", request)) {
             return Pages.USER_PASSWORD_RESET;
         }
-        return controllerUtils.processAlertMessage(model, Pages.USER_PASSWORD_RESET, messageResponse);
+        return controllerUtils.setAlertMessage(model, Pages.USER_PASSWORD_RESET, messageResponse);
     }
 }

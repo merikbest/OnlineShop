@@ -31,5 +31,5 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "   ELSE UPPER(orders.email) " +
             "END) " +
             "LIKE UPPER(CONCAT('%',:text,'%'))")
-    Page<Order> searchUsers(String searchType, String text, Pageable pageable);
+    Page<Order> searchOrders(String searchType, String text, Pageable pageable);
 }

@@ -6,7 +6,7 @@ import com.gmail.merikbest2015.ecommerce.domain.User;
 import com.gmail.merikbest2015.ecommerce.dto.request.OrderRequest;
 import com.gmail.merikbest2015.ecommerce.service.OrderService;
 import com.gmail.merikbest2015.ecommerce.service.UserService;
-import com.gmail.merikbest2015.ecommerce.utils.ControllerUtils;
+import com.gmail.merikbest2015.ecommerce.service.Impl.utils.ControllerUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -42,7 +42,7 @@ public class OrderController {
 
     @GetMapping("/user/orders")
     public String getUserOrdersList(Model model, Pageable pageable) {
-        controllerUtils.processModel(model, orderService.getUserOrdersList(pageable));
+        controllerUtils.addPagination(model, orderService.getUserOrdersList(pageable));
         return Pages.ORDERS;
     }
 

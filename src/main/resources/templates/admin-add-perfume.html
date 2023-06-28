@@ -6,12 +6,12 @@
 <div th:replace="fragments/common-fragments :: navbar"></div>
 <div id="container" class="account-container container">
     <div class="row mt-5">
-        <th:block th:replace="fragments/account-fragments :: account-sidebar"></th:block>
+        <th:block th:replace="fragments/account-fragments :: account-sidebar"/>
         <div class="col-md-9 mb-5">
             <th:block th:replace="fragments/common-fragments :: info-title(
                 text='Add perfume',
                 icon='fas fa-plus-square mr-2'
-            )"></th:block>
+            )"/>
             <br/>
             <form method="post" action="/admin/add/perfume" enctype="multipart/form-data">
                 <div class="form row">
@@ -21,14 +21,14 @@
                         placeholder='Enter the perfume title',
                         value=(${perfume} ? ${perfume.perfumeTitle} : ''),
                         error=(${perfumeTitleError})
-                    )"></th:block>
+                    )"/>
                     <th:block th:replace="fragments/account-fragments :: add-perfume-input(
                         title='Brand',
                         name='perfumer',
                         placeholder='Enter the brand',
                         value=(${perfume} ? ${perfume.perfumer} : ''),
                         error=(${perfumerError})
-                    )"></th:block>
+                    )"/>
                 </div>
                 <div class="form row mt-3">
                     <th:block th:replace="fragments/account-fragments :: add-perfume-input(
@@ -37,14 +37,14 @@
                         placeholder='Enter the release year',
                         value=(${perfume} ? ${perfume.year} : ''),
                         error=(${yearError})
-                    )"></th:block>
+                    )"/>
                     <th:block th:replace="fragments/account-fragments :: add-perfume-input(
                         title='Manufacturer country',
                         name='country',
                         placeholder='Manufacturer country',
                         value=(${perfume} ? ${perfume.country} : ''),
                         error=(${countryError})
-                    )"></th:block>
+                    )"/>
                 </div>
                 <div class="form row mt-3">
                     <th:block th:replace="fragments/account-fragments :: add-perfume-select(
@@ -52,14 +52,14 @@
                         name='type',
                         options=(${ {'Eau de Parfum', 'Eau de Toilette'} }),
                         error=(${typeError})
-                    )"></th:block>
+                    )"/>
                     <th:block th:replace="fragments/account-fragments :: add-perfume-input(
                         title='Volume',
                         name='volume',
                         placeholder='Enter the volume',
                         value=(${perfume} ? ${perfume.volume} : ''),
                         error=(${volumeError})
-                    )"></th:block>
+                    )"/>
                 </div>
                 <div class="form row mt-3">
                     <th:block th:replace="fragments/account-fragments :: add-perfume-select(
@@ -67,14 +67,14 @@
                         name='perfumeGender',
                         options=(${ {'male', 'female'} }),
                         error=(${perfumeGenderError})
-                    )"></th:block>
+                    )"/>
                     <th:block th:replace="fragments/account-fragments :: add-perfume-input(
                         title='Top notes',
                         name='fragranceTopNotes',
                         placeholder='Enter the top notes',
                         value=(${perfume} ? ${perfume.fragranceTopNotes} : ''),
                         error=(${fragranceTopNotesError})
-                    )"></th:block>
+                    )"/>
                 </div>
                 <div class="form row mt-3">
                     <th:block th:replace="fragments/account-fragments :: add-perfume-input(
@@ -83,14 +83,14 @@
                         placeholder='Enter the heart notes',
                         value=(${perfume} ? ${perfume.fragranceMiddleNotes} : ''),
                         error=(${fragranceMiddleNotesError})
-                    )"></th:block>
+                    )"/>
                     <th:block th:replace="fragments/account-fragments :: add-perfume-input(
                         title='Base notes',
                         name='fragranceBaseNotes',
                         placeholder='Enter the base notes',
                         value=(${perfume} ? ${perfume.fragranceBaseNotes} : ''),
                         error=(${fragranceBaseNotesError})
-                    )"></th:block>
+                    )"/>
                 </div>
                 <div class="form row mt-3">
                     <th:block th:replace="fragments/account-fragments :: add-perfume-input(
@@ -99,7 +99,7 @@
                         placeholder='Enter the price',
                         value=(${perfume} ? ${perfume.price} : ''),
                         error=(${priceError})
-                    )"></th:block>
+                    )"/>
                     <div class="col" style="margin-top: 35px">
                         <input type="file" name="file"/>
                     </div>
@@ -108,7 +108,7 @@
                     text='Add',
                     buttonClassName='mt-3',
                     icon='fas fa-plus-square mr-2'
-                )"></th:block>
+                )"/>
             </form>
         </div>
     </div>

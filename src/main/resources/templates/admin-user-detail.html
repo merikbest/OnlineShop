@@ -6,62 +6,35 @@
 <div th:replace="fragments/common-fragments :: navbar"></div>
 <div id="container" class="account-container container">
     <div class="row mt-5">
-        <th:block th:replace="fragments/account-fragments :: account-sidebar"></th:block>
+        <th:block th:replace="fragments/account-fragments :: account-sidebar"/>
         <div class="col-md-10 mb-5">
             <th:block th:replace="fragments/common-fragments :: info-title(
                 text='User: ' + ${user.getFirstName()} + ' ' + ${user.getLastName()},
                 icon='fas fa-user-edit mr-2'
-            )"></th:block>
+            )"/>
             <div class="row mt-5 mb-4 border px-3 py-3">
                 <div class="col-md-4">
-                    <p class="personal_data_item">
-                        User id:
-                        <span class="personal_data_text" th:text="${user.getId()}"></span>
-                    </p>
-                    <p class="personal_data_item">
-                        Email:
-                        <span class="personal_data_text" th:text="${user.getEmail()}"></span>
-                    </p>
-                    <p class="personal_data_item">
-                        Role:
-                        <span class="personal_data_text" th:text="${user.getRoles().iterator().next()}"></span>
-                    </p>
+                    <th:block th:replace="fragments/common-fragments :: data-item(title='User id', text=${user.getId()})" />
+                    <th:block th:replace="fragments/common-fragments :: data-item(title='Email', text=${user.getEmail()})" />
+                    <th:block th:replace="fragments/common-fragments :: data-item(title='Role', text=${user.getRoles().iterator().next()})" />
                 </div>
                 <div class="col-md-4">
-                    <p class="personal_data_item">
-                        First name:
-                        <span class="personal_data_text" th:text="${user.getFirstName()}"></span>
-                    </p>
-                    <p class="personal_data_item">
-                        Last name:
-                        <span class="personal_data_text" th:text="${user.getLastName()}"></span>
-                    </p>
-                    <p class="personal_data_item">
-                        City:
-                        <span class="personal_data_text" th:text="${user.getCity()}"></span>
-                    </p>
+                    <th:block th:replace="fragments/common-fragments :: data-item(title='First name', text=${user.getFirstName()})" />
+                    <th:block th:replace="fragments/common-fragments :: data-item(title='Last name', text=${user.getLastName()})" />
+                    <th:block th:replace="fragments/common-fragments :: data-item(title='City', text=${user.getCity()})" />
                 </div>
                 <div class="col-md-4">
-                    <p class="personal_data_item">
-                        Address:
-                        <span class="personal_data_text" th:text="${user.getAddress()}"></span>
-                    </p>
-                    <p class="personal_data_item">
-                        Phone number:
-                        <span class="personal_data_text" th:text="${user.getPhoneNumber()}"></span>
-                    </p>
-                    <p class="personal_data_item">
-                        Post index:
-                        <span class="personal_data_text" th:text="${user.getPostIndex()}"></span>
-                    </p>
+                    <th:block th:replace="fragments/common-fragments :: data-item(title='Address', text=${user.getAddress()})" />
+                    <th:block th:replace="fragments/common-fragments :: data-item(title='Phone number', text=${user.getPhoneNumber()})" />
+                    <th:block th:replace="fragments/common-fragments :: data-item(title='Post index', text=${user.getPostIndex()})" />
                 </div>
             </div>
-            <th:block th:if="${orders.size() == 0}">
+            <th:block th:if="${page.getContent().size() == 0}">
                 <h5 class="text-center">
                     No orders
                 </h5>
             </th:block>
-            <th:block th:unless="${orders.size() == 0}">
+            <th:block th:unless="${page.getContent().size() == 0}">
                 <h5 class="text-center">
                     Orders
                 </h5>
@@ -77,7 +50,7 @@
                         <th></th>
                     </tr>
                     </thead>
-                    <tbody th:each="order : ${orders}">
+                    <tbody th:each="order : ${page.getContent()}">
                     <tr>
                         <th th:text="${order.getId()}"></th>
                         <th th:text="${order.getDate()}"></th>

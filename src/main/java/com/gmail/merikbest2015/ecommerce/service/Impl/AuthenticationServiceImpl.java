@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.ecommerce.service.Impl;
 
 import com.gmail.merikbest2015.ecommerce.constants.ErrorMessage;
+import com.gmail.merikbest2015.ecommerce.constants.SuccessMessage;
 import com.gmail.merikbest2015.ecommerce.domain.User;
 import com.gmail.merikbest2015.ecommerce.dto.request.PasswordResetRequest;
 import com.gmail.merikbest2015.ecommerce.dto.response.MessageResponse;
@@ -37,7 +38,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         attributes.put("firstName", user.getFirstName());
         attributes.put("resetCode", "/auth/reset/" + user.getPasswordResetCode());
         mailSender.sendMessageHtml(user.getEmail(), "Password reset", "password-reset-template", attributes);
-        return new MessageResponse("alert-success",  "Reset password code is send to your E-mail");
+        return new MessageResponse("alert-success",  SuccessMessage.PASSWORD_CODE_SEND);
     }
 
     @Override
@@ -55,6 +56,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         User user = userRepository.findByEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setPasswordResetCode(null);
-        return new MessageResponse("alert-success", "Password successfully changed!");
+        return new MessageResponse("alert-success", SuccessMessage.PASSWORD_CHANGED);
     }
 }

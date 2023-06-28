@@ -1,113 +1,170 @@
 package com.gmail.merikbest2015.ecommerce.controller;
 
-import com.gmail.merikbest2015.ecommerce.domain.Perfume;
-import com.gmail.merikbest2015.ecommerce.domain.Role;
-import com.gmail.merikbest2015.ecommerce.domain.User;
-import com.gmail.merikbest2015.ecommerce.repository.PerfumeRepository;
-import com.gmail.merikbest2015.ecommerce.repository.UserRepository;
-import com.gmail.merikbest2015.ecommerce.service.PerfumeService;
-import com.gmail.merikbest2015.ecommerce.service.UserService;
-import org.hamcrest.CoreMatchers;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import com.gmail.merikbest2015.ecommerce.constants.ErrorMessage;
+import com.gmail.merikbest2015.ecommerce.constants.Pages;
+import com.gmail.merikbest2015.ecommerce.constants.PathConstants;
+import com.gmail.merikbest2015.ecommerce.constants.SuccessMessage;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import static com.gmail.merikbest2015.ecommerce.util.TestConstants.*;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
-
-@RunWith(SpringRunner.class)
-@AutoConfigureMockMvc
 @SpringBootTest
+@AutoConfigureMockMvc
+@TestPropertySource("/application-test.properties")
+@Sql(value = {"/sql/create-perfumes-before.sql", "/sql/create-user-before.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value = {"/sql/create-user-after.sql", "/sql/create-perfumes-after.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class UserControllerTest {
+
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
-    private UserRepository userRepository;
-
-    @MockBean
-    private PerfumeRepository perfumeRepository;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private PerfumeService perfumeService;
-
     @Test
-    public void getAllProductsTest() {
-        List<Perfume> perfumeList = new ArrayList<>();
-        perfumeList.add(new Perfume());
-
-        Pageable pageable = PageRequest.of(0, 12);
-        Page<Perfume> page = new PageImpl<>(perfumeList);
-
-        when(perfumeRepository.findAll(pageable)).thenReturn(page);
-
-        assertEquals(1, perfumeService.getPerfumes(pageable).getSize());
+    @DisplayName("[200] GET /user/contacts - Contacts")
+    public void contacts() throws Exception {
+        mockMvc.perform(get(PathConstants.USER + "/contacts"))
+                .andExpect(status().isOk())
+                .andExpect(view().name(Pages.CONTACTS));
     }
 
     @Test
-    public void addProductTest() {
-        Perfume perfume = new Perfume();
-        perfume.setId(1L);
-        perfume.setPerfumer("test");
-        perfume.setPerfumeTitle("test");
-
-        when(perfumeRepository.save(perfume)).thenReturn(perfume);
-
-        assertEquals(perfume, perfumeService.save(perfume));
-        assertNotNull(perfume.getId());
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /user/reset - Password Reset")
+    public void passwordReset() throws Exception {
+        mockMvc.perform(get(PathConstants.USER + "/reset"))
+                .andExpect(status().isOk())
+                .andExpect(view().name(Pages.USER_PASSWORD_RESET));
     }
 
     @Test
-    public void userListTest() {
-        List<User> users = new ArrayList<>();
-        users.add(new User());
-
-        when(userRepository.findAll()).thenReturn(users);
-
-        assertEquals(1, userService.findAll().size());
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /user/account - User Account")
+    public void userAccount() throws Exception {
+        mockMvc.perform(get(PathConstants.USER + "/account"))
+                .andExpect(status().isOk())
+                .andExpect(view().name(Pages.USER_ACCOUNT))
+                .andExpect(model().attribute("user", hasProperty("id", is(USER_ID))))
+                .andExpect(model().attribute("user", hasProperty("email", is(USER_EMAIL))))
+                .andExpect(model().attribute("user", hasProperty("firstName", is(USER_FIRST_NAME))))
+                .andExpect(model().attribute("user", hasProperty("lastName", is(USER_LAST_NAME))))
+                .andExpect(model().attribute("user", hasProperty("city", is(USER_CITY))))
+                .andExpect(model().attribute("user", hasProperty("address", is(USER_ADDRESS))))
+                .andExpect(model().attribute("user", hasProperty("phoneNumber", is(USER_PHONE_NUMBER))))
+                .andExpect(model().attribute("user", hasProperty("postIndex", is(USER_POST_INDEX))));
     }
 
     @Test
-    public void userSaveTest() {
-        User user = new User();
-        user.setId(1L);
-        user.setUsername("Bob");
-        user.setRoles(Collections.singleton(Role.ADMIN));
-
-        when(userRepository.save(user)).thenReturn(user);
-
-        assertEquals(user, userService.save(user));
-        assertNotNull(user.getId());
-        assertTrue(user.getUsername().equals("Bob"));
-        assertTrue(CoreMatchers.is(user.getRoles()).matches(Collections.singleton(Role.ADMIN)));
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /user/info - User Info")
+    public void userInfo() throws Exception {
+        mockMvc.perform(get(PathConstants.USER + "/info"))
+                .andExpect(status().isOk())
+                .andExpect(view().name(Pages.USER_INFO))
+                .andExpect(model().attribute("user", hasProperty("id", is(USER_ID))))
+                .andExpect(model().attribute("user", hasProperty("email", is(USER_EMAIL))))
+                .andExpect(model().attribute("user", hasProperty("firstName", is(USER_FIRST_NAME))))
+                .andExpect(model().attribute("user", hasProperty("lastName", is(USER_LAST_NAME))))
+                .andExpect(model().attribute("user", hasProperty("city", is(USER_CITY))))
+                .andExpect(model().attribute("user", hasProperty("address", is(USER_ADDRESS))))
+                .andExpect(model().attribute("user", hasProperty("phoneNumber", is(USER_PHONE_NUMBER))))
+                .andExpect(model().attribute("user", hasProperty("postIndex", is(USER_POST_INDEX))));
     }
 
     @Test
-    public void updateProfileInfoTest() {
-        User user = new User();
-        user.setPassword("test");
-        user.setEmail("test@test.com");
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /user/info/edit - Get Edit User Info Page")
+    public void getEditUserInfoPage() throws Exception {
+        mockMvc.perform(get(PathConstants.USER + "/info/edit"))
+                .andExpect(status().isOk())
+                .andExpect(view().name(Pages.USER_INFO_EDIT))
+                .andExpect(model().attribute("user", hasProperty("id", is(USER_ID))))
+                .andExpect(model().attribute("user", hasProperty("email", is(USER_EMAIL))))
+                .andExpect(model().attribute("user", hasProperty("firstName", is(USER_FIRST_NAME))))
+                .andExpect(model().attribute("user", hasProperty("lastName", is(USER_LAST_NAME))))
+                .andExpect(model().attribute("user", hasProperty("city", is(USER_CITY))))
+                .andExpect(model().attribute("user", hasProperty("address", is(USER_ADDRESS))))
+                .andExpect(model().attribute("user", hasProperty("phoneNumber", is(USER_PHONE_NUMBER))))
+                .andExpect(model().attribute("user", hasProperty("postIndex", is(USER_POST_INDEX))));
+    }
 
-        when(userRepository.save(user)).thenReturn(user);
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[300] POST /user/info/edit - Edit User Info")
+    public void editUserInfo() throws Exception {
+        mockMvc.perform(post(PathConstants.USER + "/info/edit")
+                        .param("firstName", USER_FIRST_NAME)
+                        .param("lastName", USER_LAST_NAME)
+                        .param("city", USER_CITY)
+                        .param("address", USER_ADDRESS)
+                        .param("phoneNumber", USER_PHONE_NUMBER)
+                        .param("postIndex", USER_POST_INDEX))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/user/info"))
+                .andExpect(flash().attribute("messageType", "alert-success"))
+                .andExpect(flash().attribute("message", SuccessMessage.USER_UPDATED));
+    }
 
-        assertEquals(user.getPassword(), "test");
-        assertEquals(user.getEmail(), "test@test.com");
-        assertEquals(user, userService.save(user));
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] POST /user/info/edit - Edit User Info Return Input Errors")
+    public void editUserInfo_ReturnInputErrors() throws Exception {
+        mockMvc.perform(post(PathConstants.USER + "/info/edit")
+                        .param("email", USER_EMAIL)
+                        .param("firstName", "")
+                        .param("lastName", ""))
+                .andExpect(status().isOk())
+                .andExpect(view().name(Pages.USER_INFO_EDIT))
+                .andExpect(model().attribute("firstNameError", is(ErrorMessage.EMPTY_FIRST_NAME)))
+                .andExpect(model().attribute("lastNameError", is(ErrorMessage.EMPTY_LAST_NAME)));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] POST /user/change/password - Change Password")
+    public void changePassword() throws Exception {
+        mockMvc.perform(post(PathConstants.USER + "/change/password")
+                        .param("password", "password")
+                        .param("password2", "password"))
+                .andExpect(status().isOk())
+                .andExpect(view().name(Pages.USER_PASSWORD_RESET))
+                .andExpect(model().attribute("messageType", "alert-success"))
+                .andExpect(model().attribute("message", SuccessMessage.PASSWORD_CHANGED));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] POST /user/change/password - Change Password Return Input Errors")
+    public void changePassword_ReturnInputErrors() throws Exception {
+        mockMvc.perform(post(PathConstants.USER + "/change/password")
+                        .param("password", "")
+                        .param("password2", ""))
+                .andExpect(status().isOk())
+                .andExpect(view().name(Pages.USER_PASSWORD_RESET))
+                .andExpect(model().attribute("passwordError", is(ErrorMessage.PASSWORD_CHARACTER_LENGTH)))
+                .andExpect(model().attribute("password2Error", is(ErrorMessage.PASSWORD2_CHARACTER_LENGTH)));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] POST /user/change/password - Change Password Return Password Not Match Error")
+    public void changePassword_ReturnPasswordNotMatchError() throws Exception {
+        mockMvc.perform(post(PathConstants.USER + "/change/password")
+                        .param("password", "password")
+                        .param("password2", "password2"))
+                .andExpect(status().isOk())
+                .andExpect(view().name(Pages.USER_PASSWORD_RESET))
+                .andExpect(model().attribute("passwordError", is(ErrorMessage.PASSWORDS_DO_NOT_MATCH)));
     }
 }

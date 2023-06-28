@@ -5,7 +5,6 @@ import com.gmail.merikbest2015.ecommerce.domain.Order;
 import com.gmail.merikbest2015.ecommerce.domain.Perfume;
 import com.gmail.merikbest2015.ecommerce.domain.User;
 import com.gmail.merikbest2015.ecommerce.dto.request.OrderRequest;
-import com.gmail.merikbest2015.ecommerce.dto.request.SearchRequest;
 import com.gmail.merikbest2015.ecommerce.repository.OrderRepository;
 import com.gmail.merikbest2015.ecommerce.service.OrderService;
 import com.gmail.merikbest2015.ecommerce.service.UserService;
@@ -33,12 +32,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order getOrder(Long orderId) {
-        return orderRepository.getById(orderId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessage.ORDER_NOT_FOUND));
-    }
-
-    @Override
-    public Order getUserOrder(Long orderId) {
         User user = userService.getAuthenticatedUser();
         return orderRepository.getByIdAndUserId(orderId, user.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessage.ORDER_NOT_FOUND));
@@ -54,21 +47,6 @@ public class OrderServiceImpl implements OrderService {
     public Page<Order> getUserOrdersList(Pageable pageable) {
         User user = userService.getAuthenticatedUser();
         return orderRepository.findOrderByUserId(user.getId(), pageable);
-    }
-
-    @Override
-    public Page<Order> getOrdersByUserId(Long userId, Pageable pageable) {
-        return orderRepository.findOrderByUserId(userId, pageable);
-    }
-
-    @Override
-    public Page<Order> getOrders(Pageable pageable) {
-        return orderRepository.findAll(pageable);
-    }
-
-    @Override
-    public Page<Order> searchOrders(SearchRequest request, Pageable pageable) {
-        return orderRepository.searchUsers(request.getSearchType(), request.getText(), pageable);
     }
 
     @Override

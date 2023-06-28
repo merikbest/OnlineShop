@@ -5,7 +5,7 @@ import com.gmail.merikbest2015.ecommerce.constants.PathConstants;
 import com.gmail.merikbest2015.ecommerce.dto.request.UserRequest;
 import com.gmail.merikbest2015.ecommerce.dto.response.MessageResponse;
 import com.gmail.merikbest2015.ecommerce.service.RegistrationService;
-import com.gmail.merikbest2015.ecommerce.utils.ControllerUtils;
+import com.gmail.merikbest2015.ecommerce.service.Impl.utils.ControllerUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,11 +41,11 @@ public class RegistrationController {
         if (controllerUtils.validateInputField(model, messageResponse, "user", user)) {
             return Pages.REGISTRATION;
         }
-        return controllerUtils.processAlertMessageAndRedirect(redirectAttributes, PathConstants.LOGIN, messageResponse);
+        return controllerUtils.setAlertFlashMessage(redirectAttributes, PathConstants.LOGIN, messageResponse);
     }
 
     @GetMapping("/activate/{code}")
     public String activateEmailCode(@PathVariable String code, Model model) {
-        return controllerUtils.processAlertMessage(model, Pages.LOGIN, registrationService.activateEmailCode(code));
+        return controllerUtils.setAlertMessage(model, Pages.LOGIN, registrationService.activateEmailCode(code));
     }
 }

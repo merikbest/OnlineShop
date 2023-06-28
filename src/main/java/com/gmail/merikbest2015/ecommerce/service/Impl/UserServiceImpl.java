@@ -1,23 +1,19 @@
 package com.gmail.merikbest2015.ecommerce.service.Impl;
 
 import com.gmail.merikbest2015.ecommerce.constants.ErrorMessage;
+import com.gmail.merikbest2015.ecommerce.constants.SuccessMessage;
 import com.gmail.merikbest2015.ecommerce.domain.User;
 import com.gmail.merikbest2015.ecommerce.dto.request.ChangePasswordRequest;
 import com.gmail.merikbest2015.ecommerce.dto.request.EditUserRequest;
-import com.gmail.merikbest2015.ecommerce.dto.request.SearchRequest;
 import com.gmail.merikbest2015.ecommerce.dto.response.MessageResponse;
 import com.gmail.merikbest2015.ecommerce.repository.UserRepository;
 import com.gmail.merikbest2015.ecommerce.security.UserPrincipal;
 import com.gmail.merikbest2015.ecommerce.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -33,22 +29,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(Long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessage.USER_NOT_FOUND));
-    }
-
-    @Override
-    public Page<User> getUsers(Pageable pageable) {
-        return userRepository.findAll(pageable);
-    }
-
-    @Override
-    public Page<User> searchUsers(SearchRequest request, Pageable pageable) {
-        return userRepository.searchUsers(request.getSearchType(), request.getText(), pageable);
-    }
-
-    @Override
     @Transactional
     public MessageResponse editUserInfo(EditUserRequest request) {
         User user = getAuthenticatedUser();
@@ -58,7 +38,7 @@ public class UserServiceImpl implements UserService {
         user.setAddress(request.getAddress());
         user.setPhoneNumber(request.getPhoneNumber());
         user.setPostIndex(request.getPostIndex());
-        return new MessageResponse("alert-success", "User successfully updated.");
+        return new MessageResponse("alert-success", SuccessMessage.USER_UPDATED);
     }
 
     @Override
@@ -69,6 +49,6 @@ public class UserServiceImpl implements UserService {
         }
         User user = getAuthenticatedUser();
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        return new MessageResponse("alert-success", "Password successfully changed!");
+        return new MessageResponse("alert-success", SuccessMessage.PASSWORD_CHANGED);
     }
 }

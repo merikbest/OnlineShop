@@ -6,62 +6,35 @@
 <div th:replace="fragments/common-fragments :: navbar"></div>
 <div class="account-container container">
     <div class="row mt-5">
-        <th:block th:replace="fragments/account-fragments :: account-sidebar"></th:block>
+        <th:block th:replace="fragments/account-fragments :: account-sidebar"/>
         <div class="col-md-10">
             <div class="container mb-5">
                 <th:block th:replace="fragments/common-fragments :: info-title(
                     text='Order #' + ${order.getId()},
                     titleClass='text-center',
                     icon='fas fa-shopping-bag'
-                )"></th:block>
+                )"/>
                 <div class="row border my-5 px-5 py-3">
                     <div class="col-md-6">
                         <h5 class="manage_user_order_subtitle">
                             <i class="fas fa-info-circle mr-2"></i>
                             Customer information
                         </h5>
-                        <p class="personal_data_item">
-                            First name:
-                            <span class="personal_data_text" th:text="${order.getFirstName()}"></span>
-                        </p>
-                        <p class="personal_data_item">
-                            Last name:
-                            <span class="personal_data_text" th:text="${order.getLastName()}"></span>
-                        </p>
-                        <p class="personal_data_item">
-                            City:
-                            <span class="personal_data_text" th:text="${order.getCity()}"></span>
-                        </p>
-                        <p class="personal_data_item">
-                            Address:
-                            <span class="personal_data_text" th:text="${order.getAddress()}"></span>
-                        </p>
-                        <p class="personal_data_item">
-                            Email:
-                            <span class="personal_data_text" th:text="${order.getEmail()}"></span>
-                        </p>
-                        <p class="personal_data_item">
-                            Phone number:
-                            <span class="personal_data_text" th:text="${order.getPhoneNumber()}"></span>
-                        </p>
-                        <p class="personal_data_item">
-                            Post index:
-                            <span class="personal_data_text" th:text="${order.getPostIndex()}"></span>
-                        </p>
+                        <th:block th:replace="fragments/common-fragments :: data-item(title='First name', text=${order.getFirstName()})" />
+                        <th:block th:replace="fragments/common-fragments :: data-item(title='Last name', text=${order.getLastName()})" />
+                        <th:block th:replace="fragments/common-fragments :: data-item(title='City', text=${order.getCity()})" />
+                        <th:block th:replace="fragments/common-fragments :: data-item(title='Address', text=${order.getAddress()})" />
+                        <th:block th:replace="fragments/common-fragments :: data-item(title='Email', text=${order.getEmail()})" />
+                        <th:block th:replace="fragments/common-fragments :: data-item(title='Phone number', text=${order.getPhoneNumber()})" />
+                        <th:block th:replace="fragments/common-fragments :: data-item(title='Post index', text=${order.getPostIndex()})" />
                     </div>
                     <div class="col-md-6">
                         <h5 class="manage_user_order_subtitle">
                             <i class="fas fa-info-circle mr-2"></i>
                             Order information
                         </h5>
-                        <p class="personal_data_item">
-                            Order id:
-                            <span class="personal_data_text" th:text="${order.getId()}"></span>
-                        </p>
-                        <p class="personal_data_item">
-                            Date:
-                            <span class="personal_data_text" th:text="${order.getDate()}"></span>
-                        </p>
+                        <th:block th:replace="fragments/common-fragments :: data-item(title='Order id', text=${order.getId()})" />
+                        <th:block th:replace="fragments/common-fragments :: data-item(title='Date', text=${order.getDate()})" />
                         <h4 class="manage_user_order_summary">
                             Order summary:
                             <span class="manage_user_order_summary_price"

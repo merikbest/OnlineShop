@@ -211,3 +211,16 @@
         <th:block th:text="${text}"></th:block>
     </button>
 </th:block>
+
+<!-- alert-message -->
+<th:block th:fragment="alert-message">
+    <div th:if="${messageType}" class="alert " th:classappend="${messageType}" th:text="${message}" role="alert"></div>
+</th:block>
+
+<!-- data-item -->
+<th:block th:fragment="data-item">
+    <p class="data_item">
+        <th:block th:text="${title + ':'}"></th:block>
+        <span th:text="${text}" class="data_text"></span>
+    </p>
+</th:block>

@@ -4,7 +4,7 @@ import com.gmail.merikbest2015.ecommerce.constants.Pages;
 import com.gmail.merikbest2015.ecommerce.constants.PathConstants;
 import com.gmail.merikbest2015.ecommerce.dto.request.SearchRequest;
 import com.gmail.merikbest2015.ecommerce.service.PerfumeService;
-import com.gmail.merikbest2015.ecommerce.utils.ControllerUtils;
+import com.gmail.merikbest2015.ecommerce.service.Impl.utils.ControllerUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -29,13 +29,13 @@ public class PerfumeController {
 
     @GetMapping
     public String getPerfumesByFilterParams(SearchRequest request, Model model, Pageable pageable) {
-        controllerUtils.processModel(request, model, perfumeService.getPerfumesByFilterParams(request, pageable));
+        controllerUtils.addPagination(request, model, perfumeService.getPerfumesByFilterParams(request, pageable));
         return Pages.PERFUMES;
     }
 
     @GetMapping("/search")
     public String searchPerfumes(SearchRequest request, Model model, Pageable pageable) {
-        controllerUtils.processModel(request, model, perfumeService.searchPerfumes(request, pageable));
+        controllerUtils.addPagination(request, model, perfumeService.searchPerfumes(request, pageable));
         return Pages.PERFUMES;
     }
 }

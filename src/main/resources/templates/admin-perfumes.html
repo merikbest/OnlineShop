@@ -6,12 +6,13 @@
 <div th:replace="fragments/common-fragments :: navbar"></div>
 <div id="container" class="account-container container">
     <div class="row mt-5">
-        <th:block th:replace="fragments/account-fragments :: account-sidebar"></th:block>
+        <th:block th:replace="fragments/account-fragments :: account-sidebar"/>
         <div class="col-md-10">
             <th:block th:replace="fragments/common-fragments :: info-title(
                 text='List of perfumes',
                 icon='fas fa-list ml-2 mr-2'
-            )"></th:block>
+            )"/>
+            <th:block th:replace="fragments/common-fragments :: alert-message"/>
             <form class="my-3" action="/admin/perfumes/search" method="get" style="justify-content: center">
                 <div th:insert="~{fragments/common-fragments :: search(
                     options=(${ {
