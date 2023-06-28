@@ -100,7 +100,7 @@
 
 <!--pagination-->
 <th:block th:fragment="pagination">
-    <ul class="pagination mx-3 d-flex justify-content-between"
+    <ul class="pagination d-flex justify-content-between " th:classappend="${class}"
         th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}">
         <div class="d-flex">
             <li class="page-item disabled">
@@ -139,7 +139,7 @@
                 <th:block th:unless="${c} == ${page.getSize()}">
                     <li class="page-item">
                         <a class="page-link text-dark"
-                           th:href="${urlBuilder.replaceQueryParam('page', page.getNumber()).replaceQueryParam('size', c).toUriString()}"
+                           th:href="${urlBuilder.replaceQueryParam('page', 0).replaceQueryParam('size', c).toUriString()}"
                            th:text="${c}"></a>
                     </li>
                 </th:block>
@@ -150,27 +150,24 @@
 
 <!--search-->
 <th:block th:fragment="search">
-    <form action="/perfume/search" method="get" style="justify-content: center">
-        <div class="row">
-            <div class="col-md-4">
-                <select name="searchType" class="form-control">
-                    <option value="perfumer">Brand</option>
-                    <option value="perfumeTitle">Perfume title</option>
-                    <option value="country">Manufacturer country</option>
-                </select>
-            </div>
-            <div class="col-md-3">
-                <input type="text" class="form-control" placeholder="Search..." name="text"
-                       th:value="${searchRequest} ? ${searchRequest.getText()} : ''"/>
-            </div>
-            <div class="col-md-5">
-                <button type="submit" class="btn btn-dark">
-                    <i class="fas fa-search mr-2"></i>
-                    Search
-                </button>
-            </div>
+    <div class="row">
+        <div class="col-md-4">
+            <select name="searchType" class="form-control">
+                <option th:each="option : ${options}" th:value="${option.value}" th:text="${option.text}"
+                        th:selected="${value == option.value}"></option>
+            </select>
         </div>
-    </form>
+        <div class="col-md-3">
+            <input type="text" class="form-control" placeholder="Search..." name="text"
+                   th:value="${searchRequest} ? ${searchRequest.getText()} : ''"/>
+        </div>
+        <div class="col-md-5">
+            <button type="submit" class="btn btn-dark">
+                <i class="fas fa-search mr-2"></i>
+                Search
+            </button>
+        </div>
+    </div>
 </th:block>
 
 <!--footer-->

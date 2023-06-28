@@ -1,11 +1,11 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments/common :: head"></head>
+<head th:replace="fragments/common-fragments :: head"></head>
 
 <body>
-<div th:insert="~{fragments/common :: scripts}"></div>
-<div th:replace="fragments/common :: navbar"></div>
+<div th:insert="~{fragments/common-fragments :: scripts}"></div>
+<div th:replace="fragments/common-fragments :: navbar"></div>
 
 <div id="container" class="container mt-5">
     <h5>
@@ -25,6 +25,6 @@
     <h6>Delivery</h6>
     <p>Delivery of orders come through courier service.</p>
 </div>
-<footer th:insert="~{fragments/common :: footer}"></footer>
+<footer th:insert="~{fragments/common-fragments :: footer}"></footer>
 </body>
 </html>

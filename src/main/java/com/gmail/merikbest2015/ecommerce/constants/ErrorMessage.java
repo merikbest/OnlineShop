@@ -11,6 +11,7 @@ public class ErrorMessage {
     public static final String PERFUME_NOT_FOUND = "Perfume not found.";
     public static final String USER_NOT_FOUND = "User not found.";
     public static final String EMPTY_FIRST_NAME = "First name cannot be empty";
+    public static final String EMPTY_LAST_NAME = "Last name cannot be empty";
     public static final String PASSWORD_CHARACTER_LENGTH = "The password must be between 6 and 16 characters long";
     public static final String PASSWORD2_CHARACTER_LENGTH = "The password confirmation must be between 6 and 16 characters long";
     public static final String INCORRECT_EMAIL = "Incorrect email";

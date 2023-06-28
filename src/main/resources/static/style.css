@@ -212,14 +212,6 @@ ul ul a{
 }
 
 /* User Info */
-.personal_data {
-    padding-left: 50px;
-}
-
-.personal_data_title {
-    margin-bottom: 30px;
-}
-
 .personal_data_item {
     font-weight: bold;
 }

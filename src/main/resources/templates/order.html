@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/common :: head"></head>
+<head th:replace="fragments/common-fragments :: head"></head>
 <body>
-<div th:insert="~{fragments/common :: scripts}"></div>
-<div th:replace="fragments/common :: navbar"></div>
+<div th:insert="~{fragments/common-fragments :: scripts}"></div>
+<div th:replace="fragments/common-fragments :: navbar"></div>
 <div class="account-container container">
     <div class="row mt-5">
         <th:block th:replace="fragments/account-fragments :: account-sidebar"></th:block>
         <div class="col-md-10">
             <div class="container mb-5">
-                <th:block th:replace="fragments/common :: info-title(
+                <th:block th:replace="fragments/common-fragments :: info-title(
                     text='Order #' + ${order.getId()},
                     titleClass='text-center',
                     icon='fas fa-shopping-bag'
@@ -94,6 +94,6 @@
         </div>
     </div>
 </div>
-<footer th:insert="~{fragments/common :: footer}"></footer>
+<footer th:insert="~{fragments/common-fragments :: footer}"></footer>
 </body>
 </html>

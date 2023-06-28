@@ -71,3 +71,43 @@
     </div>
 </th:block>
 
+<th:block th:fragment="user-info">
+    <div class="col-md-4 mb-5">
+        <th:block th:replace="fragments/common-fragments :: info-title(
+            text='Personal data',
+            icon='fas fa-address-card mr-2'
+        )"></th:block>
+        <div th:if="${messageType}" class="alert " th:classappend="${messageType}" th:text="${message}"
+             role="alert"></div>
+        <p class="personal_data_item">
+            Email:<span th:text="${user.getEmail()}" class="personal_data_text"></span>
+        </p>
+        <p class="personal_data_item">
+            First name:<span th:text="${user.getFirstName()}" class="personal_data_text"></span>
+        </p>
+        <p class="personal_data_item">
+            Last name:<span th:text="${user.getLastName()}" class="personal_data_text"></span>
+        </p>
+        <p class="personal_data_item">
+            City:<span th:text="${user.getCity()}" class="personal_data_text"></span>
+        </p>
+        <p class="personal_data_item">
+            Address:<span th:text="${user.getAddress()}" class="personal_data_text"></span>
+        </p>
+        <p class="personal_data_item">
+            Phone number:<span th:text="${user.getPhoneNumber()}" class="personal_data_text"></span>
+        </p>
+        <p class="personal_data_item">
+            Post index:<span th:text="${user.getPostIndex()}" class="personal_data_text"></span>
+        </p>
+        <a th:with="isUserEditOpen=${#request.getRequestURI() == '/user/info/edit'}"
+           th:href="@{${isUserEditOpen} ? '/user/info' : '/user/info/edit'}"
+           role="button">
+            <th:block th:replace="fragments/common-fragments :: icon-button(
+                text=(${isUserEditOpen} ? 'Hide' : 'Edit'),
+                icon=(${isUserEditOpen} ? 'fas fa-eye-slash mr-2' : 'fas fa-edit mr-2'),
+                buttonClassName='mt-2'
+            )"></th:block>
+        </a>
+    </div>
+</th:block>

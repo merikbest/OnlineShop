@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/common :: head"></head>
+<head th:replace="fragments/common-fragments :: head"></head>
 <body>
-<div th:insert="~{fragments/common :: scripts}"></div>
-<div th:replace="fragments/common :: navbar"></div>
+<div th:insert="~{fragments/common-fragments :: scripts}"></div>
+<div th:replace="fragments/common-fragments :: navbar"></div>
 <div class="account-container container">
     <div class="row mt-5">
         <div class="container mb-5">
@@ -14,6 +14,6 @@
         </div>
     </div>
 </div>
-<footer th:insert="~{fragments/common :: footer}"></footer>
+<footer th:insert="~{fragments/common-fragments :: footer}"></footer>
 </body>
 </html>

@@ -1,17 +1,27 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/common :: head"></head>
+<head th:replace="fragments/common-fragments :: head"></head>
 <body>
-<div th:insert="~{fragments/common :: scripts}"></div>
-<div th:replace="fragments/common :: navbar"></div>
+<div th:insert="~{fragments/common-fragments :: scripts}"></div>
+<div th:replace="fragments/common-fragments :: navbar"></div>
 <div class="account-container container">
     <div class="row mt-5">
         <th:block th:replace="fragments/account-fragments :: account-sidebar"></th:block>
         <div class="col-md-10">
-            <th:block th:replace="fragments/common :: info-title(
+            <th:block th:replace="fragments/common-fragments :: info-title(
                 text='List of all users',
                 icon='fas fa-users ml-2 mr-2'
             )"></th:block>
+            <form class="my-3" action="/admin/users/search" method="get" style="justify-content: center">
+                <div th:replace="~{fragments/common-fragments :: search(
+                    options=(${ {
+                        { value: 'email', text: 'Email' },
+                        { value: 'firstName', text: 'First Name' },
+                        { value: 'lastName', text: 'Last Name' }
+                    } })
+                )}"></div>
+            </form>
+            <div th:insert="~{fragments/common-fragments :: pagination}"></div>
             <table class="table mt-4 border text-center">
                 <thead class="table-active">
                 <tr>
@@ -23,7 +33,7 @@
                     <th></th>
                 </tr>
                 </thead>
-                <tbody th:each="user : ${users}">
+                <tbody th:each="user : ${page.getContent()}">
                 <tr>
                     <th th:text="${user.getId()}"></th>
                     <th th:text="${user.getFirstName()}"></th>
@@ -38,9 +48,10 @@
                 </tr>
                 </tbody>
             </table>
+            <div th:insert="~{fragments/common-fragments :: pagination}"></div>
         </div>
     </div>
 </div>
-<footer th:insert="~{fragments/common :: footer}"></footer>
+<footer th:insert="~{fragments/common-fragments :: footer}"></footer>
 </body>
 </html>

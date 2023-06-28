@@ -14,6 +14,7 @@ public class Pages {
     public static final String PERFUMES = "perfumes";
     public static final String USER_ACCOUNT = "user-account";
     public static final String USER_INFO = "user-info";
+    public static final String USER_INFO_EDIT = "user-info-edit";
     public static final String USER_PASSWORD_RESET = "user-password-reset";
     public static final String FORGOT_PASSWORD = "forgot-password";
     public static final String RESET_PASSWORD = "reset-password";

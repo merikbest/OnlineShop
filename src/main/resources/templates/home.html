@@ -1,9 +1,9 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/common :: head"></head>
+<head th:replace="fragments/common-fragments :: head"></head>
 <body>
-<div th:insert="~{fragments/common :: scripts}"></div>
-<div th:replace="fragments/common :: navbar"></div>
+<div th:insert="~{fragments/common-fragments :: scripts}"></div>
+<div th:replace="fragments/common-fragments :: navbar"></div>
 <div id="container">
     <div id="carouselExampleControls" class="carousel slide carousel-fade" data-ride="carousel">
         <div class="carousel-inner">
@@ -56,7 +56,7 @@
                     <div th:replace="fragments/perfumes-fragments :: perfumer-item(perfumer='Burberry', src='https://i.ibb.co/MRrJCgQ/o-104.jpg')"></div>
                 </div>
             </div>
-            <div th:replace="fragments/common :: carousel-indicators('#perfumerCarousel')"></div>
+            <div th:replace="fragments/common-fragments :: carousel-indicators('#perfumerCarousel')"></div>
         </div>
     </div>
     <div class="container mt-5">
@@ -117,13 +117,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div th:replace="fragments/common :: carousel-indicators('#perfumeCarousel')"></div>
+                        <div th:replace="fragments/common-fragments :: carousel-indicators('#perfumeCarousel')"></div>
                     </div>
                 </div>
             </div>
         </form>
     </div>
 </div>
-<footer th:insert="~{fragments/common :: footer}"></footer>
+<footer th:insert="~{fragments/common-fragments :: footer}"></footer>
 </body>
 </html>

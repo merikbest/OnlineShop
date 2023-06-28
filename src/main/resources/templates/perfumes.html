@@ -1,9 +1,9 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/common :: head"></head>
+<head th:replace="fragments/common-fragments :: head"></head>
 <body>
-<div th:insert="~{fragments/common :: scripts}"></div>
-<div th:replace="fragments/common :: navbar"></div>
+<div th:insert="~{fragments/common-fragments :: scripts}"></div>
+<div th:replace="fragments/common-fragments :: navbar"></div>
 <div id="container">
     <div class="container d-flex">
         <nav id="sidebar">
@@ -63,10 +63,18 @@
         </nav>
         <div class="container mb-5">
             <div class="container-fluid mt-5 ml-1">
-                <div th:replace="~{fragments/common :: search}"></div>
+                <form action="/perfume/search" method="get" style="justify-content: center">
+                    <div th:replace="~{fragments/common-fragments :: search(
+                        options=(${ {
+                            { value: 'perfumer', text: 'Brand' },
+                            { value: 'perfumeTitle', text: 'Perfume title' },
+                            { value: 'country', text: 'Manufacturer country' }
+                        } })
+                    )}"></div>
+                </form>
             </div>
             <div class="mt-4 ml-1">
-                <div th:replace="~{fragments/common :: pagination}"></div>
+                <div th:replace="~{fragments/common-fragments :: pagination(class='mx-3')}"></div>
                 <div class="container-fluid">
                     <div class="row" th:fragment="list">
                         <th:block th:each="perfume : ${page.getContent()}">
@@ -74,11 +82,11 @@
                         </th:block>
                     </div>
                 </div>
-                <div th:insert="~{fragments/common :: pagination}"></div>
+                <div th:insert="~{fragments/common-fragments :: pagination(class='mx-3')}"></div>
             </div>
         </div>
     </div>
 </div>
-<footer th:insert="~{fragments/common :: footer}"></footer>
+<footer th:insert="~{fragments/common-fragments :: footer}"></footer>
 </body>
 </html>

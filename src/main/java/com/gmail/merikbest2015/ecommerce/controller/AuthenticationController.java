@@ -49,6 +49,6 @@ public class AuthenticationController {
         if (controllerUtils.validateInputField(model, messageResponse, "email", request.getEmail())) {
             return Pages.RESET_PASSWORD;
         }
-        return controllerUtils.processAlertMessageAndRedirect(redirectAttributes, messageResponse);
+        return controllerUtils.processAlertMessageAndRedirect(redirectAttributes, PathConstants.LOGIN, messageResponse);
     }
 }

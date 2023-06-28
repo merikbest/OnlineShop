@@ -1,8 +1,6 @@
 package com.gmail.merikbest2015.ecommerce.utils;
 
-import com.gmail.merikbest2015.ecommerce.constants.Pages;
-import com.gmail.merikbest2015.ecommerce.domain.Perfume;
-import com.gmail.merikbest2015.ecommerce.dto.request.PerfumeSearchRequest;
+import com.gmail.merikbest2015.ecommerce.dto.request.SearchRequest;
 import com.gmail.merikbest2015.ecommerce.dto.response.MessageResponse;
 import com.gmail.merikbest2015.ecommerce.service.PerfumeService;
 import lombok.RequiredArgsConstructor;
@@ -50,10 +48,14 @@ public class ControllerUtils {
         return bindingResult.getFieldErrors().stream().collect(collector);
     }
 
-    public void processModel(PerfumeSearchRequest request, Model model, Page<Perfume> perfumes) {
-        model.addAttribute("searchRequest", request);
-        model.addAttribute("pagination", computePagination(perfumes));
-        model.addAttribute("page", perfumes);
+    public <T> void processModel(Model model, Page<T> page) {
+        model.addAttribute("pagination", computePagination(page));
+        model.addAttribute("page", page);
+    }
+
+    public <T> void processModel(SearchRequest searchRequest, Model model, Page<T> page) {
+        model.addAttribute("searchRequest", searchRequest);
+        processModel(model, page);
     }
 
     public String processAlertMessage(Model model, String page, MessageResponse messageResponse) {
@@ -62,10 +64,10 @@ public class ControllerUtils {
         return page;
     }
 
-    public String processAlertMessageAndRedirect(RedirectAttributes redirectAttributes, MessageResponse messageResponse) {
+    public String processAlertMessageAndRedirect(RedirectAttributes redirectAttributes, String page, MessageResponse messageResponse) {
         redirectAttributes.addFlashAttribute("messageType", messageResponse.getResponse());
         redirectAttributes.addFlashAttribute("message", messageResponse.getMessage());
-        return "redirect:/" + Pages.LOGIN;
+        return "redirect:" + page;
     }
 
     private int[] computePagination(Page<?> page) {

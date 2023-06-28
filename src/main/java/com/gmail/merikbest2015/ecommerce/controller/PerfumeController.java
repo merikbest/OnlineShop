@@ -2,7 +2,7 @@ package com.gmail.merikbest2015.ecommerce.controller;
 
 import com.gmail.merikbest2015.ecommerce.constants.Pages;
 import com.gmail.merikbest2015.ecommerce.constants.PathConstants;
-import com.gmail.merikbest2015.ecommerce.dto.request.PerfumeSearchRequest;
+import com.gmail.merikbest2015.ecommerce.dto.request.SearchRequest;
 import com.gmail.merikbest2015.ecommerce.service.PerfumeService;
 import com.gmail.merikbest2015.ecommerce.utils.ControllerUtils;
 import lombok.RequiredArgsConstructor;
@@ -28,13 +28,13 @@ public class PerfumeController {
     }
 
     @GetMapping
-    public String getPerfumesByFilterParams(PerfumeSearchRequest request, Model model, Pageable pageable) {
+    public String getPerfumesByFilterParams(SearchRequest request, Model model, Pageable pageable) {
         controllerUtils.processModel(request, model, perfumeService.getPerfumesByFilterParams(request, pageable));
         return Pages.PERFUMES;
     }
 
     @GetMapping("/search")
-    public String searchPerfumes(PerfumeSearchRequest request, Model model, Pageable pageable) {
+    public String searchPerfumes(SearchRequest request, Model model, Pageable pageable) {
         controllerUtils.processModel(request, model, perfumeService.searchPerfumes(request, pageable));
         return Pages.PERFUMES;
     }

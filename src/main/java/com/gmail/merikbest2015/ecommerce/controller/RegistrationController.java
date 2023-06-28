@@ -41,7 +41,7 @@ public class RegistrationController {
         if (controllerUtils.validateInputField(model, messageResponse, "user", user)) {
             return Pages.REGISTRATION;
         }
-        return controllerUtils.processAlertMessageAndRedirect(redirectAttributes, messageResponse);
+        return controllerUtils.processAlertMessageAndRedirect(redirectAttributes, PathConstants.LOGIN, messageResponse);
     }
 
     @GetMapping("/activate/{code}")

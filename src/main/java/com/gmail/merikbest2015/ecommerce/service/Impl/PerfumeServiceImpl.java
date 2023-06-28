@@ -3,7 +3,7 @@ package com.gmail.merikbest2015.ecommerce.service.Impl;
 import com.gmail.merikbest2015.ecommerce.constants.ErrorMessage;
 import com.gmail.merikbest2015.ecommerce.domain.Perfume;
 import com.gmail.merikbest2015.ecommerce.dto.request.PerfumeRequest;
-import com.gmail.merikbest2015.ecommerce.dto.request.PerfumeSearchRequest;
+import com.gmail.merikbest2015.ecommerce.dto.request.SearchRequest;
 import com.gmail.merikbest2015.ecommerce.repository.PerfumeRepository;
 import com.gmail.merikbest2015.ecommerce.service.PerfumeService;
 import lombok.RequiredArgsConstructor;
@@ -52,7 +52,7 @@ public class PerfumeServiceImpl implements PerfumeService {
     }
 
     @Override
-    public Page<Perfume> getPerfumesByFilterParams(PerfumeSearchRequest request, Pageable pageable) {
+    public Page<Perfume> getPerfumesByFilterParams(SearchRequest request, Pageable pageable) {
         Integer startingPrice = request.getPrice();
         Integer endingPrice = startingPrice + (startingPrice == 0 ? 500 : 50);
         return perfumeRepository.getPerfumesByFilterParams(
@@ -64,7 +64,7 @@ public class PerfumeServiceImpl implements PerfumeService {
     }
 
     @Override
-    public Page<Perfume> searchPerfumes(PerfumeSearchRequest request, Pageable pageable) {
+    public Page<Perfume> searchPerfumes(SearchRequest request, Pageable pageable) {
         return perfumeRepository.searchPerfumes(request.getSearchType(), request.getText(), pageable);
     }
 
