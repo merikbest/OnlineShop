@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.ecommerce.configuration;
 
 import com.gmail.merikbest2015.ecommerce.security.UserDetailsServiceImpl;
-import com.gmail.merikbest2015.ecommerce.service.Impl.UserServiceImpl;
+import com.gmail.merikbest2015.ecommerce.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

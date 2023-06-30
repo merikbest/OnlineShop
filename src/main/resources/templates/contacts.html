@@ -4,23 +4,28 @@
 <body>
 <div th:insert="~{fragments/common-fragments :: scripts}"></div>
 <div th:replace="fragments/common-fragments :: navbar"></div>
-<div id="container" class="container mt-5">
-    <h5>
-        <i class="fas fa-info-circle mr-2"></i>
-        Contacts
-    </h5>
-    <br>
-    <p><b>Mobile:</b> (066) 573-89-96<br/>
-        <b>E-mail:</b> merikbest2015@gmail.com</p>
-    <br>
-    <h6>Working time</h6>
-    <p>
-        The online store is open from 08:00 to 20:00 without breaks and weekends. <br/>
-        Online orders are accepted around the clock.
-    </p>
-    <br>
-    <h6>Delivery</h6>
-    <p>Delivery of orders come through courier service.</p>
+<div id="container" class="bg-light">
+    <div class="py-5">
+        <div class="container py-5 bg-white shadow-sm card-height">
+            <h5>
+                <i class="fas fa-info-circle mr-2"></i>
+                Contacts
+            </h5>
+            <br>
+            <p><b>Mobile:</b> (066) 573-89-96<br/>
+                <b>E-mail:</b> merikbest2015@gmail.com</p>
+            <br>
+            <h6>Working time</h6>
+            <p>
+                The online store is open from 08:00 to 20:00 without breaks and weekends. <br/>
+                Online orders are accepted around the clock.
+            </p>
+            <br>
+            <h6>Delivery</h6>
+            <p>Delivery of orders come through courier service.</p>
+        </div>
+
+    </div>
 </div>
 <footer th:insert="~{fragments/common-fragments :: footer}"></footer>
 </body>

@@ -6,13 +6,13 @@ import lombok.Data;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 public class OrderRequest {
     private Long id;
     private Double totalPrice;
-    private LocalDate date = LocalDate.now();
+    private LocalDateTime date = LocalDateTime.now();
 
     @NotBlank(message = ErrorMessage.FILL_IN_THE_INPUT_FIELD)
     private String firstName;

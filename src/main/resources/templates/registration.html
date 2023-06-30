@@ -4,64 +4,68 @@
 <body>
 <div th:insert="~{fragments/common-fragments :: scripts}"></div>
 <div th:replace="fragments/common-fragments :: navbar"></div>
-<div id="container" class="container mt-5">
-    <form method="post" action="/registration">
-        <div class="container mt-5">
-            <div class="row">
-                <div class="col-md-6">
-                    <h4 class="mr-3">
-                        <i class="fas fa-user-plus mr-3"></i>
-                        SIGN UP
-                    </h4>
-                    <hr/>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">E-mail: </label>
-                        <i class="fas fa-envelope" style="position: relative; top: 8px"></i>
-                        <div class="col-sm-7">
-                            <input type="email" name="email" th:value="${user} ? ${user.email} : ''"
-                                   class="form-control" th:classappend="${emailError} ? ' is-invalid'"/>
-                            <div th:if="${emailError}" class="invalid-feedback" th:text="${emailError}"></div>
+<div id="container" class="bg-light">
+    <div class="py-5">
+        <div class="container py-1 bg-white shadow-sm card-height">
+            <form method="post" action="/registration">
+                <div class="container mt-5">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 class="mr-3">
+                                <i class="fas fa-user-plus mr-3"></i>
+                                SIGN UP
+                            </h4>
+                            <hr/>
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">E-mail: </label>
+                                <i class="fas fa-envelope" style="position: relative; top: 8px"></i>
+                                <div class="col-sm-7">
+                                    <input type="email" name="email" th:value="${user} ? ${user.email} : ''"
+                                           class="form-control" th:classappend="${emailError} ? ' is-invalid'"/>
+                                    <div th:if="${emailError}" class="invalid-feedback" th:text="${emailError}"></div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">First name: </label>
+                                <i class="fas fa-user" style="position: relative; top: 8px"></i>
+                                <div class="col-sm-7">
+                                    <input type="text" name="firstName" th:value="${user} ? ${user.firstName} : ''"
+                                           class="form-control" th:classappend="${firstNameError} ? ' is-invalid'" />
+                                    <div th:if="${firstNameError}" class="invalid-feedback" th:text="${firstNameError}"></div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Password: </label>
+                                <i class="fas fa-lock" style="position: relative; top: 8px"></i>
+                                <div class="col-sm-7">
+                                    <input type="password" name="password" class="form-control"
+                                           th:classappend="${passwordError} ? ' is-invalid'"/>
+                                    <div th:if="${passwordError}" class="invalid-feedback" th:text="${passwordError}"></div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Confirm password: </label>
+                                <i class="fas fa-lock" style="position: relative; top: 8px"></i>
+                                <div class="col-sm-7">
+                                    <input type="password" name="password2" class="form-control"
+                                           th:classappend="${password2Error} ? ' is-invalid'"/>
+                                    <div th:if="${password2Error}" class="invalid-feedback" th:text="${password2Error}"></div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <button type="submit" class="btn btn-dark mx-3">
+                                    <i class="fas fa-user-plus mr-3"></i>
+                                    Sign up
+                                </button>
+                            </div>
+                            <div class="g-recaptcha" data-sitekey="6Lc5cLkZAAAAAN8mFk85HQieB9toPcWFoW0RXCNR"></div>
+                            <div th:if="${captchaError}" class="alert-danger" th:text="${captchaError}" role="alert"></div>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">First name: </label>
-                        <i class="fas fa-user" style="position: relative; top: 8px"></i>
-                        <div class="col-sm-7">
-                            <input type="text" name="firstName" th:value="${user} ? ${user.firstName} : ''"
-                                   class="form-control" th:classappend="${firstNameError} ? ' is-invalid'" />
-                            <div th:if="${firstNameError}" class="invalid-feedback" th:text="${firstNameError}"></div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Password: </label>
-                        <i class="fas fa-lock" style="position: relative; top: 8px"></i>
-                        <div class="col-sm-7">
-                            <input type="password" name="password" class="form-control"
-                                   th:classappend="${passwordError} ? ' is-invalid'"/>
-                            <div th:if="${passwordError}" class="invalid-feedback" th:text="${passwordError}"></div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Confirm password: </label>
-                        <i class="fas fa-lock" style="position: relative; top: 8px"></i>
-                        <div class="col-sm-7">
-                            <input type="password" name="password2" class="form-control"
-                                   th:classappend="${password2Error} ? ' is-invalid'"/>
-                            <div th:if="${password2Error}" class="invalid-feedback" th:text="${password2Error}"></div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <button type="submit" class="btn btn-dark mx-3">
-                            <i class="fas fa-user-plus mr-3"></i>
-                            Sign up
-                        </button>
-                    </div>
-                    <div class="g-recaptcha" data-sitekey="6Lc5cLkZAAAAAN8mFk85HQieB9toPcWFoW0RXCNR"></div>
-                    <div th:if="${captchaError}" class="alert-danger" th:text="${captchaError}" role="alert"></div>
                 </div>
-            </div>
+            </form>
         </div>
-    </form>
+    </div>
 </div>
 <footer th:insert="~{fragments/common-fragments :: footer}"></footer>
 </body>

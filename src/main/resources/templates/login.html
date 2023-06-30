@@ -4,47 +4,51 @@
 <body>
 <div th:insert="~{fragments/common-fragments :: scripts}"></div>
 <div th:replace="fragments/common-fragments :: navbar"></div>
-<div id="container" class="container mt-5">
-    <div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']}" class="alert alert-danger col-sm-8" role="alert">
-        Invalid Email Or Password
-    </div>
-    <th:block th:replace="fragments/common-fragments :: alert-message"/>
-    <form method="post" action="/login">
-        <div class="container mt-5">
-            <div class="row">
-                <div class="col-md-6">
-                    <h4 class="mr-3">
-                        <i class="fas fa-sign-in-alt mr-3"></i>
-                        SIGN IN
-                    </h4>
-                    <hr />
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">E-mail: </label>
-                        <i class="fas fa-envelope" style="position: relative; top: 8px"></i>
-                        <div class="col-sm-7">
-                            <input type="email" name="username" class="form-control" />
+<div id="container" class="bg-light">
+    <div class="py-5">
+        <div class="container py-1 bg-white shadow-sm card-height">
+            <div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']}" class="alert alert-danger col-sm-8 mt-3" role="alert">
+                Invalid Email Or Password
+            </div>
+            <th:block th:replace="fragments/common-fragments :: alert-message"/>
+            <form method="post" action="/login">
+                <div class="container mt-5">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 class="mr-3">
+                                <i class="fas fa-sign-in-alt mr-3"></i>
+                                SIGN IN
+                            </h4>
+                            <hr />
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">E-mail: </label>
+                                <i class="fas fa-envelope" style="position: relative; top: 8px"></i>
+                                <div class="col-sm-7">
+                                    <input type="email" name="username" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Password: </label>
+                                <i class="fas fa-lock" style="position: relative; top: 8px"></i>
+                                <div class="col-sm-7">
+                                    <input type="password" name="password" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <button type="submit" class="btn btn-dark mx-2">
+                                    <i class="fas fa-sign-in-alt mr-3"></i>
+                                    Sign in
+                                </button>
+                                <a href="/auth/forgot" class="forgot-password ml-3">
+                                    Forgot password?
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Password: </label>
-                        <i class="fas fa-lock" style="position: relative; top: 8px"></i>
-                        <div class="col-sm-7">
-                            <input type="password" name="password" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <button type="submit" class="btn btn-dark mx-2">
-                            <i class="fas fa-sign-in-alt mr-3"></i>
-                            Sign in
-                        </button>
-                        <a href="/auth/forgot" class="forgot-password ml-3">
-                            Forgot password?
-                        </a>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
-    </form>
+    </div>
 </div>
 <footer th:insert="~{fragments/common-fragments :: footer}"></footer>
 </body>

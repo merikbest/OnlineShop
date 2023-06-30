@@ -4,66 +4,71 @@
 <body>
 <div th:insert="~{fragments/common-fragments :: scripts}"></div>
 <div th:replace="fragments/common-fragments :: navbar"></div>
-<div id="container" class="account-container container">
-    <div class="row mt-5">
-        <th:block th:replace="fragments/account-fragments :: account-sidebar"/>
-        <div class="col-md-10">
-            <div class="row">
-                <th:block th:replace="fragments/account-fragments :: user-info"/>
-                <div class="col-md-6">
-                    <form method="post" action="/user/info/edit">
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">First name:</label>
-                            <div class="col-sm-7">
-                                <input type="text" name="firstName" th:value="${user} ? ${user.firstName} : ''"
-                                       class="form-control" th:classappend="${firstNameError} ? ' is-invalid'"/>
-                                <div th:if="${firstNameError}" class="invalid-feedback"
-                                     th:text="${firstNameError}"></div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Last name:</label>
-                            <div class="col-sm-7">
-                                <input type="text" name="lastName" th:value="${user} ? ${user.lastName} : ''"
-                                       class="form-control" th:classappend="${lastNameError} ? ' is-invalid'"/>
-                                <div th:if="${lastNameError}" class="invalid-feedback" th:text="${lastNameError}"></div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">City:</label>
-                            <div class="col-sm-7">
-                                <input type="text" name="city" th:value="${user} ? ${user.city} : ''"
-                                       class="form-control"/>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Address:</label>
-                            <div class="col-sm-7">
-                                <input type="text" name="address" th:value="${user} ? ${user.address} : ''"
-                                       class="form-control"/>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Phone number:</label>
-                            <div class="col-sm-7">
-                                <input type="text" name="phoneNumber" th:value="${user} ? ${user.phoneNumber} : ''"
-                                       class="form-control"/>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Post index:</label>
-                            <div class="col-sm-7">
-                                <input type="text" name="postIndex" th:value="${user} ? ${user.postIndex} : ''"
-                                       class="form-control"/>
-                            </div>
-                        </div>
-                        <th:block th:replace="fragments/common-fragments :: icon-button(
+<div id="container" class="bg-light">
+    <div class="py-5">
+        <div class="container py-5 bg-white shadow-sm card-height">
+            <div class="row mx-3">
+                <th:block th:replace="fragments/account-fragments :: account-sidebar"/>
+                <div class="col-md-10">
+                    <div class="row">
+                        <th:block th:replace="fragments/account-fragments :: user-info"/>
+                        <div class="col-md-6">
+                            <form method="post" action="/user/info/edit">
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">First name:</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" name="firstName" th:value="${user} ? ${user.firstName} : ''"
+                                               class="form-control" th:classappend="${firstNameError} ? ' is-invalid'"/>
+                                        <div th:if="${firstNameError}" class="invalid-feedback"
+                                             th:text="${firstNameError}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Last name:</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" name="lastName" th:value="${user} ? ${user.lastName} : ''"
+                                               class="form-control" th:classappend="${lastNameError} ? ' is-invalid'"/>
+                                        <div th:if="${lastNameError}" class="invalid-feedback" th:text="${lastNameError}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">City:</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" name="city" th:value="${user} ? ${user.city} : ''"
+                                               class="form-control"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Address:</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" name="address" th:value="${user} ? ${user.address} : ''"
+                                               class="form-control"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Phone number:</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" name="phoneNumber" th:value="${user} ? ${user.phoneNumber} : ''"
+                                               class="form-control"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Post index:</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" name="postIndex" th:value="${user} ? ${user.postIndex} : ''"
+                                               class="form-control"/>
+                                    </div>
+                                </div>
+                                <th:block th:replace="fragments/common-fragments :: icon-button(
                             text='Save',
                             icon='fas fa-check mr-2'
                         )"/>
-                    </form>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>

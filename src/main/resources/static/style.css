@@ -21,6 +21,10 @@ footer {
     width: 100%;
 }
 
+.card-height {
+    min-height: 430px;
+}
+
 .bg-black {
     background-color: black;
 }

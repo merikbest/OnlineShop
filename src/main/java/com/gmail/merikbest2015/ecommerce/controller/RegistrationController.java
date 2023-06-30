@@ -5,7 +5,7 @@ import com.gmail.merikbest2015.ecommerce.constants.PathConstants;
 import com.gmail.merikbest2015.ecommerce.dto.request.UserRequest;
 import com.gmail.merikbest2015.ecommerce.dto.response.MessageResponse;
 import com.gmail.merikbest2015.ecommerce.service.RegistrationService;
-import com.gmail.merikbest2015.ecommerce.service.Impl.utils.ControllerUtils;
+import com.gmail.merikbest2015.ecommerce.utils.ControllerUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

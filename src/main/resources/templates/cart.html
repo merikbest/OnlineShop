@@ -4,57 +4,59 @@
 <body>
 <div th:insert="~{fragments/common-fragments :: scripts}"></div>
 <div th:replace="fragments/common-fragments :: navbar"></div>
-<div id="container">
-    <div class="container mt-5 pb-5">
-        <p class="h4 mb-4 text-center">
-            <i class="fas fa-shopping-cart mr-2"></i>
-            Cart
-        </p>
-        <div class="text-center" th:if="${perfumes.size() == 0}">
-            <p>Cart is empty</p>
-        </div>
-        <div th:if="${perfumes.size() > 0}">
-            <div class="card mb-3 mx-auto" style="max-width: 940px;" th:each="perfume : ${perfumes}">
-                <div class="row no-gutters">
-                    <div class="col-2 mx-3 my-3">
-                        <img th:src="@{/img/{path} (path = ${perfume.getFilename()})}" class="img-fluid" alt="">
-                    </div>
-                    <div class="col-7">
-                        <div class="card-body">
-                            <h5 class="card-title"
-                                th:text="${perfume.getPerfumer() + ' ' + perfume.getPerfumeTitle()}"></h5>
-                            <p class="card-text" th:text="${perfume.getType()}"></p>
-                            <p class="card-text"><span th:text="${perfume.getVolume()}"></span> ml.</p>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="card-body">
-                            <h5 class="card-title">$<span th:text="${perfume.getPrice()}"></span></h5>
-                            <form class="d-inline" action="/cart/remove" method="post">
-                                <button class="btn btn-warning mb-2">
-                                    <i class="far fa-minus-square mr-2"></i>
-                                    Remove
-                                </button>
-                                <input type="hidden" name="perfumeId" th:value="${perfume.getId()}">
-                            </form>
-                        </div>
-                    </div>
-                </div>
+<div id="container" class="bg-light">
+    <div class="py-5">
+        <div class="container py-5 bg-white shadow-sm card-height">
+            <p class="h4 mb-4 text-center">
+                <i class="fas fa-shopping-cart mr-2"></i>
+                Cart
+            </p>
+            <div class="text-center" th:if="${perfumes.size() == 0}">
+                <p>Cart is empty</p>
             </div>
-            <hr class="my-3"/>
-            <div class="row">
-                <div class="col-9">
-                    <p class="h5 text-right">Total: $<span th:text="${#aggregates.sum(perfumes.![price])}"></span></p>
-                </div>
-                <div class="col-3">
-                    <form action="/order" method="get" class="ml-3">
-                        <div class="form-row">
-                            <button class="btn btn-success">
-                                <i class="fas fa-shopping-bag mr-2"></i>
-                                Checkout
-                            </button>
+            <div th:if="${perfumes.size() > 0}">
+                <div class="card mb-3 mx-auto" style="max-width: 940px;" th:each="perfume : ${perfumes}">
+                    <div class="row no-gutters">
+                        <div class="col-2 mx-3 my-3">
+                            <img th:src="@{/img/{path} (path = ${perfume.getFilename()})}" class="img-fluid" alt="">
                         </div>
-                    </form>
+                        <div class="col-7">
+                            <div class="card-body">
+                                <h5 class="card-title"
+                                    th:text="${perfume.getPerfumer() + ' ' + perfume.getPerfumeTitle()}"></h5>
+                                <p class="card-text" th:text="${perfume.getType()}"></p>
+                                <p class="card-text"><span th:text="${perfume.getVolume()}"></span> ml.</p>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="card-body">
+                                <h5 class="card-title">$<span th:text="${perfume.getPrice()}"></span></h5>
+                                <form class="d-inline" action="/cart/remove" method="post">
+                                    <button class="btn btn-warning mb-2">
+                                        <i class="far fa-minus-square mr-2"></i>
+                                        Remove
+                                    </button>
+                                    <input type="hidden" name="perfumeId" th:value="${perfume.getId()}">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-3"/>
+                <div class="row">
+                    <div class="col-9">
+                        <p class="h5 text-right">Total: $<span th:text="${#aggregates.sum(perfumes.![price])}"></span></p>
+                    </div>
+                    <div class="col-3">
+                        <form action="/order" method="get" class="ml-3">
+                            <div class="form-row">
+                                <button class="btn btn-success">
+                                    <i class="fas fa-shopping-bag mr-2"></i>
+                                    Checkout
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

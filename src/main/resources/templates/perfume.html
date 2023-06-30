@@ -4,8 +4,8 @@
 <body>
 <div th:insert="~{fragments/common-fragments :: scripts}"></div>
 <div th:replace="fragments/common-fragments :: navbar"></div>
-<div id="container">
-    <div class="container mt-5 pb-5">
+<div id="container" class="bg-light">
+    <div class="container pt-5 pb-5 bg-white shadow-sm">
         <div class="row">
             <div class="col-md-5">
                 <img th:src="@{/img/{path} (path = ${perfume.getFilename()})}" class="rounded mx-auto w-100">

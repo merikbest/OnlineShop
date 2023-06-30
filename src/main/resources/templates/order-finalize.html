@@ -5,10 +5,14 @@
 <body>
 <div th:insert="~{fragments/common-fragments :: scripts}"></div>
 <div th:replace="fragments/common-fragments :: navbar"></div>
-<div id="container">
-    <div class="container text-center mt-5">
-        <h2>Thank you for the order!</h2>
-        <p>Your order number is: <span th:text="${orderId}"></span></p>
+<div id="container" class="bg-light">
+    <div class="py-5">
+        <div class="container py-5 px-5 bg-white shadow-sm card-height">
+            <div class="container text-center">
+                <h2>Thank you for the order!</h2>
+                <p>Your order number is: <span th:text="${orderId}"></span></p>
+            </div>
+        </div>
     </div>
 </div>
 <footer th:insert="~{fragments/common-fragments :: footer}"></footer>

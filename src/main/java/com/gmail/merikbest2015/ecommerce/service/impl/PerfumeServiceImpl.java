@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.ecommerce.service.Impl;
+package com.gmail.merikbest2015.ecommerce.service.impl;
 
 import com.gmail.merikbest2015.ecommerce.constants.ErrorMessage;
 import com.gmail.merikbest2015.ecommerce.domain.Perfume;

@@ -4,7 +4,7 @@ import com.gmail.merikbest2015.ecommerce.constants.Pages;
 import com.gmail.merikbest2015.ecommerce.constants.PathConstants;
 import com.gmail.merikbest2015.ecommerce.dto.request.SearchRequest;
 import com.gmail.merikbest2015.ecommerce.service.PerfumeService;
-import com.gmail.merikbest2015.ecommerce.service.Impl.utils.ControllerUtils;
+import com.gmail.merikbest2015.ecommerce.utils.ControllerUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;

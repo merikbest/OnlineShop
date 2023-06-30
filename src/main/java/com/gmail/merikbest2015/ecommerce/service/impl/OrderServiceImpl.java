@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.ecommerce.service.Impl;
+package com.gmail.merikbest2015.ecommerce.service.impl;
 
 import com.gmail.merikbest2015.ecommerce.constants.ErrorMessage;
 import com.gmail.merikbest2015.ecommerce.domain.Order;
@@ -28,7 +28,7 @@ public class OrderServiceImpl implements OrderService {
     private final UserService userService;
     private final OrderRepository orderRepository;
     private final ModelMapper modelMapper;
-    private final MailSender mailSender;
+    private final MailService mailService;
 
     @Override
     public Order getOrder(Long orderId) {
@@ -59,7 +59,7 @@ public class OrderServiceImpl implements OrderService {
         user.getPerfumeList().clear();
         Map<String, Object> attributes = new HashMap<>();
         attributes.put("order", order);
-        mailSender.sendMessageHtml(order.getEmail(), "Order #" + order.getId(), "order-template", attributes);
+        mailService.sendMessageHtml(order.getEmail(), "Order #" + order.getId(), "order-template", attributes);
         return order.getId();
     }
 }

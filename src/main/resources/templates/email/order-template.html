@@ -47,7 +47,7 @@
             <hr/>
             <div class="text-left">
                 <p><b>Your order number is: <span th:text="${order.getId()}" th:remove="tag"></span></b></p>
-                <p><b>Date:</b> <span th:text="${order.getDate()}" th:remove="tag"></span></p>
+                <p><b>Date:</b> <span th:text="${#temporals.format(order.getDate(), 'yyyy-MM-dd HH:mm')}" th:remove="tag"></span></p>
                 <p><b>Name:</b> <span th:text="${order.getFirstName() + ' ' + order.getLastName()}"
                                       th:remove="tag"></span></p>
                 <p><b>Address:</b> <span th:text="${order.getCity() + ' ' + order.getAddress()}" th:remove="tag"></span>

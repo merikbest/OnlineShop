@@ -1,8 +1,7 @@
-package com.gmail.merikbest2015.ecommerce.service.Impl.utils;
+package com.gmail.merikbest2015.ecommerce.utils;
 
 import com.gmail.merikbest2015.ecommerce.dto.request.SearchRequest;
 import com.gmail.merikbest2015.ecommerce.dto.response.MessageResponse;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
@@ -16,7 +15,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Component
-@RequiredArgsConstructor
 public class ControllerUtils {
 
     public boolean validateInputField(Model model, MessageResponse messageResponse, String attributeKey, Object attributeValue) {

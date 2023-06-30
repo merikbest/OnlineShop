@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.ecommerce.service.Impl;
+package com.gmail.merikbest2015.ecommerce.service.impl;
 
 import com.gmail.merikbest2015.ecommerce.constants.ErrorMessage;
 import com.gmail.merikbest2015.ecommerce.constants.SuccessMessage;
@@ -24,7 +24,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final MailSender mailSender;
+    private final MailService mailService;
 
     @Override
     @Transactional
@@ -37,7 +37,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         Map<String, Object> attributes = new HashMap<>();
         attributes.put("firstName", user.getFirstName());
         attributes.put("resetCode", "/auth/reset/" + user.getPasswordResetCode());
-        mailSender.sendMessageHtml(user.getEmail(), "Password reset", "password-reset-template", attributes);
+        mailService.sendMessageHtml(user.getEmail(), "Password reset", "password-reset-template", attributes);
         return new MessageResponse("alert-success",  SuccessMessage.PASSWORD_CODE_SEND);
     }
 

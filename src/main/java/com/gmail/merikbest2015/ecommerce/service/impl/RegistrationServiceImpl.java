@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.ecommerce.service.Impl;
+package com.gmail.merikbest2015.ecommerce.service.impl;
 
 import com.gmail.merikbest2015.ecommerce.constants.ErrorMessage;
 import com.gmail.merikbest2015.ecommerce.constants.SuccessMessage;
@@ -27,7 +27,7 @@ import java.util.UUID;
 public class RegistrationServiceImpl implements RegistrationService {
 
     private final UserRepository userRepository;
-    private final MailSender mailSender;
+    private final MailService mailService;
     private final PasswordEncoder passwordEncoder;
     private final RestTemplate restTemplate;
     private final ModelMapper modelMapper;
@@ -62,7 +62,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         Map<String, Object> attributes = new HashMap<>();
         attributes.put("firstName", user.getFirstName());
         attributes.put("activationCode", "/registration/activate/" + user.getActivationCode());
-        mailSender.sendMessageHtml(user.getEmail(), "Activation code", "registration-template", attributes);
+        mailService.sendMessageHtml(user.getEmail(), "Activation code", "registration-template", attributes);
         return new MessageResponse("alert-success", SuccessMessage.ACTIVATION_CODE_SEND);
     }
 

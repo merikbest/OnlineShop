@@ -6,7 +6,7 @@ import com.gmail.merikbest2015.ecommerce.dto.request.ChangePasswordRequest;
 import com.gmail.merikbest2015.ecommerce.dto.request.EditUserRequest;
 import com.gmail.merikbest2015.ecommerce.dto.response.MessageResponse;
 import com.gmail.merikbest2015.ecommerce.service.UserService;
-import com.gmail.merikbest2015.ecommerce.service.Impl.utils.ControllerUtils;
+import com.gmail.merikbest2015.ecommerce.utils.ControllerUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
