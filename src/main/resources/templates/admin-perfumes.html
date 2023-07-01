@@ -27,8 +27,13 @@
                     <div class="mt-3" th:insert="~{fragments/common-fragments :: pagination}"></div>
                     <form method="get" action="/static">
                         <div class="row" th:fragment="list">
-                            <div class="col-lg-3" th:each="perfume : ${page.getContent()}">
-                                <div class="card mb-5 perfume_list_item_wrapper shadow" th:if="${perfume.getFilename()}">
+                            <th:block th:if="${page.getContent().size() == 0}"
+                                      th:insert="~{fragments/common-fragments :: empty-result(text='Perfumes not found')}"/>
+                            <div class="col-lg-3"
+                                 th:unless="${page.getContent().size() == 0}"
+                                 th:each="perfume : ${page.getContent()}">
+                                <div class="card mb-5 perfume_list_item_wrapper shadow"
+                                     th:if="${perfume.getFilename()}">
                                     <div class="perfume_list_item_image_wrapper">
                                         <img th:src="@{/img/{path} (path = ${perfume.getFilename()})}"
                                              class="rounded mx-auto w-50 perfume_list_item_image">
@@ -49,7 +54,9 @@
                             </div>
                         </div>
                     </form>
-                    <div class="mt-3" th:insert="~{fragments/common-fragments :: pagination}"></div>
+                    <div class="mt-3"
+                         th:if="${page.getContent().size() != 0}"
+                         th:insert="~{fragments/common-fragments :: pagination}"></div>
                 </div>
             </div>
         </div>

@@ -4,10 +4,12 @@ import com.gmail.merikbest2015.ecommerce.constants.Pages;
 import com.gmail.merikbest2015.ecommerce.constants.PathConstants;
 import com.gmail.merikbest2015.ecommerce.dto.request.ChangePasswordRequest;
 import com.gmail.merikbest2015.ecommerce.dto.request.EditUserRequest;
+import com.gmail.merikbest2015.ecommerce.dto.request.SearchRequest;
 import com.gmail.merikbest2015.ecommerce.dto.response.MessageResponse;
 import com.gmail.merikbest2015.ecommerce.service.UserService;
 import com.gmail.merikbest2015.ecommerce.utils.ControllerUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -40,6 +42,12 @@ public class UserController {
     public String userAccount(Model model) {
         model.addAttribute("user", userService.getAuthenticatedUser());
         return Pages.USER_ACCOUNT;
+    }
+
+    @GetMapping("/orders/search")
+    public String searchUserOrders(SearchRequest request, Pageable pageable, Model model) {
+        controllerUtils.addPagination(request, model, userService.searchUserOrders(request, pageable));
+        return Pages.ORDERS;
     }
 
     @GetMapping("/info")

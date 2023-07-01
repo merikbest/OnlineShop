@@ -32,4 +32,16 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "END) " +
             "LIKE UPPER(CONCAT('%',:text,'%'))")
     Page<Order> searchOrders(String searchType, String text, Pageable pageable);
+
+    @EntityGraph(attributePaths = {"perfumes", "user", "user.roles"})
+    @Query("SELECT orders FROM Order orders " +
+            "LEFT JOIN orders.user user " +
+            "WHERE user.id = :userId " +
+            "AND (CASE " +
+            "   WHEN :searchType = 'firstName' THEN UPPER(orders.firstName) " +
+            "   WHEN :searchType = 'lastName' THEN UPPER(orders.lastName) " +
+            "   ELSE UPPER(orders.email) " +
+            "END) " +
+            "LIKE UPPER(CONCAT('%',:text,'%'))")
+    Page<Order> searchUserOrders(Long userId, String searchType, String text, Pageable pageable);
 }

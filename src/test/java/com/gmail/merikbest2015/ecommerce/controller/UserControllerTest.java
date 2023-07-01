@@ -15,8 +15,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static com.gmail.merikbest2015.ecommerce.util.TestConstants.*;
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -24,8 +23,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
-@Sql(value = {"/sql/create-perfumes-before.sql", "/sql/create-user-before.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-@Sql(value = {"/sql/create-user-after.sql", "/sql/create-perfumes-after.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+@Sql(value = {"/sql/create-perfumes-before.sql", "/sql/create-user-before.sql", "/sql/create-orders-before.sql"},
+        executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value = {"/sql/create-orders-after.sql", "/sql/create-user-after.sql", "/sql/create-perfumes-after.sql"},
+        executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class UserControllerTest {
 
     @Autowired
@@ -63,6 +64,42 @@ public class UserControllerTest {
                 .andExpect(model().attribute("user", hasProperty("address", is(USER_ADDRESS))))
                 .andExpect(model().attribute("user", hasProperty("phoneNumber", is(USER_PHONE_NUMBER))))
                 .andExpect(model().attribute("user", hasProperty("postIndex", is(USER_POST_INDEX))));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /user/orders/search - Search Orders By Email")
+    public void searchUserOrders_ByEmail() throws Exception {
+        mockMvc.perform(get(PathConstants.USER + "/orders/search")
+                        .param("searchType", "email")
+                        .param("text", USER_EMAIL))
+                .andExpect(status().isOk())
+                .andExpect(view().name(Pages.ORDERS))
+                .andExpect(model().attribute("page", hasProperty("content", hasSize(1))));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /user/orders/search - Search Orders bt First Name")
+    public void searchUserOrders_ByFirstName() throws Exception {
+        mockMvc.perform(get(PathConstants.USER + "/orders/search")
+                        .param("searchType", "firstName")
+                        .param("text", USER_FIRST_NAME))
+                .andExpect(status().isOk())
+                .andExpect(view().name(Pages.ORDERS))
+                .andExpect(model().attribute("page", hasProperty("content", hasSize(1))));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /user/orders/search - Search Orders By Last Name")
+    public void searchUserOrders_ByLastName() throws Exception {
+        mockMvc.perform(get(PathConstants.USER + "/orders/search")
+                        .param("searchType", "lastName")
+                        .param("text", USER_LAST_NAME))
+                .andExpect(status().isOk())
+                .andExpect(view().name(Pages.ORDERS))
+                .andExpect(model().attribute("page", hasProperty("content", hasSize(1))));
     }
 
     @Test

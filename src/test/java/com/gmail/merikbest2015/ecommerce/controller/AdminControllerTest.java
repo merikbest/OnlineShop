@@ -152,7 +152,7 @@ public class AdminControllerTest {
 
     @Test
     @DisplayName("[200] GET /admin/orders/search - Search Orders By Email")
-    public void searchOrders_ByByEmail() throws Exception {
+    public void searchOrders_ByEmail() throws Exception {
         mockMvc.perform(get(PathConstants.ADMIN + "/orders/search")
                         .param("searchType", "email")
                         .param("text", USER_EMAIL))

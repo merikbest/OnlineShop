@@ -29,7 +29,7 @@ public class OrderController {
     private final ControllerUtils controllerUtils;
 
     @GetMapping("/{orderId}")
-    public String getOrder(@PathVariable("orderId") Long orderId, Model model) {
+    public String getOrder(@PathVariable Long orderId, Model model) {
         model.addAttribute("order", orderService.getOrder(orderId));
         return Pages.ORDER;
     }

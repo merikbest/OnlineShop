@@ -24,7 +24,9 @@
                         )}"></div>
                     </form>
                     <div th:insert="~{fragments/common-fragments :: pagination}"></div>
-                    <table class="table mt-4 border text-center">
+                    <th:block th:if="${page.getContent().size() == 0}"
+                              th:insert="~{fragments/common-fragments :: empty-result(text='Users not found')}"/>
+                    <table th:unless="${page.getContent().size() == 0}" class="table mt-4 border text-center">
                         <thead class="table-active">
                         <tr>
                             <th>id</th>
@@ -50,7 +52,8 @@
                         </tr>
                         </tbody>
                     </table>
-                    <div th:insert="~{fragments/common-fragments :: pagination}"></div>
+                    <div th:unless="${page.getContent().size() == 0}"
+                         th:insert="~{fragments/common-fragments :: pagination}"></div>
                 </div>
             </div>
         </div>

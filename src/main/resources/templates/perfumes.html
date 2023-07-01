@@ -77,12 +77,16 @@
                 <th:block th:replace="~{fragments/common-fragments :: pagination(class='mx-3')}"/>
                 <div class="container-fluid">
                     <div class="row" th:fragment="list">
-                        <th:block th:each="perfume : ${page.getContent()}">
+                        <th:block th:if="${page.getContent().size() == 0}"
+                                  th:insert="~{fragments/common-fragments :: empty-result(text='Perfumes not found')}"/>
+                        <th:block th:unless="${page.getContent().size() == 0}" th:each="perfume : ${page.getContent()}">
                             <th:block th:replace="fragments/perfumes-fragments :: perfume-item(${perfume})"/>
                         </th:block>
                     </div>
                 </div>
-                <th:block th:replace="~{fragments/common-fragments :: pagination(class='mx-3')}"/>
+                <th:block th:if="${page.getContent().size() != 0}">
+                    <th:block th:replace="~{fragments/common-fragments :: pagination(class='mx-3')}"/>
+                </th:block>
             </div>
         </div>
     </div>

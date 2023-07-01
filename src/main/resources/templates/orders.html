@@ -14,7 +14,12 @@
                         text='List of all orders',
                         icon='fas fa-shopping-bag ml-2 mr-2'
                     )"/>
-                    <form class="my-3" action="/admin/orders/search" method="get" style="justify-content: center">
+                    <form class="my-3" method="get" style="justify-content: center"
+                          th:action="${
+                            #authorization.expression('hasAuthority(''ADMIN'')')
+                            ? '/admin/orders/search'
+                            : '/user/orders/search'
+                    }">
                         <div th:replace="~{fragments/common-fragments :: search(
                             options=(${ {
                                 { value: 'email', text: 'Email' },
@@ -24,7 +29,9 @@
                         )}"></div>
                     </form>
                     <div th:insert="~{fragments/common-fragments :: pagination}"></div>
-                    <table class="table mt-4 border text-center">
+                    <th:block th:if="${page.getContent().size() == 0}"
+                              th:insert="~{fragments/common-fragments :: empty-result(text='Orders not found')}"/>
+                    <table th:unless="${page.getContent().size() == 0}" class="table mt-4 border text-center">
                         <thead class="table-active">
                         <tr>
                             <th>Order №</th>
@@ -49,14 +56,17 @@
                                 </th>
                             </th:block>
                             <th:block sec:authorize="hasAuthority('USER')">
-                                <a th:href="@{/order/{orderId} (orderId = ${order.getId()})}">
-                                    Show more
-                                </a>
+                                <th>
+                                    <a th:href="@{/order/{orderId} (orderId = ${order.getId()})}">
+                                        Show more
+                                    </a>
+                                </th>
                             </th:block>
                         </tr>
                         </tbody>
                     </table>
-                    <div th:insert="~{fragments/common-fragments :: pagination}"></div>
+                    <div th:unless="${page.getContent().size() == 0}"
+                         th:insert="~{fragments/common-fragments :: pagination}"></div>
                 </div>
             </div>
         </div>
