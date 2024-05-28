@@ -23,6 +23,14 @@ Password: admin
 * Junit, Mockito
 * Lombok
 
+## How to connect Database
+
+* installing postgresql
+* Type `CREATE USER postgres SUPERUSER` on SQL SHELL
+* Type `CREATE DATABASE perfume WITH OWNER postgres` on SQL SHELL
+* Make perfume table
+
+
 ## About This Project
 * Customers can register/login.
 * Customers can navigate through the main pages, view products, or select a product from a storefront and preview.
