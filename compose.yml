@@ -1,0 +1,11 @@
+services:
+  postgres:
+    image: postgres:17beta1-alpine3.20
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=online_shop
+      - POSTGRES_USER=online_shop
+      - POSTGRES_PASSWORD=S3cret

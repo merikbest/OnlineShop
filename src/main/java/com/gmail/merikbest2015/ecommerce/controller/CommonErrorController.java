@@ -2,14 +2,14 @@ package com.gmail.merikbest2015.ecommerce.controller;
 
 import com.gmail.merikbest2015.ecommerce.constants.Pages;
 import com.gmail.merikbest2015.ecommerce.constants.PathConstants;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class CommonErrorController implements ErrorController {
@@ -25,8 +25,8 @@ public class CommonErrorController implements ErrorController {
         return Pages.ERROR_500;
     }
 
-    @Override
-    public String getErrorPath() {
-        return PathConstants.ERROR;
-    }
+//    @Override
+//    public String getErrorPath() {
+//        return PathConstants.ERROR;
+//    }
 }

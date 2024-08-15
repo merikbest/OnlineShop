@@ -63,7 +63,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Order getOrder(Long orderId) {
-        return orderRepository.getById(orderId)
+        return orderRepository.getOrderById(orderId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorMessage.ORDER_NOT_FOUND));
     }
 
