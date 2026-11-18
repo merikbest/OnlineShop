@@ -53,7 +53,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (request.getPassword() != null && !request.getPassword().equals(request.getPassword2())) {
             return new MessageResponse("passwordError", ErrorMessage.PASSWORDS_DO_NOT_MATCH);
         }
-        User user = userRepository.findByEmail(request.getEmail());
+        User user = userRepository.findByPasswordResetCode(request.getCode());
+        if (user == null) {
+            return new MessageResponse("alert-danger", ErrorMessage.INVALID_PASSWORD_CODE);
+        }
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setPasswordResetCode(null);
         return new MessageResponse("alert-success", SuccessMessage.PASSWORD_CHANGED);
