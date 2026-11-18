@@ -10,6 +10,8 @@ public class PasswordResetRequest {
 
     private String email;
 
+    private String code;
+
     @Size(min = 6, max = 16, message = ErrorMessage.PASSWORD_CHARACTER_LENGTH)
     private String password;
 

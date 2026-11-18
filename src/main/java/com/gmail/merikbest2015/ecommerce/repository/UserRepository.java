@@ -24,6 +24,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<String> getEmailByPasswordResetCode(String code);
 
     @EntityGraph(attributePaths = "roles")
+    User findByPasswordResetCode(String code);
+
+    @EntityGraph(attributePaths = "roles")
     @Query("SELECT user FROM User user WHERE " +
             "(CASE " +
             "   WHEN :searchType = 'firstName' THEN UPPER(user.firstName) " +
